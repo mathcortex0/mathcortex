@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alamin Network - Search</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Same navigation as index.html -->
+    <nav class="navbar glass-effect">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html">ALAMIN NETWORK</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Categories ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="category.html?cat=national">National</a></li>
+                        <li><a href="category.html?cat=international">International</a></li>
+                        <li><a href="category.html?cat=politics">Politics</a></li>
+                        <li><a href="category.html?cat=business">Business</a></li>
+                        <li><a href="category.html?cat=sports">Sports</a></li>
+                        <li><a href="category.html?cat=technology">Technology</a></li>
+                        <li><a href="category.html?cat=entertainment">Entertainment</a></li>
+                    </ul>
+                </li>
+                <li><a href="search.html" class="active">Search</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="search-container glass-effect">
+            <h1>Search Articles</h1>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search by title or content..." class="glass-effect">
+                <select id="categoryFilter" class="glass-effect">
+                    <option value="all">All Categories</option>
+                    <option value="national">National</option>
+                    <option value="international">International</option>
+                    <option value="politics">Politics</option>
+                    <option value="business">Business</option>
+                    <option value="sports">Sports</option>
+                    <option value="technology">Technology</option>
+                    <option value="entertainment">Entertainment</option>
+                </select>
+                <button onclick="performSearch()" class="search-btn glass-effect">Search</button>
+            </div>
+        </div>
+
+        <div class="search-results" id="searchResults"></div>
+    </main>
+
+    <!-- Same footer as index.html -->
+    <footer class="glass-effect">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Alamin Network</h3>
+                    <p>Delivering truth, empowering minds.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="category.html?cat=national">National</a></li>
+                        <li><a href="category.html?cat=international">International</a></li>
+                        <li><a href="category.html?cat=politics">Politics</a></li>
+                        <li><a href="category.html?cat=business">Business</a></li>
+                        <li><a href="category.html?cat=sports">Sports</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#">Twitter</a>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Facebook</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Alamin Network. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/search.js"></script>
+</body>
+</html>
