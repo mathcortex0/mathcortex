@@ -2,22 +2,64 @@
     {
         "id": "1001",
         "title": "Global Economic Summit Addresses Climate Change Impact",
-        "summary": "World leaders gather to discuss economic policies and climate change mitigation strategies at the annual Global Economic Summit.",
+        "summary": "World leaders gather in Geneva to discuss economic policies and climate change mitigation strategies at the annual Global Economic Summit. Historic agreements expected.",
         "date": "2024-01-15",
         "category": "International"
     },
     {
         "id": "1002",
         "title": "National Healthcare Reform Bill Passes Parliament",
-        "summary": "Historic healthcare reform bill approved with bipartisan support, expanding coverage to millions of citizens.",
+        "summary": "Historic healthcare reform bill approved with bipartisan support, expanding coverage to millions of citizens. The bill includes provisions for mental health services.",
         "date": "2024-01-14",
         "category": "National"
     },
     {
         "id": "1003",
         "title": "Tech Giants Announce AI Ethics Framework",
-        "summary": "Leading technology companies collaborate to establish comprehensive guidelines for ethical AI development.",
+        "summary": "Leading technology companies including Google, Microsoft, and OpenAI collaborate to establish comprehensive guidelines for ethical AI development and deployment.",
         "date": "2024-01-13",
+        "category": "Technology"
+    },
+    {
+        "id": "1004",
+        "title": "Champions League: Quarter-Final Draw Results",
+        "summary": "Exciting matchups revealed as UEFA Champions League quarter-final draw takes place in Nyon. Real Madrid to face Manchester City in blockbuster tie.",
+        "date": "2024-01-12",
+        "category": "Sports"
+    },
+    {
+        "id": "1005",
+        "title": "Infrastructure Development Project Launches in Major Cities",
+        "summary": "$1 trillion infrastructure initiative begins construction in 10 major cities, focusing on public transit, bridges, and high-speed internet access.",
+        "date": "2024-01-12",
+        "category": "National"
+    },
+    {
+        "id": "1006",
+        "title": "Federal Reserve Signals Interest Rate Decision",
+        "summary": "Central bank indicates possible rate cuts in coming months as inflation shows signs of cooling. Markets respond positively to the announcement.",
+        "date": "2024-01-11",
+        "category": "Business"
+    },
+    {
+        "id": "1007",
+        "title": "Election Campaign Heats Up With Key Debates",
+        "summary": "Presidential candidates face off in first televised debate, discussing economy, healthcare, and foreign policy. Polls show tight race.",
+        "date": "2024-01-10",
+        "category": "Politics"
+    },
+    {
+        "id": "1008",
+        "title": "Oscar Nominations 2024: Full List Revealed",
+        "summary": "Academy Awards nominations announced with 'Oppenheimer' leading with 13 nods. Barbie, Killers of the Flower Moon also receive multiple nominations.",
+        "date": "2024-01-09",
+        "category": "Entertainment"
+    },
+    {
+        "id": "1009",
+        "title": "Breakthrough in Renewable Energy Storage",
+        "summary": "Scientists develop new battery technology that could revolutionize renewable energy storage, making solar and wind power more reliable than ever.",
+        "date": "2024-01-08",
         "category": "Technology"
     }
 ]
