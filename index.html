@@ -1,94 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alamin Network - Latest News</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alamin Network — World News</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar glass-effect">
-        <div class="container">
-            <div class="nav-brand">
-                <a href="index.html">ALAMIN NETWORK</a>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li class="dropdown">
-                    <a href="#">Categories ▾</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="category.html?cat=national">National</a></li>
-                        <li><a href="category.html?cat=international">International</a></li>
-                        <li><a href="category.html?cat=politics">Politics</a></li>
-                        <li><a href="category.html?cat=business">Business</a></li>
-                        <li><a href="category.html?cat=sports">Sports</a></li>
-                        <li><a href="category.html?cat=technology">Technology</a></li>
-                        <li><a href="category.html?cat=entertainment">Entertainment</a></li>
-                    </ul>
-                </li>
-                <li><a href="search.html">Search</a></li>
-            </ul>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero glass-effect">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Welcome to Alamin Network</h1>
-                <p>Your trusted source for global news, delivering accurate and timely information across all categories.</p>
-            </div>
+  <!-- NAV -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-top">
+        <div class="live-ticker" id="ticker">
+          <span class="ticker-label">LIVE</span>
+          <span class="ticker-text" id="ticker-text">Loading latest updates…</span>
         </div>
+        <div class="header-meta">
+          <span id="live-date"></span>
+          <span class="dot-sep">·</span>
+          <span>Dhaka, Bangladesh</span>
+        </div>
+      </div>
+      <div class="header-brand">
+        <a href="index.html" class="brand-logo">
+          <span class="brand-main">Alamin</span>
+          <span class="brand-sub">Network</span>
+        </a>
+        <p class="brand-tagline">Reporting the World With Precision</p>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="category.html?cat=national" class="nav-link">National</a>
+        <a href="category.html?cat=international" class="nav-link">International</a>
+        <a href="category.html?cat=sports" class="nav-link">Sports</a>
+        <button class="search-btn" onclick="toggleSearch()" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+      </nav>
+    </div>
+    <!-- Search Bar -->
+    <div class="search-bar" id="searchBar">
+      <div class="search-inner">
+        <input type="text" id="searchInput" placeholder="Search articles…" oninput="doSearch(this.value)" />
+        <button onclick="toggleSearch()">✕</button>
+      </div>
+      <div id="searchResults" class="search-results"></div>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- HERO -->
+    <section class="hero-section" id="hero-section">
+      <div class="hero-inner">
+        <div class="hero-card" id="hero-article">
+          <div class="hero-skeleton">
+            <div class="sk-line sk-title"></div>
+            <div class="sk-line sk-body"></div>
+            <div class="sk-line sk-body short"></div>
+          </div>
+        </div>
+        <div class="hero-sidebar" id="hero-sidebar"></div>
+      </div>
     </section>
 
-    <!-- Trending Bar -->
-    <div class="trending-bar glass-effect">
-        <div class="container">
-            <span class="trending-label">TRENDING</span>
-            <div class="trending-news" id="trendingNews"></div>
-        </div>
-    </div>
+    <!-- TRENDING -->
+    <section class="trending-bar">
+      <span class="trending-label">Trending</span>
+      <div class="trending-list" id="trending-list"></div>
+    </section>
 
-    <!-- Main Content -->
-    <main class="container">
+    <!-- FEED GRID -->
+    <section class="feed-section">
+      <div class="section-header">
         <h2 class="section-title">Latest News</h2>
-        <div class="news-grid" id="newsGrid"></div>
-    </main>
+        <div class="section-line"></div>
+      </div>
+      <div class="news-grid" id="news-grid"></div>
+    </section>
 
-    <!-- Footer -->
-    <footer class="glass-effect">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Alamin Network</h3>
-                    <p>Delivering truth, empowering minds.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Categories</h4>
-                    <ul>
-                        <li><a href="category.html?cat=national">National</a></li>
-                        <li><a href="category.html?cat=international">International</a></li>
-                        <li><a href="category.html?cat=politics">Politics</a></li>
-                        <li><a href="category.html?cat=business">Business</a></li>
-                        <li><a href="category.html?cat=sports">Sports</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Follow Us</h4>
-                    <div class="social-links">
-                        <a href="#">Twitter</a>
-                        <a href="#">LinkedIn</a>
-                        <a href="#">Facebook</a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Alamin Network. All rights reserved.</p>
-            </div>
+    <!-- CATEGORY STRIPS -->
+    <section class="category-strips">
+      <div class="strip" id="strip-national">
+        <div class="strip-header">
+          <h3>National</h3>
+          <a href="category.html?cat=national">View All →</a>
         </div>
-    </footer>
+        <div class="strip-list" id="strip-national-list"></div>
+      </div>
+      <div class="strip" id="strip-sports">
+        <div class="strip-header">
+          <h3>Sports</h3>
+          <a href="category.html?cat=sports">View All →</a>
+        </div>
+        <div class="strip-list" id="strip-sports-list"></div>
+      </div>
+    </section>
 
-    <script src="js/main.js"></script>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-main">Alamin</span><span class="brand-sub">Network</span>
+      </div>
+      <p class="footer-tagline">© 2026 Alamin Network. All rights reserved. Independent. Accountable. Precise.</p>
+      <nav class="footer-nav">
+        <a href="category.html?cat=national">National</a>
+        <a href="category.html?cat=international">International</a>
+        <a href="category.html?cat=sports">Sports</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    initHomepage();
+  </script>
 </body>
 </html>
