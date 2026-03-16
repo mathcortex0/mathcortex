@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alamin Network - Category</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Same navigation as index.html -->
+    <nav class="navbar glass-effect">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html">ALAMIN NETWORK</a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Categories ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="category.html?cat=national">National</a></li>
+                        <li><a href="category.html?cat=international">International</a></li>
+                        <li><a href="category.html?cat=politics">Politics</a></li>
+                        <li><a href="category.html?cat=business">Business</a></li>
+                        <li><a href="category.html?cat=sports">Sports</a></li>
+                        <li><a href="category.html?cat=technology">Technology</a></li>
+                        <li><a href="category.html?cat=entertainment">Entertainment</a></li>
+                    </ul>
+                </li>
+                <li><a href="search.html">Search</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h2 class="section-title" id="categoryTitle"></h2>
+        <div class="category-controls">
+            <select id="sortSelect" class="sort-select glass-effect">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+            </select>
+        </div>
+        <div class="news-list" id="newsList"></div>
+    </main>
+
+    <!-- Same footer as index.html -->
+    <footer class="glass-effect">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Alamin Network</h3>
+                    <p>Delivering truth, empowering minds.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="category.html?cat=national">National</a></li>
+                        <li><a href="category.html?cat=international">International</a></li>
+                        <li><a href="category.html?cat=politics">Politics</a></li>
+                        <li><a href="category.html?cat=business">Business</a></li>
+                        <li><a href="category.html?cat=sports">Sports</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#">Twitter</a>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Facebook</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Alamin Network. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/category.js"></script>
+</body>
+</html>
