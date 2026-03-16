@@ -1,12 +1,7 @@
 [
-    {
-        "id": "1002",
-        "title": "National Healthcare Reform Bill Passes Parliament",
-        "date": "2024-01-14"
-    },
-    {
-        "id": "1005",
-        "title": "Infrastructure Development Project Launches in Major Cities",
-        "date": "2024-01-12"
-    }
+  { "id": "002", "title": "Bangladesh Finance Ministry Unveils Historic Tk 9.2 Trillion Budget Framework", "date": "2026-03-17" },
+  { "id": "005", "title": "Dhaka Rapid Transit Line 6 Reaches 500,000 Daily Rider Milestone", "date": "2026-03-15" },
+  { "id": "008", "title": "Anti-Corruption Commission Files Charges Against 14 LGRD Officials", "date": "2026-03-14" },
+  { "id": "009", "title": "Bangladesh Bank Raises Policy Rate to 9.5% to Curb Inflation", "date": "2026-03-13" },
+  { "id": "010", "title": "Sylhet Flash Floods Displace Over 120,000 Residents in 48 Hours", "date": "2026-03-12" }
 ]
