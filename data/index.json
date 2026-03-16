@@ -1,0 +1,23 @@
+[
+    {
+        "id": "1001",
+        "title": "Global Economic Summit Addresses Climate Change Impact",
+        "summary": "World leaders gather to discuss economic policies and climate change mitigation strategies at the annual Global Economic Summit.",
+        "date": "2024-01-15",
+        "category": "International"
+    },
+    {
+        "id": "1002",
+        "title": "National Healthcare Reform Bill Passes Parliament",
+        "summary": "Historic healthcare reform bill approved with bipartisan support, expanding coverage to millions of citizens.",
+        "date": "2024-01-14",
+        "category": "National"
+    },
+    {
+        "id": "1003",
+        "title": "Tech Giants Announce AI Ethics Framework",
+        "summary": "Leading technology companies collaborate to establish comprehensive guidelines for ethical AI development.",
+        "date": "2024-01-13",
+        "category": "Technology"
+    }
+]
