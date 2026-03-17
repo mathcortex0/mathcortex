@@ -373,7 +373,7 @@
   <div class="breaking-scroll"><span class="breaking-scroll-inner" id="breaking-inner"></span></div>
 </div>
 
-<!-- HEADER - EXACT COPY FROM OTHER PAGES -->
+<!-- HEADER - EXACT COPY FROM OTHER PAGES - NO CHANGES WHATSOEVER -->
 <header class="site-header">
   <div class="header-brand-row">
     <div class="header-logo">
@@ -382,7 +382,6 @@
       <div class="logo-text">
         <span class="logo-text-main">Alamin Network</span>
         <span class="logo-text-sub">Reporting the World With Precision</span>
-        <span class="logo-founder">Founded by Md. Al Amin · 17 March 2026</span>
       </div>
     </div>
     <div class="edition-badge">
@@ -410,7 +409,7 @@
   </nav>
 </header>
 
-<!-- DRAWER BACKDROP - EXACT COPY -->
+<!-- DRAWER BACKDROP -->
 <div class="drawer-backdrop" id="drawer-backdrop"></div>
 
 <!-- DRAWER - EXACT COPY WITH NO EXTRA MENU ITEMS -->
@@ -429,7 +428,6 @@
     <a href="category.html?cat=national"        class="drawer-link" data-cat="national"><span class="drawer-dot"></span>National</a>
     <a href="category.html?cat=international"   class="drawer-link" data-cat="international"><span class="drawer-dot"></span>International</a>
     <a href="category.html?cat=sports"          class="drawer-link" data-cat="sports"><span class="drawer-dot"></span>Sports</a>
-    <!-- NO ABOUT LINK HERE - menus exactly as original -->
   </div>
   <div class="drawer-foot">
     <div class="drawer-foot-title">Follow Us</div>
@@ -441,7 +439,7 @@
   </div>
 </nav>
 
-<!-- SEARCH OVERLAY - EXACT COPY -->
+<!-- SEARCH OVERLAY -->
 <div class="search-overlay" id="search-overlay">
   <div class="search-box">
     <div class="search-box-label">Search Articles</div>
@@ -454,7 +452,7 @@
   </div>
 </div>
 
-<!-- MAIN CONTENT - ONLY THE CONTENT CHANGES -->
+<!-- MAIN CONTENT - ONLY THIS SECTION IS UNIQUE TO ABOUT PAGE -->
 <main class="site-main">
 
   <!-- ABOUT HERO -->
@@ -590,7 +588,7 @@
 
 </main>
 
-<!-- FOOTER - EXACT COPY WITH ADDED FOUNDER INFO -->
+<!-- FOOTER - WITH FOUNDER INFO (APPROPRIATE HERE) -->
 <footer class="site-footer">
   <div class="footer-main">
     <div>
@@ -633,10 +631,10 @@
 <script src="js/main.js"></script>
 <script>
   // Initialize all standard functions exactly like other pages
-  initTheme?.();
-  initDate?.();
-  initEdition?.();
-  setActiveNav?.(); // This will NOT set any "about" as active in main nav
+  if (typeof initTheme === 'function') initTheme();
+  if (typeof initDate === 'function') initDate();
+  if (typeof initEdition === 'function') initEdition();
+  if (typeof setActiveNav === 'function') setActiveNav();
   
   // Load ticker and breaking from index.json (exactly like category.html)
   fetch('data/index.json?_=' + Date.now())
@@ -646,9 +644,6 @@
       if (typeof initBreaking === 'function') initBreaking(data);
     })
     .catch(() => {});
-  
-  // DO NOT set any active states in drawer - let it be natural
-  // The drawer should behave exactly like on other pages
 </script>
 </body>
 </html>
