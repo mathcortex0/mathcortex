@@ -18,7 +18,7 @@
     <div class="header-topbar">
       <div class="header-topbar-inner">
         <div class="topbar-left">
-          <span class="topbar-date" id="live-date"></span>
+          <span id="live-date"></span>
           <span class="topbar-divider">|</span>
           <span class="topbar-location">Dhaka, Bangladesh</span>
         </div>
@@ -30,7 +30,7 @@
     </div>
     <div class="header-brand-row">
       <div class="header-logo">
-        <img class="logo-img" src="anlogo.png" alt="Alamin Network Logo" />
+        <img class="logo-img" src="anlogo.png" alt="Alamin Network" />
         <div class="logo-divider"></div>
         <div class="logo-text">
           <span class="logo-text-main">Alamin Network</span>
@@ -42,7 +42,6 @@
         Independent · Accurate · Trusted
       </div>
       <div class="header-actions">
-        <button class="header-action-btn theme-btn" id="theme-btn" onclick="toggleTheme()">☀️</button>
         <button class="header-action-btn" onclick="openSearch()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <span>Search</span>
@@ -61,15 +60,17 @@
 
   <div class="search-overlay" id="search-overlay">
     <button class="search-close" onclick="closeSearch()">✕</button>
-    <div class="search-label">Search Articles</div>
-    <div class="search-input-wrap">
-      <input type="text" id="search-input" placeholder="Type to search…" oninput="runSearch(this.value)" autocomplete="off" />
+    <div class="search-box">
+      <div class="search-label">Search Articles</div>
+      <div class="search-input-wrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="search-input" placeholder="Type to search…" oninput="runSearch(this.value)" autocomplete="off" />
+      </div>
+      <div id="search-results-overlay" class="search-results-overlay"></div>
     </div>
-    <div id="search-results-overlay" class="search-results-overlay"></div>
   </div>
 
   <main class="site-main" role="main">
-
     <div class="cat-hero">
       <div class="cat-hero-inner">
         <div>
@@ -79,19 +80,16 @@
         <div class="cat-hero-count" id="cat-count">00</div>
       </div>
     </div>
-
     <div class="cat-list" id="cat-list">
-      <!-- Skeleton rows -->
-      <div style="height:90px;margin-bottom:1px" class="sk"></div>
-      <div style="height:90px;margin-bottom:1px" class="sk"></div>
-      <div style="height:90px;margin-bottom:1px" class="sk"></div>
+      <div style="height:85px;margin-bottom:1px;border-radius:var(--r)" class="sk"></div>
+      <div style="height:85px;margin-bottom:1px;border-radius:var(--r)" class="sk"></div>
+      <div style="height:85px;border-radius:var(--r)" class="sk"></div>
     </div>
-
   </main>
 
   <footer class="site-footer" role="contentinfo">
     <div class="footer-main">
-      <div class="footer-brand">
+      <div>
         <img class="footer-logo" src="anlogo.png" alt="Alamin Network" />
         <p class="footer-desc">Independent journalism covering Bangladesh and the world.</p>
       </div>
