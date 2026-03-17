@@ -3,40 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Alamin Network — Breaking news, national, international and sports coverage from Bangladesh and around the world." />
+  <meta name="description" content="Alamin Network — Breaking news, national, international and sports coverage." />
   <meta property="og:title" content="Alamin Network" />
   <meta property="og:description" content="Reporting the World With Precision" />
-  <meta name="theme-color" content="#04080f" />
+  <meta name="theme-color" content="#ffffff" />
   <title>Alamin Network — World News</title>
   <link rel="icon" type="image/png" href="anlogo.png" />
   <link rel="stylesheet" href="css/main.css" />
-  <style>
-    @media print {
-      .site-header,.breaking-banner,.trending,.cat-strips,.site-footer { display: none !important; }
-    }
-  </style>
 </head>
 <body>
 
-  <!-- BREAKING NEWS BANNER -->
+  <!-- BREAKING BANNER -->
   <div class="breaking-banner" id="breaking-banner">
-    <div class="breaking-tag">
-      <div class="breaking-dot"></div>
-      Breaking
-    </div>
-    <div class="breaking-scroll">
-      <div class="breaking-scroll-inner" id="breaking-inner"></div>
-    </div>
+    <div class="breaking-tag"><div class="breaking-dot"></div>Breaking</div>
+    <div class="breaking-scroll"><div class="breaking-scroll-inner" id="breaking-inner"></div></div>
   </div>
 
   <!-- HEADER -->
   <header class="site-header" role="banner">
 
-    <!-- Top bar -->
     <div class="header-topbar">
       <div class="header-topbar-inner">
         <div class="topbar-left">
-          <span class="topbar-date" id="live-date"></span>
+          <span id="live-date"></span>
           <span class="topbar-divider">|</span>
           <span class="topbar-location">Dhaka, Bangladesh</span>
         </div>
@@ -47,10 +36,9 @@
       </div>
     </div>
 
-    <!-- Brand row -->
     <div class="header-brand-row">
       <div class="header-logo">
-        <img class="logo-img" src="anlogo.png" alt="Alamin Network Logo" />
+        <img class="logo-img" src="anlogo.png" alt="Alamin Network" />
         <div class="logo-divider"></div>
         <div class="logo-text">
           <span class="logo-text-main">Alamin Network</span>
@@ -62,7 +50,6 @@
         Independent · Accurate · Trusted
       </div>
       <div class="header-actions">
-        <button class="header-action-btn theme-btn" id="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">☀️</button>
         <button class="header-action-btn" onclick="openSearch()" aria-label="Search">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <span>Search</span>
@@ -70,7 +57,6 @@
       </div>
     </div>
 
-    <!-- Nav -->
     <nav class="main-nav" role="navigation" aria-label="Main navigation">
       <div class="main-nav-inner">
         <a href="index.html" class="nav-link active">Home</a>
@@ -83,38 +69,40 @@
   </header>
 
   <!-- SEARCH OVERLAY -->
-  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true" aria-label="Search">
-    <button class="search-close" onclick="closeSearch()" aria-label="Close search">✕</button>
-    <div class="search-label">Search Articles</div>
-    <div class="search-input-wrap">
-      <input type="text" id="search-input" placeholder="Type to search…" oninput="runSearch(this.value)" autocomplete="off" />
+  <div class="search-overlay" id="search-overlay" role="dialog" aria-modal="true">
+    <button class="search-close" onclick="closeSearch()" aria-label="Close">✕</button>
+    <div class="search-box">
+      <div class="search-label">Search Articles</div>
+      <div class="search-input-wrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="search-input" placeholder="Type to search…" oninput="runSearch(this.value)" autocomplete="off" />
+      </div>
+      <div id="search-results-overlay" class="search-results-overlay"></div>
     </div>
-    <div id="search-results-overlay" class="search-results-overlay"></div>
   </div>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <main class="site-main" role="main">
 
     <!-- HERO -->
     <section class="hero" aria-label="Featured news">
       <div class="hero-main" id="hero-main">
-        <!-- Skeleton -->
-        <div style="width:100%;height:100%;min-height:400px;background:var(--navy-mid);border-radius:var(--r-lg) 0 0 var(--r-lg)" class="sk"></div>
+        <div style="width:100%;height:100%;min-height:420px;" class="sk"></div>
       </div>
       <div class="hero-stack" id="hero-stack">
-        <div style="flex:1;background:var(--navy-mid)" class="sk"></div>
-        <div style="flex:1;background:var(--navy-mid);margin-top:2px" class="sk"></div>
-        <div style="flex:1;background:var(--navy-mid);margin-top:2px;border-radius:0 0 var(--r-lg) 0" class="sk"></div>
+        <div style="flex:1" class="sk"></div>
+        <div style="flex:1;margin-top:2px" class="sk"></div>
+        <div style="flex:1;margin-top:2px" class="sk"></div>
       </div>
     </section>
 
     <!-- TRENDING -->
-    <div class="trending" aria-label="Trending">
+    <div class="trending" aria-label="Trending now">
       <div class="trending-label">Trending</div>
       <div class="trending-items" id="trending-items"></div>
     </div>
 
-    <!-- LATEST NEWS GRID -->
+    <!-- LATEST NEWS -->
     <section aria-label="Latest news">
       <div class="section-head">
         <div class="section-head-left">
@@ -127,7 +115,7 @@
 
     <!-- CATEGORY STRIPS -->
     <div class="cat-strips">
-      <section aria-label="National news">
+      <section aria-label="National">
         <div class="section-head">
           <div class="section-head-left">
             <div class="section-accent-bar" style="background:var(--cat-national)"></div>
@@ -137,7 +125,7 @@
         </div>
         <div class="strip-list" id="strip-national"></div>
       </section>
-      <section aria-label="Sports news">
+      <section aria-label="Sports">
         <div class="section-head">
           <div class="section-head-left">
             <div class="section-accent-bar" style="background:var(--cat-sports)"></div>
@@ -154,9 +142,9 @@
   <!-- FOOTER -->
   <footer class="site-footer" role="contentinfo">
     <div class="footer-main">
-      <div class="footer-brand">
+      <div>
         <img class="footer-logo" src="anlogo.png" alt="Alamin Network" />
-        <p class="footer-desc">Independent journalism covering Bangladesh and the world. Accurate, accountable, precise.</p>
+        <p class="footer-desc">Independent journalism covering Bangladesh and the world. Accurate, accountable, and precise in every report.</p>
       </div>
       <div>
         <div class="footer-col-title">Coverage</div>
