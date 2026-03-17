@@ -1,12 +1,74 @@
 [
-  { "id": "i001", "cat": "international", "title": "UN Security Council Convenes Emergency Session Over Gaza Ceasefire Collapse",         "summary": "World leaders demand accountability as fragile truce breaks down along the Gaza corridor, leaving humanitarian aid convoys stranded and millions at risk.", "date": "2026-03-17", "image": "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1200&q=80", "featured": true,  "breaking": true  },
-  { "id": "n001", "cat": "national",       "title": "Bangladesh Finance Ministry Unveils Historic Tk 9.2 Trillion Budget Framework",         "summary": "The proposed budget prioritizes digital infrastructure and rural electrification, marking the largest capital investment allocation in the nation's history.",   "date": "2026-03-17", "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80", "featured": false, "breaking": false },
-  { "id": "s001", "cat": "sports",         "title": "Tigers Crush Sri Lanka by 7 Wickets in Colombo Test Series Opener",                   "summary": "Bangladesh's pace attack dismantled the Sri Lankan top order in just 34 overs, with Taskin Ahmed claiming five wickets on a rain-affected pitch.",             "date": "2026-03-16", "image": "https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=1200&q=80", "featured": false, "breaking": false },
-  { "id": "i002", "cat": "international", "title": "G20 Summit in Johannesburg Closes With Landmark Climate Finance Pact",                  "summary": "Developed nations pledge $500 billion over a decade to support green transitions in emerging economies, though critics call the timeline dangerously slow.",    "date": "2026-03-16", "image": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=80", "featured": false, "breaking": false },
-  { "id": "n002", "cat": "national",       "title": "Dhaka Rapid Transit Line 6 Reaches 500,000 Daily Rider Milestone",                      "summary": "Bangladesh's flagship urban rail project exceeds ridership projections six months ahead of schedule, prompting calls to accelerate Line 2 construction.",       "date": "2026-03-15", "image": "https://images.unsplash.com/photo-1555636222-cae831e670b3?w=1200&q=80", "featured": false, "breaking": false },
-  { "id": "s002", "cat": "sports",         "title": "FC Barcelona Signs Teenage Prodigy in Record-Breaking €180M Deal",                      "summary": "The Catalan giants break the world transfer record as they secure the Argentine wunderkind amid fierce competition from Premier League clubs.",                  "date": "2026-03-15", "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=1200&q=80", "featured": false, "breaking": false },
-  { "id": "i003", "cat": "international", "title": "India-Pakistan Diplomatic Channel Reopens After Three-Year Freeze",                       "summary": "Back-channel talks facilitated by Oman have yielded a provisional agreement to resume consular services and ease trade restrictions along the Wagah border.",   "date": "2026-03-14", "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1200&q=80", "featured": false, "breaking": false },
-  { "id": "n003", "cat": "national",       "title": "Anti-Corruption Commission Files Charges Against 14 LGRD Officials",                     "summary": "The sweeping crackdown targets a procurement scandal involving ghost infrastructure projects worth nearly Tk 800 crore across four southern districts.",          "date": "2026-03-14", "image": "https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=1200&q=80", "featured": false, "breaking": true  },
-  { "id": "s003", "cat": "sports",         "title": "Shakib Al Hasan Named Bangladesh ODI Captain for World Cup Campaign",                     "summary": "The board's decision ends weeks of speculation, with the veteran all-rounder set to lead a squad featuring several promising newcomers.",                       "date": "2026-03-13", "image": "https://images.unsplash.com/photo-1540747913346-19212a4cf528?w=1200&q=80", "featured": false, "breaking": false },
-  { "id": "i004", "cat": "international", "title": "Federal Reserve Holds Rates Steady Amid Global Uncertainty",                              "summary": "Fed Chair signals patience as inflation remains above target while labor market shows early signs of softening across key sectors.",                            "date": "2026-03-13", "image": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=80", "featured": false, "breaking": false }
+  {
+    "id": "i001", "cat": "international",
+    "title": "UN Security Council Convenes Emergency Session Over Gaza Ceasefire Collapse",
+    "summary": "World leaders demand accountability as fragile truce breaks down along the Gaza corridor, leaving humanitarian aid convoys stranded and millions at risk.",
+    "date": "2026-03-17",
+    "image": "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1200&q=80",
+    "featured": true, "breaking": true
+  },
+  {
+    "id": "n001", "cat": "national",
+    "title": "Bangladesh Finance Ministry Unveils Historic Tk 9.2 Trillion Budget Framework",
+    "summary": "The proposed budget prioritizes digital infrastructure and rural electrification, marking the largest capital investment allocation in the nation's history.",
+    "date": "2026-03-17",
+    "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80",
+    "featured": false, "breaking": false
+  },
+  {
+    "id": "s001", "cat": "sports",
+    "title": "Tigers Crush Sri Lanka by 7 Wickets in Colombo Test Series Opener",
+    "summary": "Bangladesh's pace attack dismantled the Sri Lankan top order in just 34 overs, with Taskin Ahmed claiming five wickets on a rain-affected pitch.",
+    "date": "2026-03-16",
+    "image": "https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=1200&q=80",
+    "featured": false, "breaking": false
+  },
+  {
+    "id": "i002", "cat": "international",
+    "title": "G20 Summit in Johannesburg Closes With Landmark Climate Finance Pact",
+    "summary": "Developed nations pledge $500 billion over a decade to support green transitions in emerging economies, though critics call the timeline dangerously slow.",
+    "date": "2026-03-16",
+    "image": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=80",
+    "featured": false, "breaking": false
+  },
+  {
+    "id": "n002", "cat": "national",
+    "title": "Dhaka Rapid Transit Line 6 Reaches 500,000 Daily Rider Milestone",
+    "summary": "Bangladesh's flagship urban rail project exceeds ridership projections six months ahead of schedule, prompting calls to accelerate Line 2 construction.",
+    "date": "2026-03-15",
+    "image": "https://images.unsplash.com/photo-1555636222-cae831e670b3?w=1200&q=80",
+    "featured": false, "breaking": false
+  },
+  {
+    "id": "s002", "cat": "sports",
+    "title": "FC Barcelona Signs Teenage Prodigy in Record-Breaking 180M Euro Deal",
+    "summary": "The Catalan giants break the world transfer record as they secure the Argentine wunderkind amid fierce competition from Premier League clubs.",
+    "date": "2026-03-15",
+    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=1200&q=80",
+    "featured": false, "breaking": false
+  },
+  {
+    "id": "i003", "cat": "international",
+    "title": "India-Pakistan Diplomatic Channel Reopens After Three-Year Freeze",
+    "summary": "Back-channel talks facilitated by Oman have yielded a provisional agreement to resume consular services and ease trade restrictions along the Wagah border.",
+    "date": "2026-03-14",
+    "image": "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1200&q=80",
+    "featured": false, "breaking": false
+  },
+  {
+    "id": "n003", "cat": "national",
+    "title": "Anti-Corruption Commission Files Charges Against 14 LGRD Officials",
+    "summary": "The sweeping crackdown targets a procurement scandal involving ghost infrastructure projects worth nearly Tk 800 crore across four southern districts.",
+    "date": "2026-03-14",
+    "image": "https://images.unsplash.com/photo-1589391886645-d51941baf7fb?w=1200&q=80",
+    "featured": false, "breaking": true
+  },
+  {
+    "id": "s003", "cat": "sports",
+    "title": "Shakib Al Hasan Named Bangladesh ODI Captain for World Cup Campaign",
+    "summary": "The board's decision ends weeks of speculation, with the veteran all-rounder set to lead a squad featuring several promising newcomers.",
+    "date": "2026-03-13",
+    "image": "https://images.unsplash.com/photo-1540747913346-19212a4cf528?w=1200&q=80",
+    "featured": false, "breaking": false
+  }
 ]
