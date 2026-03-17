@@ -1,5 +1,15 @@
 [
   {
+  "id": "i012",
+  "cat": "international",
+  "title": "At Least 100 Killed in Pakistani Air Strike on Kabul Drug Rehab Centre",
+  "summary": "More than 100 people have been killed after a Pakistani air strike leveled a major drug treatment facility in the Afghan capital, according to forensic sources. The strike targeted the Omid Addiction Treatment Hospital, a sprawling complex that was once a US military base.",
+  "date": "2026-03-17",
+  "image": "images/pak-attack-on-afg.jpg",
+  "featured": true,
+  "breaking": true
+  },
+  {
     "id": "i011",
     "cat": "international",
     "title": "Israel Claims Assassination of Iran's Security Chief Larijani and Basij Commander",
@@ -16,18 +26,8 @@
     "summary": "The president is acting like business as usual, but rising gas prices and reluctant allies are making the Iran conflict a political headache that won't go away.",
     "date": "2026-03-17",
     "image": "images/trump.webp",
-    "featured": true,
-    "breaking": false
-  },
-  {
-    "id": "i001",
-    "cat": "international",
-    "title": "UN Security Council Convenes Emergency Session Over Gaza Ceasefire Collapse",
-    "summary": "World leaders demand accountability as fragile truce breaks down along the Gaza corridor, leaving humanitarian aid convoys stranded and millions at risk.",
-    "date": "2026-03-17",
-    "image": "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1200&q=80",
     "featured": false,
-    "breaking": true
+    "breaking": false
   },
   {
     "id": "n006",
