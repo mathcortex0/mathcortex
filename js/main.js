@@ -241,7 +241,9 @@ async function initHomepage() {
 
   // Category strips
   var natData = await getJSON('data/national.json');
+  var intData = await getJSON('data/international.json');
   var sptData = await getJSON('data/sports.json');
+  renderStrip(intData, '#strip-international', 'international');
   renderStrip(natData, '#strip-national', 'national');
   renderStrip(sptData, '#strip-sports', 'sports');
 }
