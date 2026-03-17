@@ -1,5 +1,15 @@
 [
   {
+  "id": "i011",
+  "cat": "international",
+  "title": "Israel Claims Assassination of Iran's Security Chief Larijani and Basij Commander",
+  "summary": "In a major escalation on Day 18 of the conflict, Israel claims to have killed Ali Larijani and Gholamreza Soleimani. Tehran has not confirmed, and a handwritten note from Larijani has raised questions about proof of life.",
+  "date": "2026-03-17",
+  "image": "/images/larijani.webp",
+  "featured": false,
+  "breaking": true
+}
+  {
     "id": "i009",
     "cat": "international",
     "title": "Trump's confidence is undimmed — but every Iran option comes with risk",
@@ -7,7 +17,7 @@
     "date": "2026-03-17",
     "image": "images/trump.webp",
     "featured": true,
-    "breaking": true
+    "breaking": false
   },
   {
     "id": "i001",
