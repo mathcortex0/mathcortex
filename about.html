@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="About Alamin Network — Independent journalism headquartered in Dhaka, Bangladesh." />
   <meta name="theme-color" content="#ffffff" />
+  <meta property="og:site_name" content="Alamin Network" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="About Us — Alamin Network" />
+  <meta property="og:description" content="Independent journalism headquartered in Dhaka, Bangladesh. Founded 17 March 2026." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="About Us — Alamin Network" />
   <title>About Us — Alamin Network</title>
   <link rel="icon" type="image/png" href="anlogo.png" />
   <link rel="stylesheet" href="css/main.css" />
@@ -429,6 +435,7 @@
       <a href="index.html" class="cat-link">Home</a>
       <a href="category.html?cat=national"      class="cat-link" data-cat="national">National</a>
       <a href="category.html?cat=international" class="cat-link" data-cat="international">International</a>
+      <a href="category.html?cat=politics"      class="cat-link" data-cat="politics">Politics</a>
       <a href="category.html?cat=sports"        class="cat-link" data-cat="sports">Sports</a>
     </div>
   </nav>
@@ -448,11 +455,18 @@
     Independent · Accurate · Trusted
   </div>
   <div>
-    <div class="drawer-nav-label">Navigate</div>
+    <div class="drawer-nav-label">News</div>
     <a href="index.html"                      class="drawer-link" data-page="home"><span class="drawer-dot"></span>Home</a>
     <a href="category.html?cat=national"      class="drawer-link" data-cat="national"><span class="drawer-dot"></span>National</a>
     <a href="category.html?cat=international" class="drawer-link" data-cat="international"><span class="drawer-dot"></span>International</a>
+    <a href="category.html?cat=politics"      class="drawer-link" data-cat="politics"><span class="drawer-dot"></span>Politics</a>
+    <a href="category.html?cat=business"      class="drawer-link" data-cat="business"><span class="drawer-dot"></span>Business</a>
+  </div>
+  <div>
+    <div class="drawer-nav-label">More</div>
     <a href="category.html?cat=sports"        class="drawer-link" data-cat="sports"><span class="drawer-dot"></span>Sports</a>
+    <a href="category.html?cat=technology"    class="drawer-link" data-cat="technology"><span class="drawer-dot"></span>Technology</a>
+    <a href="category.html?cat=entertainment" class="drawer-link" data-cat="entertainment"><span class="drawer-dot"></span>Entertainment</a>
   </div>
   <div class="drawer-foot">
     <div class="drawer-foot-title">Follow Us</div>
@@ -655,11 +669,8 @@
     <div class="about-section-label" style="justify-content:center;display:flex">Get In Touch</div>
     <h2 class="about-section-title" style="text-align:center">Contact Alamin Network</h2>
     <p style="font-family:var(--ui);font-size:.9rem;color:var(--text-3);margin-bottom:1.5rem">For news tips, press enquiries, or editorial matters — we want to hear from you.</p>
-    <a href="mailto:contact@alaminnetwork.com"
-      style="display:inline-flex;align-items:center;gap:.5rem;background:var(--navy);color:#fff;font-family:var(--ui);font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 2rem;border-radius:var(--r);transition:background .18s"
-      onmouseover="this.style.background='var(--navy-mid)'"
-      onmouseout="this.style.background='var(--navy)'">
-      ✉ contact@alaminnetwork.com
+    <a href="/cdn-cgi/l/email-protection#74171b1a0015170034151815191d1a1a1100031b061f5a171b19" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--navy);color:#fff;font-family:var(--ui);font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 2rem;border-radius:var(--r);transition:background .18s" onmouseover="this.style.background='var(--navy-mid)'" onmouseout="this.style.background='var(--navy)'">
+      ✉ <span class="__cf_email__" data-cfemail="92f1fdfce6f3f1e6d2f3fef3fffbfcfcf7e6e5fde0f9bcf1fdff">[email&#160;protected]</span>
     </a>
   </div>
 
@@ -706,10 +717,7 @@
 <script src="js/main.js"></script>
 <script>
   initEdition();
-  initBreaking([]);
   setActiveNav();
-
-  // Load breaking banner from index.json
   getJSON('data/index.json').then(function(feed) {
     if (feed) { _feed = feed; initBreaking(feed); }
   });
