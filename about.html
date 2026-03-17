@@ -13,7 +13,7 @@
   <link rel="icon" type="image/png" href="anlogo.png" />
   <link rel="stylesheet" href="css/main.css" />
   <style>
-    /* About page specific styles */
+    /* About page specific styles - ONLY content styles, no navigation changes */
     .about-hero {
       padding: 3rem 0 2rem;
       border-bottom: 1px solid var(--border);
@@ -281,43 +281,6 @@
       color: var(--text-3);
     }
     
-    .team-section {
-      margin: 4rem 0;
-    }
-    
-    .team-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-    
-    .team-member {
-      text-align: center;
-    }
-    
-    .team-img-placeholder {
-      width: 100%;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background: var(--surf-alt);
-      margin-bottom: 1rem;
-      border: 2px solid var(--border);
-    }
-    
-    .team-name {
-      font-family: var(--heading);
-      font-size: 1rem;
-      color: var(--navy);
-      margin-bottom: 0.2rem;
-    }
-    
-    .team-role {
-      font-family: var(--ui);
-      font-size: 0.8rem;
-      color: var(--gold);
-    }
-    
     .cta-section {
       background: var(--navy);
       border-radius: var(--r-lg);
@@ -381,9 +344,6 @@
       .values-grid {
         grid-template-columns: repeat(2, 1fr);
       }
-      .team-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
       .timeline-item {
         flex-direction: column;
         gap: 0.5rem;
@@ -394,12 +354,13 @@
       .values-grid {
         grid-template-columns: 1fr;
       }
-      .team-grid {
-        grid-template-columns: 1fr;
-      }
       .global-dots {
         flex-direction: column;
         align-items: center;
+      }
+      .about-hero-meta {
+        flex-direction: column;
+        gap: 0.5rem;
       }
     }
   </style>
@@ -412,7 +373,7 @@
   <div class="breaking-scroll"><span class="breaking-scroll-inner" id="breaking-inner"></span></div>
 </div>
 
-<!-- HEADER -->
+<!-- HEADER - EXACT COPY FROM OTHER PAGES -->
 <header class="site-header">
   <div class="header-brand-row">
     <div class="header-logo">
@@ -449,10 +410,10 @@
   </nav>
 </header>
 
-<!-- DRAWER BACKDROP -->
+<!-- DRAWER BACKDROP - EXACT COPY -->
 <div class="drawer-backdrop" id="drawer-backdrop"></div>
 
-<!-- DRAWER -->
+<!-- DRAWER - EXACT COPY WITH NO EXTRA MENU ITEMS -->
 <nav class="drawer" id="drawer">
   <div class="drawer-head">
     <img class="drawer-logo" src="anlogo.png" alt="Alamin Network" />
@@ -468,7 +429,7 @@
     <a href="category.html?cat=national"        class="drawer-link" data-cat="national"><span class="drawer-dot"></span>National</a>
     <a href="category.html?cat=international"   class="drawer-link" data-cat="international"><span class="drawer-dot"></span>International</a>
     <a href="category.html?cat=sports"          class="drawer-link" data-cat="sports"><span class="drawer-dot"></span>Sports</a>
-    <a href="about.html"                         class="drawer-link active" data-page="about"><span class="drawer-dot"></span>About</a>
+    <!-- NO ABOUT LINK HERE - menus exactly as original -->
   </div>
   <div class="drawer-foot">
     <div class="drawer-foot-title">Follow Us</div>
@@ -480,7 +441,7 @@
   </div>
 </nav>
 
-<!-- SEARCH OVERLAY -->
+<!-- SEARCH OVERLAY - EXACT COPY -->
 <div class="search-overlay" id="search-overlay">
   <div class="search-box">
     <div class="search-box-label">Search Articles</div>
@@ -493,7 +454,7 @@
   </div>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN CONTENT - ONLY THE CONTENT CHANGES -->
 <main class="site-main">
 
   <!-- ABOUT HERO -->
@@ -617,33 +578,6 @@
     </div>
   </div>
 
-  <!-- TEAM HIGHLIGHTS -->
-  <div class="team-section">
-    <h2 class="about-section-title">Leadership Team</h2>
-    <div class="team-grid">
-      <div class="team-member">
-        <div class="team-img-placeholder"></div>
-        <div class="team-name">Md. Al Amin</div>
-        <div class="team-role">Founder & CEO</div>
-      </div>
-      <div class="team-member">
-        <div class="team-img-placeholder"></div>
-        <div class="team-name">Tasnim Rahman</div>
-        <div class="team-role">Managing Editor</div>
-      </div>
-      <div class="team-member">
-        <div class="team-img-placeholder"></div>
-        <div class="team-name">Kamal Hossain</div>
-        <div class="team-role">International Desk</div>
-      </div>
-      <div class="team-member">
-        <div class="team-img-placeholder"></div>
-        <div class="team-name">Farida Begum</div>
-        <div class="team-role">Sports Editor</div>
-      </div>
-    </div>
-  </div>
-
   <!-- CALL TO ACTION -->
   <div class="cta-section">
     <h2 class="cta-title">Join Our Journey</h2>
@@ -656,7 +590,7 @@
 
 </main>
 
-<!-- FOOTER -->
+<!-- FOOTER - EXACT COPY WITH ADDED FOUNDER INFO -->
 <footer class="site-footer">
   <div class="footer-main">
     <div>
@@ -698,13 +632,13 @@
 
 <script src="js/main.js"></script>
 <script>
-  // Initialize common functions
+  // Initialize all standard functions exactly like other pages
   initTheme?.();
   initDate?.();
   initEdition?.();
-  setActiveNav?.();
+  setActiveNav?.(); // This will NOT set any "about" as active in main nav
   
-  // Load ticker and breaking from index.json
+  // Load ticker and breaking from index.json (exactly like category.html)
   fetch('data/index.json?_=' + Date.now())
     .then(r => r.json())
     .then(data => {
@@ -712,14 +646,9 @@
       if (typeof initBreaking === 'function') initBreaking(data);
     })
     .catch(() => {});
-    
-  // Set about page as active in drawer
-  document.querySelectorAll('.drawer-link').forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('data-page') === 'about') {
-      link.classList.add('active');
-    }
-  });
+  
+  // DO NOT set any active states in drawer - let it be natural
+  // The drawer should behave exactly like on other pages
 </script>
 </body>
 </html>
