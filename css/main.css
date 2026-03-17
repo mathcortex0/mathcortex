@@ -118,6 +118,14 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
 .cat-link[data-cat="international"].active{color:var(--cat-int)}
 .cat-link[data-cat="sports"]::after{background:var(--cat-spt)}
 .cat-link[data-cat="sports"].active{color:var(--cat-spt)}
+.cat-link[data-cat="politics"]::after{background:#7c3aed}
+.cat-link[data-cat="politics"].active{color:#7c3aed}
+.cat-link[data-cat="business"]::after{background:#0891b2}
+.cat-link[data-cat="business"].active{color:#0891b2}
+.cat-link[data-cat="technology"]::after{background:#0284c7}
+.cat-link[data-cat="technology"].active{color:#0284c7}
+.cat-link[data-cat="entertainment"]::after{background:#db2777}
+.cat-link[data-cat="entertainment"].active{color:#db2777}
 
 /* ── DRAWER ────────────────────────────────────────── */
 .drawer-backdrop{position:fixed;inset:0;background:rgba(15,32,64,.45);backdrop-filter:blur(3px);z-index:300;opacity:0;pointer-events:none;transition:opacity .3s var(--ease)}
@@ -131,6 +139,7 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
 .drawer-edition{padding:.8rem 1.4rem;background:var(--surf-alt);border-bottom:1px solid var(--border-lt);font-family:var(--ui);font-size:.62rem;color:var(--text-4);letter-spacing:.06em}
 .drawer-edition strong{display:block;color:var(--navy);font-size:.7rem;font-weight:600;margin-bottom:.1rem}
 .drawer-nav-label{font-family:var(--ui);font-size:.55rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--text-5);padding:.9rem 1.4rem .3rem}
+.drawer-nav-label:not(:first-of-type){padding-top:1.2rem;margin-top:.3rem;border-top:1px solid var(--border-lt)}
 .drawer-link{display:flex;align-items:center;gap:.8rem;padding:.8rem 1.4rem;font-family:var(--ui);font-size:.88rem;font-weight:500;color:var(--text-2);border-left:3px solid transparent;transition:background .18s,color .18s,border-color .18s,padding-left .18s}
 .drawer-link:hover{background:var(--surf-alt);color:var(--navy);border-left-color:var(--navy);padding-left:1.7rem}
 .drawer-link.active{color:var(--navy);font-weight:600;background:var(--surf-alt);border-left-color:var(--navy)}
@@ -138,6 +147,10 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
 .drawer-link[data-cat="national"] .drawer-dot{background:var(--cat-nat)}
 .drawer-link[data-cat="international"] .drawer-dot{background:var(--cat-int)}
 .drawer-link[data-cat="sports"] .drawer-dot{background:var(--cat-spt)}
+.drawer-link[data-cat="politics"] .drawer-dot{background:#7c3aed}
+.drawer-link[data-cat="business"] .drawer-dot{background:#0891b2}
+.drawer-link[data-cat="technology"] .drawer-dot{background:#0284c7}
+.drawer-link[data-cat="entertainment"] .drawer-dot{background:#db2777}
 .drawer-foot{padding:1.1rem 1.4rem;border-top:1px solid var(--border-lt);margin-top:auto;flex-shrink:0}
 .drawer-foot-title{font-family:var(--ui);font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--text-5);margin-bottom:.6rem}
 .drawer-social{display:flex;gap:.4rem}
@@ -370,6 +383,9 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
 @media print{
   .site-header,.breaking-banner,.article-progress,.article-sidebar,.site-footer,.share-btns,.trending{display:none!important}
   .article-wrap{grid-template-columns:1fr!important}
+  body{background:#fff!important}
+  .article-body{color:#000!important}
+}
   body{background:#fff!important}
   .article-body{color:#000!important}
 }
