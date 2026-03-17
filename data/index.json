@@ -1,18 +1,18 @@
 [
   {
-  "id": "i011",
-  "cat": "international",
-  "title": "Israel Claims Assassination of Iran's Security Chief Larijani and Basij Commander",
-  "summary": "In a major escalation on Day 18 of the conflict, Israel claims to have killed Ali Larijani and Gholamreza Soleimani. Tehran has not confirmed, and a handwritten note from Larijani has raised questions about proof of life.",
-  "date": "2026-03-17",
-  "image": "images/larijani.webp",
-  "featured": false,
-  "breaking": true
+    "id": "i011",
+    "cat": "international",
+    "title": "Israel Claims Assassination of Iran's Security Chief Larijani and Basij Commander",
+    "summary": "In a major escalation on Day 18 of the conflict, Israel claims to have killed Ali Larijani and Gholamreza Soleimani. Tehran has not confirmed, and a handwritten note from Larijani has raised questions about proof of life.",
+    "date": "2026-03-17",
+    "image": "images/larijani.webp",
+    "featured": false,
+    "breaking": true
   },
   {
     "id": "i009",
     "cat": "international",
-    "title": "Trump's confidence is undimmed — but every Iran option comes with risk",
+    "title": "Trump's Confidence is Undimmed — But Every Iran Option Comes With Risk",
     "summary": "The president is acting like business as usual, but rising gas prices and reluctant allies are making the Iran conflict a political headache that won't go away.",
     "date": "2026-03-17",
     "image": "images/trump.webp",
@@ -30,24 +30,44 @@
     "breaking": true
   },
   {
-  "id": "n006",
-  "cat": "national",
-  "title": "Prime Minister to Launch 'Farmer Card' Initiative in Tangail on Pohela Boishakh",
-  "summary": "Prime Minister Tarique Rahman is scheduled to inaugurate the government's landmark 'Farmer Card' program on the upcoming Pohela Boishakh, marking a significant step in digitizing agricultural subsidies.",
-  "date": "2026-03-17",
-  "image": "images/pmtarekrahman.webp",
-  "featured": false,
-  "breaking": false
+    "id": "n006",
+    "cat": "national",
+    "title": "Prime Minister to Launch 'Farmer Card' Initiative in Tangail on Pohela Boishakh",
+    "summary": "Prime Minister Tarique Rahman is scheduled to inaugurate the government's landmark 'Farmer Card' program on the upcoming Pohela Boishakh, marking a significant step in digitizing agricultural subsidies.",
+    "date": "2026-03-17",
+    "image": "images/pmtarekrahman.webp",
+    "featured": false,
+    "breaking": false
   },
   {
-  "id": "s006",
-  "cat": "sports",
-  "title": "Fizz Cleared for Play Following Knee Injury in Series Win Over Pakistan",
-  "summary": "The Bangladesh Cricket Board has confirmed that pace spearhead Mustafizur Rahman has been cleared of any serious injury after a mid-pitch scare during Sunday's series-deciding ODI against Pakistan.",
-  "date": "2026-03-17",
-  "image": "images/fizz_injury.jpeg",
-  "featured": false,
-  "breaking": false
+    "id": "s006",
+    "cat": "sports",
+    "title": "Fizz Cleared for Play Following Knee Injury in Series Win Over Pakistan",
+    "summary": "The Bangladesh Cricket Board has confirmed that pace spearhead Mustafizur Rahman has been cleared of any serious injury after a mid-pitch scare during Sunday's series-deciding ODI against Pakistan.",
+    "date": "2026-03-17",
+    "image": "images/fizz_injury.jpeg",
+    "featured": false,
+    "breaking": false
+  },
+  {
+    "id": "p001",
+    "cat": "politics",
+    "title": "Bangladesh Election Commission Announces Roadmap for Municipal Polls",
+    "summary": "The EC has set a six-month timeline for holding elections across 12 city corporations, with voter list verification beginning next month.",
+    "date": "2026-03-17",
+    "image": "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=1200&q=80",
+    "featured": false,
+    "breaking": false
+  },
+  {
+    "id": "t001",
+    "cat": "technology",
+    "title": "Bangladesh Launches National AI Strategy with $800 Million Investment Pledge",
+    "summary": "The government's five-year plan targets AI adoption across healthcare, agriculture, and public administration, with a dedicated research institute in Dhaka.",
+    "date": "2026-03-17",
+    "image": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&q=80",
+    "featured": false,
+    "breaking": false
   },
   {
     "id": "i002",
@@ -56,6 +76,26 @@
     "summary": "Developed nations pledge $500 billion over a decade to support green transitions in emerging economies, though critics call the timeline dangerously slow.",
     "date": "2026-03-16",
     "image": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=80",
+    "featured": false,
+    "breaking": false
+  },
+  {
+    "id": "b001",
+    "cat": "business",
+    "title": "Bangladesh Garment Exports Cross $50 Billion Mark for First Time in History",
+    "summary": "The RMG sector's record performance cements Bangladesh's position as the world's second largest apparel exporter behind China.",
+    "date": "2026-03-16",
+    "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&q=80",
+    "featured": false,
+    "breaking": false
+  },
+  {
+    "id": "e001",
+    "cat": "entertainment",
+    "title": "Bangladeshi Film 'Nodir Nam Modhumoti' Selected for Cannes Un Certain Regard",
+    "summary": "Director Mostofa Sarwar Farooki's latest feature becomes the first Bangladeshi film to receive an official Cannes selection in over two decades.",
+    "date": "2026-03-16",
+    "image": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1200&q=80",
     "featured": false,
     "breaking": false
   },
@@ -100,12 +140,52 @@
     "breaking": true
   },
   {
+    "id": "b002",
+    "cat": "business",
+    "title": "Dhaka Stock Exchange Hits Record High as Foreign Investment Surges",
+    "summary": "The DSEX index crossed 7,800 points for the first time, driven by strong earnings from banking and telecom sectors.",
+    "date": "2026-03-14",
+    "image": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=80",
+    "featured": false,
+    "breaking": false
+  },
+  {
+    "id": "t002",
+    "cat": "technology",
+    "title": "Grameenphone Rolls Out Nationwide 5G Network Covering All Division Capitals",
+    "summary": "Bangladesh's largest telecom operator has activated 5G services across eight divisional headquarters, promising speeds up to 20 times faster than current 4G.",
+    "date": "2026-03-13",
+    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80",
+    "featured": false,
+    "breaking": false
+  },
+  {
     "id": "s003",
     "cat": "sports",
     "title": "Shakib Al Hasan Named Bangladesh ODI Captain for World Cup Campaign",
     "summary": "The board's decision ends weeks of speculation, with the veteran all-rounder set to lead a squad featuring several promising newcomers.",
     "date": "2026-03-13",
     "image": "https://images.unsplash.com/photo-1540747913346-19212a4cf528?w=1200&q=80",
+    "featured": false,
+    "breaking": false
+  },
+  {
+    "id": "e002",
+    "cat": "entertainment",
+    "title": "Singer Tahsan Rahman Announces World Tour Spanning 15 Cities Across Three Continents",
+    "summary": "The beloved Bangladeshi artist will perform in North America, Europe, and the Middle East for the first time, with Dhaka kicking off the tour in May.",
+    "date": "2026-03-13",
+    "image": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1200&q=80",
+    "featured": false,
+    "breaking": false
+  },
+  {
+    "id": "p002",
+    "cat": "politics",
+    "title": "Parliament Passes Landmark Digital Security Amendment After Heated Debate",
+    "summary": "The amended law introduces new safeguards for journalists and limits provisions critics said were used to suppress press freedom.",
+    "date": "2026-03-13",
+    "image": "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=1200&q=80",
     "featured": false,
     "breaking": false
   }
