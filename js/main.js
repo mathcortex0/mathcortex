@@ -17,7 +17,7 @@ function qs(key) {
 
 async function getJSON(url) {
   try {
-    const r = await fetch(url + '?_=' + Date.now());
+    const r = await fetch(url);
     if (!r.ok) return null;
     return await r.json();
   } catch { return null; }
