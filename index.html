@@ -40,6 +40,11 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           <span>Search</span>
         </button>
+        <button class="hamburger-btn" id="hamburger-btn" onclick="openDrawer()" aria-label="Menu">
+          <span class="ham-bar"></span>
+          <span class="ham-bar"></span>
+          <span class="ham-bar"></span>
+        </button>
       </div>
     </div>
 
@@ -66,6 +71,44 @@
       <div id="search-results-overlay" class="search-results-overlay"></div>
     </div>
   </div>
+
+  <!-- DRAWER OVERLAY -->
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+
+  <!-- DRAWER -->
+  <nav class="drawer" id="drawer" aria-label="Site navigation">
+    <div class="drawer-head">
+      <img class="drawer-logo" src="anlogo.png" alt="Alamin Network" />
+      <button class="drawer-close" onclick="closeDrawer()" aria-label="Close menu">✕</button>
+    </div>
+    <div class="drawer-edition">
+      <strong id="drawer-edition-name">Morning Edition</strong>
+      Independent · Accurate · Trusted
+    </div>
+    <div class="drawer-nav">
+      <div class="drawer-nav-label">Navigate</div>
+      <a href="index.html" class="drawer-link active" data-page="home">
+        <span class="drawer-link-dot"></span>Home
+      </a>
+      <a href="category.html?cat=national" class="drawer-link" data-cat="national">
+        <span class="drawer-link-dot"></span>National
+      </a>
+      <a href="category.html?cat=international" class="drawer-link" data-cat="international">
+        <span class="drawer-link-dot"></span>International
+      </a>
+      <a href="category.html?cat=sports" class="drawer-link" data-cat="sports">
+        <span class="drawer-link-dot"></span>Sports
+      </a>
+    </div>
+    <div class="drawer-footer">
+      <div class="drawer-footer-title">Follow Us</div>
+      <div class="drawer-social">
+        <a href="#">Facebook</a>
+        <a href="#">𝕏 Twitter</a>
+        <a href="#">YouTube</a>
+      </div>
+    </div>
+  </nav>
 
   <!-- MAIN -->
   <main class="site-main" role="main">
