@@ -1,0 +1,24 @@
+[
+  {
+    "id": "t001",
+    "title": "Bangladesh Launches National AI Strategy with $800 Million Investment Pledge",
+    "summary": "The government's five-year plan targets artificial intelligence adoption across healthcare, agriculture, and public administration, with a dedicated research institute to be established in Dhaka.",
+    "date": "2026-03-17",
+    "category": "Technology",
+    "image": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&q=80",
+    "featured": true,
+    "breaking": false,
+    "content": "<p>The Bangladesh government formally launched its National Artificial Intelligence Strategy on Monday, committing $800 million over five years to accelerate the adoption of AI technologies across priority sectors including healthcare, agriculture, education, and public administration, and announcing the establishment of a dedicated AI Research Institute in Dhaka to anchor the country's emerging technology ecosystem.</p><p>State Minister for ICT Zunaid Ahmed Palak unveiled the strategy at a ceremony attended by technology leaders from Bangladesh and abroad, describing artificial intelligence as the defining technological frontier of the coming decade and expressing the government's determination to ensure Bangladesh is a participant in that frontier rather than merely a consumer of its outputs.</p><p>The strategy identifies three initial focus areas. In healthcare, AI-powered diagnostic tools will be deployed across district hospitals to address the chronic shortage of specialist physicians in rural areas. In agriculture, precision farming applications will be piloted across 50,000 smallholder farms to improve yield prediction and resource efficiency. In public administration, natural language processing systems will be integrated into citizen service portals to improve accessibility for users who are not fluent in formal written Bangla.</p><p>Technology industry groups broadly welcomed the strategy but called for complementary investments in digital infrastructure, data governance frameworks, and AI literacy programs to ensure that the ambition of the strategy could be matched by the capacity of Bangladesh's talent pool and regulatory environment to execute it.</p><p>The AI Research Institute, to be built on a 15-acre campus in the Purbachal New Town development, will host graduate programs in partnership with leading international universities and provide open research infrastructure accessible to startups and established companies alike.</p>"
+  },
+  {
+    "id": "t002",
+    "title": "Grameenphone Rolls Out Nationwide 5G Network Covering All Division Capitals",
+    "summary": "Bangladesh's largest telecom operator has activated 5G services across eight divisional headquarters, promising speeds up to 20 times faster than current 4G infrastructure.",
+    "date": "2026-03-13",
+    "category": "Technology",
+    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80",
+    "featured": false,
+    "breaking": false,
+    "content": "<p>Grameenphone on Wednesday activated 5G services across all eight of Bangladesh's divisional headquarters simultaneously, completing the first phase of a national rollout that the company described as the most significant upgrade to the country's telecommunications infrastructure since the introduction of 4G in 2018.</p><p>The activation covers Dhaka, Chittagong, Sylhet, Rajshahi, Khulna, Barisal, Rangpur, and Mymensingh, putting 5G connectivity within reach of approximately 45 million people according to Grameenphone's coverage estimates. Peak download speeds in tested areas reached 1.2 gigabits per second, compared to an average of 35 to 60 megabits per second on the operator's current 4G network.</p><p>Grameenphone CEO Yasir Azman called the launch a transformational moment for Bangladesh's digital economy, noting that 5G's low latency characteristics would enable entirely new categories of application beyond faster consumer internet, including industrial automation, remote surgery, smart city infrastructure, and augmented reality applications in education and manufacturing.</p><p>Bangladesh Telecommunication Regulatory Commission Chairman said the 5G rollout represented the culmination of a three-year spectrum allocation and infrastructure investment process and that the commission would continue to work with all operators to ensure competitive 5G deployment reached secondary cities and eventually rural areas within the next licensing period.</p>"
+  }
+]
