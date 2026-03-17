@@ -30,14 +30,15 @@
     "breaking": true
   },
   {
-    "id": "n001",
-    "cat": "national",
-    "title": "Bangladesh Finance Ministry Unveils Historic Tk 9.2 Trillion Budget Framework",
-    "summary": "The proposed budget prioritizes digital infrastructure and rural electrification, marking the largest capital investment allocation in the nation's history.",
-    "date": "2026-03-17",
-    "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80",
-    "featured": false,
-    "breaking": false
+    {
+  "id": "n006",
+  "cat": "national",
+  "title": "Prime Minister to Launch 'Farmer Card' Initiative in Tangail on Pohela Boishakh",
+  "summary": "Prime Minister Tarique Rahman is scheduled to inaugurate the government's landmark 'Farmer Card' program on the upcoming Pohela Boishakh, marking a significant step in digitizing agricultural subsidies.",
+  "date": "2026-03-17",
+  "image": "images/pmtarekrahman.webp",
+  "featured": false,
+  "breaking": false
   },
   {
   "id": "s006",
