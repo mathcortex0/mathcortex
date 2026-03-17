@@ -9,141 +9,141 @@
 </head>
 <body>
 
-  <div class="breaking-banner" id="breaking-banner">
-    <div class="breaking-tag"><div class="breaking-dot"></div>Breaking</div>
-    <div class="breaking-scroll"><div class="breaking-scroll-inner" id="breaking-inner"></div></div>
-  </div>
+<div class="breaking-banner" id="breaking-banner">
+  <div class="breaking-tag"><div class="breaking-dot"></div>Breaking</div>
+  <div class="breaking-scroll"><span class="breaking-scroll-inner" id="breaking-inner"></span></div>
+</div>
 
-  <header class="site-header" role="banner">
-    <div class="header-brand-row">
-      <div class="header-logo">
-        <img class="logo-img" src="anlogo.png" alt="Alamin Network" />
-        <div class="logo-divider"></div>
-        <div class="logo-text">
-          <span class="logo-text-main">Alamin Network</span>
-          <span class="logo-text-sub">Reporting the World With Precision</span>
-        </div>
-      </div>
-      <div class="edition-badge">
-        <span class="edition-name" id="edition-name">Morning Edition</span>
-        Independent · Accurate · Trusted
-      </div>
-      <div class="header-actions">
-        <button class="header-action-btn" onclick="openSearch()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <span>Search</span>
-        </button>
-        <button class="hamburger-btn" id="hamburger-btn" onclick="openDrawer()" aria-label="Menu">
-          <span class="ham-bar"></span>
-          <span class="ham-bar"></span>
-          <span class="ham-bar"></span>
-        </button>
+<header class="site-header">
+  <div class="header-brand-row">
+    <div class="header-logo">
+      <img class="logo-img" src="anlogo.png" alt="Alamin Network" />
+      <div class="logo-divider"></div>
+      <div class="logo-text">
+        <span class="logo-text-main">Alamin Network</span>
+        <span class="logo-text-sub">Reporting the World With Precision</span>
       </div>
     </div>
-    <nav class="main-nav" role="navigation">
-      <div class="main-nav-inner">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="category.html?cat=national"      class="nav-link" data-cat="national">National</a>
-        <a href="category.html?cat=international" class="nav-link" data-cat="international">International</a>
-        <a href="category.html?cat=sports"        class="nav-link" data-cat="sports">Sports</a>
-      </div>
-    </nav>
-  </header>
-
-  <div class="search-overlay" id="search-overlay">
-    <button class="search-close" onclick="closeSearch()">✕</button>
-    <div class="search-box">
-      <div class="search-label">Search Articles</div>
-      <div class="search-input-wrap">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input type="text" id="search-input" placeholder="Type to search…" oninput="runSearch(this.value)" autocomplete="off" />
-      </div>
-      <div id="search-results-overlay" class="search-results-overlay"></div>
-    </div>
-  </div>
-
-  <div class="drawer-overlay" id="drawer-overlay"></div>
-  <nav class="drawer" id="drawer" aria-label="Site navigation">
-    <div class="drawer-head">
-      <img class="drawer-logo" src="anlogo.png" alt="Alamin Network" />
-      <button class="drawer-close" onclick="closeDrawer()">✕</button>
-    </div>
-    <div class="drawer-edition">
-      <strong id="drawer-edition-name">Morning Edition</strong>
+    <div class="edition-badge">
+      <span class="edition-name" id="edition-name">Morning Edition</span>
       Independent · Accurate · Trusted
     </div>
-    <div class="drawer-nav">
-      <div class="drawer-nav-label">Navigate</div>
-      <a href="index.html" class="drawer-link" data-page="home"><span class="drawer-link-dot"></span>Home</a>
-      <a href="category.html?cat=national" class="drawer-link" data-cat="national"><span class="drawer-link-dot"></span>National</a>
-      <a href="category.html?cat=international" class="drawer-link" data-cat="international"><span class="drawer-link-dot"></span>International</a>
-      <a href="category.html?cat=sports" class="drawer-link" data-cat="sports"><span class="drawer-link-dot"></span>Sports</a>
+    <div class="header-actions">
+      <button class="header-btn" onclick="openSearch()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <span>Search</span>
+      </button>
+      <button class="hamburger-btn" id="hamburger-btn" onclick="openDrawer()">
+        <span class="ham-bar"></span>
+        <span class="ham-bar"></span>
+        <span class="ham-bar"></span>
+      </button>
     </div>
-    <div class="drawer-footer">
-      <div class="drawer-footer-title">Follow Us</div>
-      <div class="drawer-social">
+  </div>
+  <nav class="cat-nav" id="cat-nav">
+    <div class="cat-nav-inner">
+      <a href="index.html" class="cat-link">Home</a>
+      <a href="category.html?cat=national"      class="cat-link" data-cat="national">National</a>
+      <a href="category.html?cat=international" class="cat-link" data-cat="international">International</a>
+      <a href="category.html?cat=sports"        class="cat-link" data-cat="sports">Sports</a>
+    </div>
+  </nav>
+</header>
+
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<nav class="drawer" id="drawer">
+  <div class="drawer-head">
+    <img class="drawer-logo" src="anlogo.png" alt="Alamin Network" />
+    <button class="drawer-x" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-edition">
+    <strong id="drawer-edition-name">Morning Edition</strong>
+    Independent · Accurate · Trusted
+  </div>
+  <div>
+    <div class="drawer-nav-label">Navigate</div>
+    <a href="index.html"                      class="drawer-link" data-page="home"><span class="drawer-dot"></span>Home</a>
+    <a href="category.html?cat=national"      class="drawer-link" data-cat="national"><span class="drawer-dot"></span>National</a>
+    <a href="category.html?cat=international" class="drawer-link" data-cat="international"><span class="drawer-dot"></span>International</a>
+    <a href="category.html?cat=sports"        class="drawer-link" data-cat="sports"><span class="drawer-dot"></span>Sports</a>
+  </div>
+  <div class="drawer-foot">
+    <div class="drawer-foot-title">Follow Us</div>
+    <div class="drawer-social">
+      <a href="#">Facebook</a>
+      <a href="#">𝕏 Twitter</a>
+      <a href="#">YouTube</a>
+    </div>
+  </div>
+</nav>
+
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-box-label">Search Articles</div>
+    <div class="search-input-row">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search-input" placeholder="Type to search…" oninput="runSearch(this.value)" autocomplete="off" />
+      <button class="search-close-btn" onclick="closeSearch()">✕</button>
+    </div>
+    <div id="search-results"></div>
+  </div>
+</div>
+
+<main class="site-main">
+  <div class="cat-page-hero">
+    <div class="cat-page-hero-inner">
+      <div>
+        <div class="cat-page-label" id="cat-label">Category</div>
+        <h1 class="cat-page-title" id="cat-title">Loading…</h1>
+      </div>
+      <div class="cat-page-count" id="cat-count">00</div>
+    </div>
+  </div>
+  <div class="cat-list" id="cat-list">
+    <div style="height:82px;margin-bottom:1px;border-radius:var(--r)" class="sk"></div>
+    <div style="height:82px;margin-bottom:1px;border-radius:var(--r)" class="sk"></div>
+    <div style="height:82px;border-radius:var(--r)" class="sk"></div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <div>
+      <img class="footer-logo" src="anlogo.png" alt="Alamin Network" />
+      <p class="footer-desc">Independent journalism covering Bangladesh and the world.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Coverage</div>
+      <div class="footer-links">
+        <a href="category.html?cat=national">National</a>
+        <a href="category.html?cat=international">International</a>
+        <a href="category.html?cat=sports">Sports</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Network</div>
+      <div class="footer-links">
+        <a href="#">About Us</a>
+        <a href="#">Editorial Policy</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Follow</div>
+      <div class="footer-links">
         <a href="#">Facebook</a>
         <a href="#">𝕏 Twitter</a>
         <a href="#">YouTube</a>
       </div>
     </div>
-  </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Alamin Network. All rights reserved.</span>
+    <span>Independent · Accountable · Precise</span>
+  </div>
+</footer>
 
-  <main class="site-main" role="main">
-    <div class="cat-hero">
-      <div class="cat-hero-inner">
-        <div>
-          <div class="cat-hero-label" id="cat-label">Category</div>
-          <h1 class="cat-hero-title" id="cat-title">Loading…</h1>
-        </div>
-        <div class="cat-hero-count" id="cat-count">00</div>
-      </div>
-    </div>
-    <div class="cat-list" id="cat-list">
-      <div style="height:85px;margin-bottom:1px;border-radius:var(--r)" class="sk"></div>
-      <div style="height:85px;margin-bottom:1px;border-radius:var(--r)" class="sk"></div>
-      <div style="height:85px;border-radius:var(--r)" class="sk"></div>
-    </div>
-  </main>
-
-  <footer class="site-footer" role="contentinfo">
-    <div class="footer-main">
-      <div>
-        <img class="footer-logo" src="anlogo.png" alt="Alamin Network" />
-        <p class="footer-desc">Independent journalism covering Bangladesh and the world.</p>
-      </div>
-      <div>
-        <div class="footer-col-title">Coverage</div>
-        <div class="footer-links">
-          <a href="category.html?cat=national">National</a>
-          <a href="category.html?cat=international">International</a>
-          <a href="category.html?cat=sports">Sports</a>
-        </div>
-      </div>
-      <div>
-        <div class="footer-col-title">Network</div>
-        <div class="footer-links">
-          <a href="#">About Us</a>
-          <a href="#">Editorial Policy</a>
-          <a href="#">Contact</a>
-        </div>
-      </div>
-      <div>
-        <div class="footer-col-title">Follow</div>
-        <div class="footer-links">
-          <a href="#">Facebook</a>
-          <a href="#">𝕏 Twitter</a>
-          <a href="#">YouTube</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 Alamin Network. All rights reserved.</span>
-      <span>Independent · Accountable · Precise</span>
-    </div>
-  </footer>
-
-  <script src="js/main.js"></script>
-  <script>initCategoryPage();</script>
+<script src="js/main.js"></script>
+<script>initCategoryPage();</script>
 </body>
 </html>
