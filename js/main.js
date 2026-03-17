@@ -63,10 +63,12 @@ function initDate() {
 }
 
 function initEdition() {
-  const el = $('#edition-name');
-  if (!el) return;
   const h = new Date().getHours();
-  el.textContent = h < 12 ? 'Morning Edition' : h < 17 ? 'Afternoon Edition' : 'Evening Edition';
+  const name = h < 12 ? 'Morning Edition' : h < 17 ? 'Afternoon Edition' : 'Evening Edition';
+  const el = $('#edition-name');
+  const el2 = $('#drawer-edition-name');
+  if (el) el.textContent = name;
+  if (el2) el2.textContent = name;
 }
 
 function initTheme() {
@@ -81,12 +83,22 @@ function toggleTheme() {
 }
 
 function setActiveNav() {
-  const cat = qs('cat');
+  const cat  = qs('cat');
   const path = window.location.pathname;
+  const isHome = path.endsWith('index.html') || path === '/' || path.endsWith('/');
+
+  // Top nav links
   $$('.nav-link').forEach(l => {
     l.classList.remove('active');
     if (l.dataset.cat && l.dataset.cat === cat) l.classList.add('active');
-    if (!l.dataset.cat && (path.endsWith('index.html') || path === '/' || path.endsWith('/'))) l.classList.add('active');
+    if (!l.dataset.cat && isHome) l.classList.add('active');
+  });
+
+  // Drawer links
+  $$('.drawer-link').forEach(l => {
+    l.classList.remove('active');
+    if (l.dataset.cat && l.dataset.cat === cat) l.classList.add('active');
+    if (l.dataset.page === 'home' && isHome) l.classList.add('active');
   });
 }
 
@@ -140,10 +152,6 @@ function runSearch(q) {
 }
 
 document.addEventListener('keydown', e => {
-  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); openSearch(); }
-  if (e.key === 'Escape') closeSearch();
-});
-
 // ── NEWS CARD HTML ────────────────────────────────────────────
 
 function cardHTML(a) {
@@ -472,10 +480,62 @@ function downloadSummary() {
   ctx.font = '400 16px Arial'; ctx.fillStyle = 'rgba(244,241,235,0.4)';
   ctx.fillText(fmt(_currentArticle.date) + '  ·  ' + readTime(_currentArticle.content || ''), 84, H - 80);
 
-  ctx.fillStyle = '#c9a84c'; ctx.fillRect(0, H-5, W, 5);
-
-  const a = document.createElement('a');
-  a.download = `alamin-${_currentArticle.id}.png`;
-  a.href = canvas.toDataURL('image/png');
-  a.click();
 }
+
+// ── NAV SCROLL HIDE ───────────────────────────────────────────
+
+(function () {
+  let lastScroll = 0;
+  const THRESHOLD = 60; // px scrolled before nav hides
+
+  window.addEventListener('scroll', () => {
+    const nav = $('.main-nav');
+    if (!nav) return;
+    const current = window.scrollY;
+
+    if (current > THRESHOLD && current > lastScroll) {
+      // scrolling DOWN — hide nav
+      nav.classList.add('nav-hidden');
+    } else {
+      // scrolling UP or near top — show nav
+      nav.classList.remove('nav-hidden');
+    }
+    lastScroll = current <= 0 ? 0 : current;
+  }, { passive: true });
+})();
+
+// ── DRAWER ────────────────────────────────────────────────────
+
+function openDrawer() {
+  const drawer  = $('#drawer');
+  const overlay = $('#drawer-overlay');
+  const btn     = $('#hamburger-btn');
+  if (!drawer) return;
+  drawer.classList.add('open');
+  overlay.classList.add('open');
+  btn.classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDrawer() {
+  const drawer  = $('#drawer');
+  const overlay = $('#drawer-overlay');
+  const btn     = $('#hamburger-btn');
+  if (!drawer) return;
+  drawer.classList.remove('open');
+  overlay.classList.remove('open');
+  btn.classList.remove('is-open');
+  document.body.style.overflow = '';
+}
+
+// Close drawer on overlay click
+document.addEventListener('DOMContentLoaded', () => {
+  const overlay = $('#drawer-overlay');
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+});
+
+// Close drawer on Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeDrawer(); closeSearch(); }
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); openSearch(); }
+});
