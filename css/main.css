@@ -245,7 +245,7 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
 .news-card:hover .card-arrow{background:var(--navy);border-color:var(--navy);color:#fff;transform:translateX(2px)}
 
 /* ── CATEGORY STRIPS ───────────────────────────────── */
-.cat-strips{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-bottom:3.5rem}
+.cat-strips{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;margin-bottom:3.5rem}
 .strip-list{display:flex;flex-direction:column}
 .strip-item{display:grid;grid-template-columns:58px 1fr;gap:.85rem;align-items:center;padding:.8rem 0;border-bottom:1px solid var(--border-lt);cursor:pointer;transition:padding-left .18s}
 .strip-item:hover{padding-left:.4rem}
@@ -334,7 +334,7 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
   .news-grid .news-card:first-child{grid-column:span 2;flex-direction:column}
   .news-grid .news-card:first-child .card-img-wrap{width:100%;aspect-ratio:16/9;border-radius:var(--r-lg) var(--r-lg) 0 0}
   .news-grid .news-card:first-child .card-body{border-radius:0 0 var(--r-lg) var(--r-lg)}
-  .cat-strips{grid-template-columns:1fr;gap:2rem}
+  .cat-strips{grid-template-columns:1fr 1fr}
   .article-wrap{grid-template-columns:1fr}
   .article-sidebar{position:static}
   .footer-main{grid-template-columns:1fr 1fr}
