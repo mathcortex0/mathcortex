@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Alamin Network — Independent journalism founded in Dhaka, Bangladesh with global reach." />
+  <meta name="author" content="Md. Al Amin" />
+  <meta property="og:title" content="About — Alamin Network" />
+  <meta property="og:description" content="Founded 17 March 2026. Reporting the world with precision from Dhaka to every corner of the globe." />
+  <meta property="og:site_name" content="Alamin Network" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>About — Alamin Network</title>
+  <link rel="icon" type="image/png" href="anlogo.png" />
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    /* About page specific styles */
+    .about-hero {
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    
+    .about-hero-title {
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    
+    .about-hero-sub {
+      font-family: var(--ui);
+      font-size: 1rem;
+      color: var(--gold);
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    
+    .about-hero-meta {
+      display: flex;
+      gap: 2rem;
+      font-family: var(--ui);
+      font-size: 0.85rem;
+      color: var(--text-4);
+    }
+    
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+    
+    .about-section {
+      margin-bottom: 2.5rem;
+    }
+    
+    .about-section-title {
+      font-family: var(--display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 1.2rem;
+      position: relative;
+      padding-bottom: 0.8rem;
+    }
+    
+    .about-section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--gold);
+    }
+    
+    .about-section-text {
+      font-family: var(--ui);
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-2);
+      margin-bottom: 1.2rem;
+    }
+    
+    .about-founder {
+      display: flex;
+      gap: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 2rem;
+      margin-bottom: 3rem;
+      box-shadow: var(--sh-md);
+    }
+    
+    .founder-img-placeholder {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 4px solid var(--gold-pale);
+    }
+    
+    .founder-initials {
+      font-family: var(--display);
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+    
+    .founder-info {
+      flex: 1;
+    }
+    
+    .founder-name {
+      font-family: var(--display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.3rem;
+    }
+    
+    .founder-title {
+      font-family: var(--ui);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-lt);
+    }
+    
+    .founder-bio {
+      font-family: var(--ui);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-2);
+      margin-bottom: 1rem;
+    }
+    
+    .founder-signature {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--navy);
+      margin-top: 1rem;
+      opacity: 0.8;
+    }
+    
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+    
+    .value-card {
+      background: var(--surface);
+      border: 1px solid var(--border-lt);
+      border-radius: var(--r-lg);
+      padding: 1.8rem 1.2rem;
+      text-align: center;
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+    }
+    
+    .value-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--sh-lg);
+    }
+    
+    .value-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .value-title {
+      font-family: var(--heading);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    
+    .value-desc {
+      font-family: var(--ui);
+      font-size: 0.85rem;
+      color: var(--text-3);
+      line-height: 1.5;
+    }
+    
+    .global-map {
+      background: var(--surf-deep);
+      border-radius: var(--r-lg);
+      padding: 3rem 2rem;
+      text-align: center;
+      margin: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .global-map-title {
+      font-family: var(--display);
+      font-size: 2rem;
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+    
+    .global-map-text {
+      font-family: var(--ui);
+      font-size: 1.1rem;
+      color: var(--text-2);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    
+    .global-dots {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .global-dot-item {
+      background: var(--surface);
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      border: 1px solid var(--border);
+      font-family: var(--ui);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--navy);
+      box-shadow: var(--sh-xs);
+    }
+    
+    .timeline {
+      margin: 3rem 0;
+    }
+    
+    .timeline-item {
+      display: flex;
+      gap: 2rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border-lt);
+    }
+    
+    .timeline-year {
+      font-family: var(--display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      min-width: 120px;
+    }
+    
+    .timeline-content {
+      flex: 1;
+    }
+    
+    .timeline-title {
+      font-family: var(--heading);
+      font-size: 1.2rem;
+      color: var(--navy);
+      margin-bottom: 0.3rem;
+    }
+    
+    .timeline-desc {
+      font-family: var(--ui);
+      font-size: 0.9rem;
+      color: var(--text-3);
+    }
+    
+    .team-section {
+      margin: 4rem 0;
+    }
+    
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .team-member {
+      text-align: center;
+    }
+    
+    .team-img-placeholder {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--surf-alt);
+      margin-bottom: 1rem;
+      border: 2px solid var(--border);
+    }
+    
+    .team-name {
+      font-family: var(--heading);
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 0.2rem;
+    }
+    
+    .team-role {
+      font-family: var(--ui);
+      font-size: 0.8rem;
+      color: var(--gold);
+    }
+    
+    .cta-section {
+      background: var(--navy);
+      border-radius: var(--r-lg);
+      padding: 3rem;
+      text-align: center;
+      margin: 4rem 0;
+      color: white;
+    }
+    
+    .cta-title {
+      font-family: var(--display);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .cta-text {
+      font-family: var(--ui);
+      font-size: 1rem;
+      opacity: 0.8;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: var(--ui);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      transition: background 0.18s, transform 0.2s var(--spring);
+    }
+    
+    .cta-btn:hover {
+      background: var(--gold-rich);
+      transform: translateY(-2px);
+    }
+    
+    @media (max-width: 900px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .about-founder {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .founder-img-placeholder {
+        width: 150px;
+        height: 150px;
+      }
+      .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .timeline-item {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+      .global-dots {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- BREAKING BANNER -->
+<div class="breaking-banner" id="breaking-banner">
+  <div class="breaking-tag"><div class="breaking-dot"></div>Breaking</div>
+  <div class="breaking-scroll"><span class="breaking-scroll-inner" id="breaking-inner"></span></div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-brand-row">
+    <div class="header-logo">
+      <img class="logo-img" src="anlogo.png" alt="Alamin Network" />
+      <div class="logo-divider"></div>
+      <div class="logo-text">
+        <span class="logo-text-main">Alamin Network</span>
+        <span class="logo-text-sub">Reporting the World With Precision</span>
+        <span class="logo-founder">Founded by Md. Al Amin · 17 March 2026</span>
+      </div>
+    </div>
+    <div class="edition-badge">
+      <span class="edition-name" id="edition-name">Morning Edition</span>
+      Independent · Accurate · Trusted
+    </div>
+    <div class="header-actions">
+      <button class="header-btn" onclick="openSearch()" title="Search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="hamburger-btn" id="hamburger-btn" onclick="openDrawer()" title="Menu">
+        <span class="ham-bar"></span>
+        <span class="ham-bar"></span>
+        <span class="ham-bar"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="cat-nav" id="cat-nav">
+    <div class="cat-nav-inner">
+      <a href="index.html" class="cat-link">Home</a>
+      <a href="category.html?cat=national"      class="cat-link" data-cat="national">National</a>
+      <a href="category.html?cat=international" class="cat-link" data-cat="international">International</a>
+      <a href="category.html?cat=sports"        class="cat-link" data-cat="sports">Sports</a>
+    </div>
+  </nav>
+</header>
+
+<!-- DRAWER BACKDROP -->
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+
+<!-- DRAWER -->
+<nav class="drawer" id="drawer">
+  <div class="drawer-head">
+    <img class="drawer-logo" src="anlogo.png" alt="Alamin Network" />
+    <button class="drawer-x" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-edition">
+    <strong id="drawer-edition-name">Morning Edition</strong>
+    Independent · Accurate · Trusted
+  </div>
+  <div>
+    <div class="drawer-nav-label">Navigate</div>
+    <a href="index.html"                        class="drawer-link" data-page="home"><span class="drawer-dot"></span>Home</a>
+    <a href="category.html?cat=national"        class="drawer-link" data-cat="national"><span class="drawer-dot"></span>National</a>
+    <a href="category.html?cat=international"   class="drawer-link" data-cat="international"><span class="drawer-dot"></span>International</a>
+    <a href="category.html?cat=sports"          class="drawer-link" data-cat="sports"><span class="drawer-dot"></span>Sports</a>
+    <a href="about.html"                         class="drawer-link active" data-page="about"><span class="drawer-dot"></span>About</a>
+  </div>
+  <div class="drawer-foot">
+    <div class="drawer-foot-title">Follow Us</div>
+    <div class="drawer-social">
+      <a href="#">Facebook</a>
+      <a href="#">𝕏 Twitter</a>
+      <a href="#">YouTube</a>
+    </div>
+  </div>
+</nav>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-box-label">Search Articles</div>
+    <div class="search-input-row">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search-input" placeholder="Type to search…" oninput="runSearch(this.value)" autocomplete="off" />
+      <button class="search-close-btn" onclick="closeSearch()">✕</button>
+    </div>
+    <div id="search-results"></div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main class="site-main">
+
+  <!-- ABOUT HERO -->
+  <div class="about-hero">
+    <div class="about-hero-sub">Founded 17 March 2026 · Dhaka, Bangladesh</div>
+    <h1 class="about-hero-title">Reporting the World<br />With Precision</h1>
+    <div class="about-hero-meta">
+      <span>🌍 Global Network</span>
+      <span>📰 Independent Journalism</span>
+      <span>⚡ 24/7 Coverage</span>
+    </div>
+  </div>
+
+  <!-- ABOUT GRID -->
+  <div class="about-grid">
+    <!-- Left Column -->
+    <div>
+      <div class="about-section">
+        <h2 class="about-section-title">Our Mission</h2>
+        <p class="about-section-text">Alamin Network was established with a singular vision: to deliver accurate, independent, and precise news reporting from Dhaka to every corner of the world. We believe that quality journalism is the cornerstone of informed societies and democratic discourse.</p>
+        <p class="about-section-text">Our name represents a commitment to excellence — "Alamin" symbolizing universal knowledge and understanding. We bridge local insights with global perspectives, ensuring our readers never miss what matters.</p>
+      </div>
+      
+      <div class="about-section">
+        <h2 class="about-section-title">Global Presence</h2>
+        <p class="about-section-text">Headquartered in Dhaka, Bangladesh, Alamin Network is building a truly international news organization. We are establishing bureaus and correspondent networks across Asia, Europe, North America, Africa, and the Middle East.</p>
+        <p class="about-section-text">Our goal is to have journalists on the ground in every major city, bringing you stories from the people who live them — not through secondhand reports, but through direct, on-the-ground coverage.</p>
+      </div>
+    </div>
+    
+    <!-- Right Column -->
+    <div>
+      <div class="about-section">
+        <h2 class="about-section-title">Our Values</h2>
+        <p class="about-section-text">We operate on three core principles that guide every story we publish, every decision we make, and every relationship we build:</p>
+      </div>
+      
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">🔍</div>
+          <div class="value-title">Independent</div>
+          <div class="value-desc">Free from political or commercial influence. Our only allegiance is to the truth.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">⚖️</div>
+          <div class="value-title">Accountable</div>
+          <div class="value-desc">We stand by our reporting and correct errors promptly and transparently.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">🎯</div>
+          <div class="value-title">Precise</div>
+          <div class="value-desc">Every fact is verified. Every source is vetted. Every story matters.</div>
+        </div>
+      </div>
+      
+      <div class="about-section">
+        <h2 class="about-section-title">Our Commitment</h2>
+        <p class="about-section-text">In an era of misinformation and declining trust in media, Alamin Network stands as a beacon of reliability. We verify before we publish. We provide context, not just headlines. We serve our readers, not agendas.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOUNDER SECTION -->
+  <div class="about-founder">
+    <div class="founder-img-placeholder">
+      <span class="founder-initials">MA</span>
+    </div>
+    <div class="founder-info">
+      <h2 class="founder-name">Md. Al Amin</h2>
+      <div class="founder-title">Founder, CEO & Editor-in-Chief</div>
+      <p class="founder-bio">A visionary journalist and technologist, Md. Al Amin founded Alamin Network on 17 March 2026 with a mission to create a new standard in digital journalism. With deep roots in Bangladesh and a global outlook, he personally designed and developed every aspect of this platform — from the code that powers it to the editorial principles that guide it.</p>
+      <p class="founder-bio">"I built Alamin Network because I believe journalism can be both principled and innovative. We're not just reporting news — we're building a trusted companion for readers everywhere, from Dhaka to Dhaka, from New York to Tokyo."</p>
+      <div class="founder-signature">— Md. Al Amin</div>
+    </div>
+  </div>
+
+  <!-- GLOBAL MAP VISUALIZATION -->
+  <div class="global-map">
+    <h2 class="global-map-title">From Dhaka to the World</h2>
+    <p class="global-map-text">Bureaus opening in every corner of the globe — because your world deserves to be reported firsthand.</p>
+    <div class="global-dots">
+      <span class="global-dot-item">🇧🇩 Dhaka (HQ)</span>
+      <span class="global-dot-item">🇺🇸 New York</span>
+      <span class="global-dot-item">🇬🇧 London</span>
+      <span class="global-dot-item">🇯🇵 Tokyo</span>
+      <span class="global-dot-item">🇦🇪 Dubai</span>
+      <span class="global-dot-item">🇧🇷 São Paulo</span>
+      <span class="global-dot-item">🇿🇦 Johannesburg</span>
+      <span class="global-dot-item">🇦🇺 Sydney</span>
+      <span class="global-dot-item">🇩🇪 Berlin</span>
+      <span class="global-dot-item">🇨🇳 Shanghai</span>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="timeline">
+    <h2 class="about-section-title">Our Journey</h2>
+    
+    <div class="timeline-item">
+      <div class="timeline-year">2026</div>
+      <div class="timeline-content">
+        <div class="timeline-title">17 March — Alamin Network Launches</div>
+        <div class="timeline-desc">Founded in Dhaka, Bangladesh with a team of dedicated journalists and a vision for global coverage.</div>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-year">2026</div>
+      <div class="timeline-content">
+        <div class="timeline-title">Q2 2026 — First International Bureau</div>
+        <div class="timeline-desc">New York bureau opens, followed by London and Tokyo by year's end.</div>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-year">2027</div>
+      <div class="timeline-content">
+        <div class="timeline-title">Expansion Across Five Continents</div>
+        <div class="timeline-desc">Establishing presence in 20+ countries with local correspondents and regional editors.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEAM HIGHLIGHTS -->
+  <div class="team-section">
+    <h2 class="about-section-title">Leadership Team</h2>
+    <div class="team-grid">
+      <div class="team-member">
+        <div class="team-img-placeholder"></div>
+        <div class="team-name">Md. Al Amin</div>
+        <div class="team-role">Founder & CEO</div>
+      </div>
+      <div class="team-member">
+        <div class="team-img-placeholder"></div>
+        <div class="team-name">Tasnim Rahman</div>
+        <div class="team-role">Managing Editor</div>
+      </div>
+      <div class="team-member">
+        <div class="team-img-placeholder"></div>
+        <div class="team-name">Kamal Hossain</div>
+        <div class="team-role">International Desk</div>
+      </div>
+      <div class="team-member">
+        <div class="team-img-placeholder"></div>
+        <div class="team-name">Farida Begum</div>
+        <div class="team-role">Sports Editor</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALL TO ACTION -->
+  <div class="cta-section">
+    <h2 class="cta-title">Join Our Journey</h2>
+    <p class="cta-text">Whether you're a reader, a journalist, or a partner — there's a place for you at Alamin Network.</p>
+    <a href="#" class="cta-btn">
+      Contact Us
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div>
+      <img class="footer-logo" src="anlogo.png" alt="Alamin Network" />
+      <p class="footer-desc">Independent journalism covering Bangladesh and the world. Accurate, accountable, and precise in every report.</p>
+      <span class="footer-founded">Founded 17 March 2026 · Dhaka</span>
+    </div>
+    <div>
+      <div class="footer-col-title">Coverage</div>
+      <div class="footer-links">
+        <a href="category.html?cat=national">National</a>
+        <a href="category.html?cat=international">International</a>
+        <a href="category.html?cat=sports">Sports</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Network</div>
+      <div class="footer-links">
+        <a href="about.html">About Us</a>
+        <a href="#">Editorial Policy</a>
+        <a href="#">Contact</a>
+        <a href="#">Careers</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Follow</div>
+      <div class="footer-links">
+        <a href="#">Facebook</a>
+        <a href="#">𝕏 Twitter</a>
+        <a href="#">YouTube</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Alamin Network. All rights reserved.</span>
+    <span>Founded by Md. Al Amin · 17 March 2026</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  // Initialize common functions
+  initTheme?.();
+  initDate?.();
+  initEdition?.();
+  setActiveNav?.();
+  
+  // Load ticker and breaking from index.json
+  fetch('data/index.json?_=' + Date.now())
+    .then(r => r.json())
+    .then(data => {
+      if (typeof initTicker === 'function') initTicker(data);
+      if (typeof initBreaking === 'function') initBreaking(data);
+    })
+    .catch(() => {});
+    
+  // Set about page as active in drawer
+  document.querySelectorAll('.drawer-link').forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('data-page') === 'about') {
+      link.classList.add('active');
+    }
+  });
+</script>
+</body>
+</html>
