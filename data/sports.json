@@ -1,7 +1,57 @@
 [
-  { "id": "003", "title": "Tigers Crush Sri Lanka by 7 Wickets in Colombo Test Series Opener", "date": "2026-03-16" },
-  { "id": "006", "title": "FC Barcelona Signs Teenage Prodigy in Record-Breaking €180M Deal", "date": "2026-03-15" },
-  { "id": "013", "title": "Shakib Al Hasan Named Bangladesh's ODI Captain for World Cup Campaign", "date": "2026-03-13" },
-  { "id": "014", "title": "Paris Saint-Germain Eliminated From Champions League in Stunning Upset", "date": "2026-03-12" },
-  { "id": "015", "title": "Dhaka Premier League: Abahani Extend Lead With Dominant Victory", "date": "2026-03-11" }
+  {
+    "id": "s001",
+    "title": "Tigers Crush Sri Lanka by 7 Wickets in Colombo Test Series Opener",
+    "summary": "Bangladesh's pace attack dismantled the Sri Lankan top order in just 34 overs, with Taskin Ahmed claiming five wickets on a rain-affected pitch.",
+    "date": "2026-03-16",
+    "category": "Sports",
+    "image": "https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=1200&q=80",
+    "featured": true,
+    "breaking": false,
+    "content": "<p>Bangladesh's pace attack delivered a commanding performance in Colombo on Sunday, dismissing Sri Lanka for just 134 runs in their first innings and then chasing down a modest 142-run target with seven wickets and more than a session to spare in the opening Test of a three-match series.</p><p>Taskin Ahmed was the standout performer, claiming five wickets for 38 runs to dismantle the Sri Lankan top order on a pitch that offered more assistance to pace bowlers than the hosts had anticipated. His opening spell of seven overs yielded three wickets without conceding a run, setting a tone of total dominance that the visitors never relinquished.</p><p>\"I've been working hard on my length and the seam position,\" Taskin said in the post-match press conference. \"The pitch was helpful but you still have to execute, and today the team executed as a unit. The dressing room is very focused on winning this series.\"</p><p>Sri Lanka's batting lineup struggled to adapt to the conditions, with only Kusal Mendis offering meaningful resistance with a gritty 41. The hosts were bowled out in 34.2 overs, their lowest total against Bangladesh in a home Test match and a result that prompted immediate calls for a review of the Sri Lanka Cricket selection process.</p><p>Bangladesh's reply was anchored by a composed half-century from Najmul Hossain Shanto, who brought up his fifty off 74 balls before falling to an edge behind the wicket. Mominul Haque and Mushfiqur Rahim then guided the Tigers to their target without further alarm, completing the win with a boundary that brought the sparse but vocal travelling Bangladesh supporters to their feet.</p><p>The second Test in the three-match series is scheduled to begin in Galle on March 24. A Bangladesh series victory would mark their first-ever Test series win on Sri Lankan soil — a milestone that the dressing room is clearly targeting with focused, professional resolve.</p>"
+  },
+  {
+    "id": "s002",
+    "title": "FC Barcelona Signs Teenage Prodigy in Record-Breaking €180M Deal",
+    "summary": "The Catalan giants break the world transfer record as they secure the Argentine wunderkind amid fierce competition from Premier League clubs.",
+    "date": "2026-03-15",
+    "category": "Sports",
+    "image": "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=1200&q=80",
+    "featured": false,
+    "breaking": false,
+    "content": "<p>FC Barcelona shattered the world transfer record on Saturday by confirming the signing of 18-year-old Argentine forward Mateo Ibarra from River Plate in a deal worth €180 million, eclipsing the previous record set by Paris Saint-Germain's acquisition of Neymar in 2017.</p><p>The deal, which had been the subject of frenzied speculation for weeks, was concluded after Barcelona president Joan Laporta personally flew to Buenos Aires to finalize terms with the player's representatives and River Plate officials. Ibarra, who has been dubbed \"the new Messi\" by Argentine media since his debut at age 16, signed a six-year contract with a release clause reportedly set at €400 million.</p><p>The signing represents a significant financial gamble by a club that has spent much of the past five years restructuring its balance sheet following the financial turbulence of the pandemic era. Barcelona have activated what they describe as a \"fourth economic lever\" — a mechanism for monetizing future commercial revenues — to fund the transfer without breaching La Liga's financial fair play regulations.</p><p>Manchester City and Liverpool had both been heavily linked with Ibarra, with reports suggesting that City had offered a higher base fee but that the player's preference for Barcelona ultimately proved decisive. Premier League clubs expressed frustration at what they characterized as Barcelona's use of deferred payment structures that would not be available under English football's financial regulations.</p><p>Ibarra is expected to be officially unveiled at the Camp Nou on Monday and could make his debut in Barcelona's La Liga fixture against Atletico Madrid the following weekend.</p>"
+  },
+  {
+    "id": "s003",
+    "title": "Shakib Al Hasan Named Bangladesh ODI Captain for World Cup Campaign",
+    "summary": "The board's decision ends weeks of speculation, with the veteran all-rounder set to lead a squad featuring several promising newcomers.",
+    "date": "2026-03-13",
+    "category": "Sports",
+    "image": "https://images.unsplash.com/photo-1540747913346-19212a4cf528?w=1200&q=80",
+    "featured": false,
+    "breaking": false,
+    "content": "<p>The Bangladesh Cricket Board announced on Wednesday that Shakib Al Hasan would captain the national One Day International side for the upcoming ICC Cricket World Cup qualifying campaign, ending weeks of uncertainty that had surrounded the team's leadership following the retirement of several senior players.</p><p>BCB President Faruque Ahmed confirmed the appointment at a press conference at the Sher-e-Bangla National Cricket Stadium, describing Shakib as the \"natural leader\" for a campaign of this magnitude given his unparalleled experience in global tournaments and his continued excellence as a match-winning all-rounder.</p><p>The squad announced alongside the captaincy appointment features five players who have fewer than ten ODI appearances, reflecting the BCB's stated intention to use the qualifying campaign to blood younger talent alongside proven performers. Pace bowler Nahid Rana, 22, and opening batter Tanzid Hasan, 24, are among those tipped for expanded roles.</p><p>Shakib, speaking briefly after the announcement, said the team's goal was not merely qualification but performing in a way that would build momentum heading into the tournament itself. \"We want to win every game we play. That is the standard we are setting,\" he said.</p><p>Bangladesh are placed in a qualifying group alongside Zimbabwe, the Netherlands, and Oman. Cricket analysts consider the Tigers strong favorites to advance, though the BCB has cautioned against complacency given the improving standards of associate nations over the past World Cup cycle.</p>"
+  },
+  {
+    "id": "s004",
+    "title": "Paris Saint-Germain Eliminated From Champions League in Stunning Upset",
+    "summary": "Benfica's disciplined defensive display and a clinical counter-attacking performance send PSG crashing out at the quarter-final stage.",
+    "date": "2026-03-12",
+    "category": "Sports",
+    "image": "https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=1200&q=80",
+    "featured": false,
+    "breaking": false,
+    "content": "<p>Paris Saint-Germain's Champions League campaign ended in humiliating fashion on Tuesday night as Benfica produced one of the competition's great upsets, eliminating the Ligue 1 giants with a 2-0 victory at the Parc des Princes that completed a 3-1 aggregate triumph for the Portuguese champions.</p><p>The result leaves PSG without a Champions League trophy despite years of transformative investment and signals, many observers believe, that the club must undertake another fundamental reassessment of its sporting project. The defeat comes two years after the club's last major European embarrassment and raises renewed questions about whether extraordinary financial resources alone can build a genuine Champions League winning culture.</p><p>Benfica's performance was tactically disciplined and ruthlessly efficient. Manager Roger Schmidt set his side up to absorb PSG's possession and strike on the counter, a game plan that was executed with precision by a squad whose collective work rate and organizational discipline contrasted sharply with PSG's increasingly frustrated and disjointed attacking play.</p><p>Goals from Fredrik Aursnes in the 34th minute and a clinical finish from Vangelis Pavlidis in stoppage time sealed the tie. PSG's star-studded forward line was kept largely quiet throughout, with the visitors' back four winning their individual duels with a composure that belied their underdog status.</p><p>PSG president Nasser Al-Khelaifi left the stadium without speaking to the media. Sources within the club indicated that an emergency board meeting had been convened for Thursday to discuss the sporting directorship and coaching staff's positions.</p>"
+  },
+  {
+    "id": "s005",
+    "title": "Dhaka Premier League: Abahani Extend Lead With Dominant Derby Victory",
+    "summary": "Two goals from striker Suman Reza and a commanding defensive display give Abahani a five-point cushion at the top of the table.",
+    "date": "2026-03-11",
+    "category": "Sports",
+    "image": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1200&q=80",
+    "featured": false,
+    "breaking": false,
+    "content": "<p>Abahani Limited extended their lead at the top of the Bangladesh Football Premier League to five points with a commanding 3-1 victory over city rivals Mohammedan Sporting Club in a fiercely contested Dhaka derby at the Bangabandhu National Stadium on Sunday afternoon.</p><p>Striker Suman Reza was the hero of the afternoon, scoring twice in the first half to give Abahani a comfortable cushion before the interval. His first goal, a precise header from a Rakib Hossain cross in the 17th minute, was followed by a brilliant individual effort in the 38th minute when he collected a pass on the edge of the area, turned his marker, and drove a low shot into the far corner.</p><p>Mohammedan pulled a goal back through Brazilian import Marcos Paulo shortly after the restart, and the match entered an intense period in which either side might have altered the scoreline. But Abahani's Argentine midfielder Diego Saavedra settled the contest with a composed finish from the penalty spot in the 76th minute after a handball by the Mohammedan centre-back.</p><p>The result leaves Abahani in a strong position to claim their first Premier League title in four years, with nine matches remaining. Head coach Paul Put described the performance as one of the team's best of the season. \"We played with discipline and quality. This is the standard we demand,\" he said.</p><p>Mohammedan remain in third place and face an increasingly difficult path to the title, with second-placed Sheikh Russel Krira Chakra maintaining their challenge with a 2-0 win over Rahmatganj on the same evening.</p>"
+  }
 ]
