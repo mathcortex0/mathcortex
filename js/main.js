@@ -363,6 +363,19 @@ async function initArticlePage() {
   _currentArticle = article;
   document.title = article.title + ' — Alamin Network';
 
+  // Inject Open Graph meta tags with article data
+  function setMeta(id, val) {
+    var el = document.getElementById(id);
+    if (el && val) el.setAttribute('content', val);
+  }
+  setMeta('og-title',       article.title + ' — Alamin Network');
+  setMeta('og-description', article.summary || article.title);
+  setMeta('og-image',       article.image || '');
+  setMeta('og-url',         window.location.href);
+  setMeta('tw-title',       article.title + ' — Alamin Network');
+  setMeta('tw-description', article.summary || article.title);
+  setMeta('tw-image',       article.image || '');
+
   renderArticle(article);
 
   // Related = other items from same category JSON
