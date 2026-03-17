@@ -4,80 +4,129 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Category — Alamin Network</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="anlogo.png" />
   <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="header-top">
-        <div class="live-ticker">
-          <span class="ticker-label">LIVE</span>
+  <div class="breaking-banner" id="breaking-banner">
+    <div class="breaking-tag"><div class="breaking-dot"></div>Breaking</div>
+    <div class="breaking-scroll"><div class="breaking-scroll-inner" id="breaking-inner"></div></div>
+  </div>
+
+  <header class="site-header" role="banner">
+    <div class="header-topbar">
+      <div class="header-topbar-inner">
+        <div class="topbar-left">
+          <span class="topbar-date" id="live-date"></span>
+          <span class="topbar-divider">|</span>
+          <span class="topbar-location">Dhaka, Bangladesh</span>
+        </div>
+        <div class="ticker-wrap">
+          <span class="ticker-label">Live</span>
           <span class="ticker-text" id="ticker-text">Loading…</span>
         </div>
-        <div class="header-meta">
-          <span id="live-date"></span>
-          <span class="dot-sep">·</span>
-          <span>Dhaka, Bangladesh</span>
+      </div>
+    </div>
+    <div class="header-brand-row">
+      <div class="header-logo">
+        <img class="logo-img" src="anlogo.png" alt="Alamin Network Logo" />
+        <div class="logo-divider"></div>
+        <div class="logo-text">
+          <span class="logo-text-main">Alamin Network</span>
+          <span class="logo-text-sub">Reporting the World With Precision</span>
         </div>
       </div>
-      <div class="header-brand">
-        <a href="index.html" class="brand-logo">
-          <span class="brand-main">Alamin</span>
-          <span class="brand-sub">Network</span>
-        </a>
-        <p class="brand-tagline">Reporting the World With Precision</p>
+      <div class="edition-badge">
+        <span class="edition-name" id="edition-name">Morning Edition</span>
+        Independent · Accurate · Trusted
       </div>
-      <nav class="main-nav">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="category.html?cat=national" class="nav-link" data-cat="national">National</a>
-        <a href="category.html?cat=international" class="nav-link" data-cat="international">International</a>
-        <a href="category.html?cat=sports" class="nav-link" data-cat="sports">Sports</a>
-        <button class="search-btn" onclick="toggleSearch()" aria-label="Search">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <div class="header-actions">
+        <button class="header-action-btn theme-btn" id="theme-btn" onclick="toggleTheme()">☀️</button>
+        <button class="header-action-btn" onclick="openSearch()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span>Search</span>
         </button>
-      </nav>
-    </div>
-    <div class="search-bar" id="searchBar">
-      <div class="search-inner">
-        <input type="text" id="searchInput" placeholder="Search articles…" oninput="doSearch(this.value)" />
-        <button onclick="toggleSearch()">✕</button>
       </div>
-      <div id="searchResults" class="search-results"></div>
     </div>
+    <nav class="main-nav" role="navigation">
+      <div class="main-nav-inner">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="category.html?cat=national"      class="nav-link" data-cat="national">National</a>
+        <a href="category.html?cat=international" class="nav-link" data-cat="international">International</a>
+        <a href="category.html?cat=sports"        class="nav-link" data-cat="sports">Sports</a>
+      </div>
+    </nav>
   </header>
 
-  <main class="main-content">
-    <section class="category-page-header" id="cat-page-header">
-      <div class="cat-label-large" id="cat-label-large"></div>
-      <h1 class="cat-page-title" id="cat-page-title"></h1>
-      <div class="cat-divider"></div>
-    </section>
+  <div class="search-overlay" id="search-overlay">
+    <button class="search-close" onclick="closeSearch()">✕</button>
+    <div class="search-label">Search Articles</div>
+    <div class="search-input-wrap">
+      <input type="text" id="search-input" placeholder="Type to search…" oninput="runSearch(this.value)" autocomplete="off" />
+    </div>
+    <div id="search-results-overlay" class="search-results-overlay"></div>
+  </div>
 
-    <section class="feed-section">
-      <div class="news-list" id="cat-list"></div>
-    </section>
+  <main class="site-main" role="main">
+
+    <div class="cat-hero">
+      <div class="cat-hero-inner">
+        <div>
+          <div class="cat-hero-label" id="cat-label">Category</div>
+          <h1 class="cat-hero-title" id="cat-title">Loading…</h1>
+        </div>
+        <div class="cat-hero-count" id="cat-count">00</div>
+      </div>
+    </div>
+
+    <div class="cat-list" id="cat-list">
+      <!-- Skeleton rows -->
+      <div style="height:90px;margin-bottom:1px" class="sk"></div>
+      <div style="height:90px;margin-bottom:1px" class="sk"></div>
+      <div style="height:90px;margin-bottom:1px" class="sk"></div>
+    </div>
+
   </main>
 
-  <footer class="site-footer">
-    <div class="footer-inner">
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-main">
       <div class="footer-brand">
-        <span class="brand-main">Alamin</span><span class="brand-sub">Network</span>
+        <img class="footer-logo" src="anlogo.png" alt="Alamin Network" />
+        <p class="footer-desc">Independent journalism covering Bangladesh and the world.</p>
       </div>
-      <p class="footer-tagline">© 2026 Alamin Network. All rights reserved.</p>
-      <nav class="footer-nav">
-        <a href="category.html?cat=national">National</a>
-        <a href="category.html?cat=international">International</a>
-        <a href="category.html?cat=sports">Sports</a>
-      </nav>
+      <div>
+        <div class="footer-col-title">Coverage</div>
+        <div class="footer-links">
+          <a href="category.html?cat=national">National</a>
+          <a href="category.html?cat=international">International</a>
+          <a href="category.html?cat=sports">Sports</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Network</div>
+        <div class="footer-links">
+          <a href="#">About Us</a>
+          <a href="#">Editorial Policy</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Follow</div>
+        <div class="footer-links">
+          <a href="#">Facebook</a>
+          <a href="#">𝕏 Twitter</a>
+          <a href="#">YouTube</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Alamin Network. All rights reserved.</span>
+      <span>Independent · Accountable · Precise</span>
     </div>
   </footer>
 
   <script src="js/main.js"></script>
-  <script>
-    initCategoryPage();
-  </script>
+  <script>initCategoryPage();</script>
 </body>
 </html>
