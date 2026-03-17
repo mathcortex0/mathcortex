@@ -143,57 +143,6 @@ button { cursor: pointer; font-family: var(--ui); border: none; background: none
   box-shadow: var(--shadow-sm);
 }
 
-/* Top utility bar */
-.header-topbar {
-  background: var(--navy);
-  padding: 0.32rem 0;
-}
-.header-topbar-inner {
-  max-width: 1380px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.topbar-left {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  font-size: 0.68rem;
-  color: rgba(255,255,255,0.65);
-  letter-spacing: 0.04em;
-  font-family: var(--ui);
-}
-.topbar-location { color: var(--gold-rich); font-weight: 500; }
-.topbar-divider  { color: rgba(255,255,255,0.2); }
-.ticker-wrap {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  max-width: 480px;
-  overflow: hidden;
-}
-.ticker-label {
-  background: var(--red);
-  color: #fff;
-  font-size: 0.56rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  padding: 0.2em 0.6em;
-  border-radius: 2px;
-  flex-shrink: 0;
-  text-transform: uppercase;
-}
-.ticker-text {
-  font-size: 0.68rem;
-  color: rgba(255,255,255,0.6);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-family: var(--ui);
-}
-
 /* Brand row */
 .header-brand-row {
   max-width: 1380px;
@@ -1269,7 +1218,7 @@ button { cursor: pointer; font-family: var(--ui); border: none; background: none
   .site-main { padding: 0 1rem 4rem; }
   .header-brand-row { grid-template-columns: 1fr auto; padding: 0.7rem 1rem; }
   .edition-badge { display: none; }
-  .header-topbar-inner { padding: 0 1rem; }
+
   .main-nav-inner { padding: 0 1rem; overflow-x: auto; scrollbar-width: none; }
   .main-nav-inner::-webkit-scrollbar { display: none; }
   .logo-text { display: none; }
@@ -1284,7 +1233,6 @@ button { cursor: pointer; font-family: var(--ui); border: none; background: none
   .article-title { font-size: 1.65rem; }
   .footer-main { grid-template-columns: 1fr; gap: 2rem; }
   .footer-bottom { flex-direction: column; gap: 0.4rem; text-align: center; }
-  .topbar-left { display: none; }
   .header-action-btn span { display: none; }
 }
 
