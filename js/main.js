@@ -118,8 +118,7 @@ function initEdition() {
   }
 
   // Check live.json and show/hide LIVE button
-  fetch('data/live.json?_=' + Date.now())
-    .then(r => r.json())
+  getJSON('data/live.json')
     .then(data => {
       const btn = document.getElementById('live-header-btn');
       if (!btn) return;
@@ -594,9 +593,6 @@ function downloadSummary() {
   ctx.fillStyle = '#c9a84c'; ctx.fillRect(0, H-5, W, 5);
   const link = document.createElement('a');
   link.download = 'alamin-' + _currentArticle.id + '.png';
-  link.href = canvas.toDataURL('image/png');
-  link.click();
-}
   link.href = canvas.toDataURL('image/png');
   link.click();
 }
