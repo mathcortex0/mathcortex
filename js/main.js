@@ -169,7 +169,9 @@ function initBreaking(data) {
   inner.textContent = text + '   ·   ·   ·   ' + text;
 }
 
-// ── SCROLL TO TOP + PAGE TRANSITIONS ────────────────
+// ── SCROLL: HEADER SLIDES AS ONE UNIT ───────────────
+// Header + nav strip move together as one block
+// Pure transform — GPU only — zero layout shift — zero shaking
 
 (function() {
 
@@ -200,20 +202,7 @@ function initBreaking(data) {
     setTimeout(() => { location.href = href; }, 220);
   });
 
-  // Scroll to top button visibility — simple, no shaking
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        if (window.scrollY > 400) topBtn.classList.add('visible');
-        else                      topBtn.classList.remove('visible');
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }, { passive: true });
-
-  // Scroll active category link into center view on load
+  // Scroll active link into view
   function scrollActiveLink() {
     const nav    = document.querySelector('.cat-nav');
     const active = document.querySelector('.cat-nav .cat-link.active');
@@ -221,12 +210,78 @@ function initBreaking(data) {
     const center = active.offsetLeft - (nav.clientWidth / 2) + (active.clientWidth / 2);
     nav.scrollTo({ left: center, behavior: 'smooth' });
   }
-
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', scrollActiveLink);
   } else {
     setTimeout(scrollActiveLink, 150);
   }
+
+  // ── Core scroll logic
+  let lastY     = window.scrollY;
+  let ticking   = false;
+  let hidden    = false;
+  let downAccum = 0;
+  let upAccum   = 0;
+
+  // Must scroll DOWN this many px before hiding
+  const HIDE_AFTER = 50;
+  // Must scroll UP this many px before showing
+  const SHOW_AFTER = 8;
+  // Don't hide until past this scroll position
+  const MIN_SCROLL = 120;
+
+  function update() {
+    const header = document.querySelector('.site-header');
+    const curY   = window.scrollY;
+    const diff   = curY - lastY;
+
+    if (header) {
+      if (curY <= 10) {
+        // At very top — always show, reset everything
+        downAccum = 0; upAccum = 0;
+        if (hidden) {
+          header.classList.remove('hide-up');
+          hidden = false;
+        }
+        header.classList.remove('scrolled');
+      } else {
+        header.classList.add('scrolled');
+
+        if (diff > 0) {
+          // Scrolling DOWN
+          upAccum    = 0;
+          downAccum += diff;
+          if (!hidden && curY > MIN_SCROLL && downAccum > HIDE_AFTER) {
+            header.classList.add('hide-up');
+            hidden    = true;
+            downAccum = 0;
+          }
+        } else if (diff < 0) {
+          // Scrolling UP
+          downAccum  = 0;
+          upAccum   += Math.abs(diff);
+          if (hidden && upAccum > SHOW_AFTER) {
+            header.classList.remove('hide-up');
+            hidden  = false;
+            upAccum = 0;
+          }
+        }
+      }
+    }
+
+    // Scroll to top button
+    if (curY > 400) topBtn.classList.add('visible');
+    else            topBtn.classList.remove('visible');
+
+    lastY   = curY <= 0 ? 0 : curY;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+
+  update();
 
 })();
 
