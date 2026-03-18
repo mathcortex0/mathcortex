@@ -1,51 +1,75 @@
 {
   "active": true,
-  "title": "UN Security Council Convenes Emergency Session Over Gaza Ceasefire Collapse",
-  "subtitle": "World leaders demand accountability as the fragile truce breaks down along the Gaza corridor.",
-  "started": "2026-03-17",
-  "startTime": "14:00",
-  "updatedTime": "16:45",
+  "title": "Israel Strikes Kill Iran's Intelligence Chief and Senior Security Official",
+  "subtitle": "Overnight Israeli operations have targeted senior Iranian figures. Tehran has yet to respond formally but has vowed retaliation as strikes spread across the wider Middle East.",
+  "started": "2026-03-18",
+  "startTime": "06:00",
+  "updatedTime": "11:30",
   "coveringBy": "Alamin Network International Desk",
   "endedReport": "",
   "updates": [
     {
       "id": "u001",
-      "time": "16:45",
+      "time": "11:30",
       "label": "Breaking",
-      "headline": "US Vetoes Ceasefire Resolution at Security Council",
-      "text": "The United States has exercised its veto power, blocking a draft resolution that would have demanded an immediate and permanent ceasefire in Gaza. The vote was 13 in favour, 1 against, and 1 abstention. The US representative called the language of the resolution unenforceable without greater accountability mechanisms, drawing sharp condemnation from Arab League and OIC member states.",
-      "image": "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1200&q=80"
+      "headline": "Israel Says Iran's Intelligence Minister Killed in Overnight Strike",
+      "text": "Israeli Defence Minister Israel Katz has confirmed that Esmail Khatib, Iran's Intelligence Minister, was eliminated in an overnight Israeli strike. Katz stated that Khatib's killing followed the death of top security official Ali Larijani the previous day. Iran has not yet officially commented on the claim, though security sources in the region have not disputed the reports.",
+      "image": "images/iran_intelligence_minister"
     },
     {
       "id": "u002",
-      "time": "16:10",
+      "time": "10:45",
       "label": "Update",
-      "headline": "Guterres Calls for Immediate 72-Hour Humanitarian Pause",
-      "text": "UN Secretary-General António Guterres took the floor and called for a 72-hour humanitarian pause to allow aid convoys through the Rafah and Kerem Shalom crossings. He described the situation as a catastrophe unfolding in real time, warning that over 2.3 million people in Gaza remain critically dependent on external food supplies. Egypt and Qatar are understood to be working on a framework for the pause behind the scenes.",
+      "headline": "Tehran Vows Retaliation Following Larijani's Death",
+      "text": "Senior Iranian officials have issued statements threatening a severe response following the killing of Ali Larijani, the country's top security chief, in yesterday's Israeli operation. While Tehran has not yet formally acknowledged the death of the intelligence minister, the tone from Iranian leadership has hardened considerably overnight, with officials warning that any further Israeli escalation will be met with a response that crosses new thresholds.",
       "image": ""
     },
     {
       "id": "u003",
-      "time": "15:40",
-      "label": "Quote",
-      "headline": "France: 'The World Is Watching and the World Is Appalled'",
-      "text": "The French ambassador delivered a statement calling the collapse of the ceasefire a profound failure of international diplomacy. Referring directly to the mediating powers, she said all parties had an obligation to return to the table immediately and that France would support any mechanism that restored the truce. The UK ambassador echoed the statement, saying the humanitarian consequences of continued hostilities were simply unacceptable.",
+      "time": "10:00",
+      "label": "Update",
+      "headline": "Israeli Strikes Hit Central Beirut as Lebanon Offensive Continues",
+      "text": "Israel has launched a series of airstrikes on Beirut, with at least one explosion flattening a multi-storey building in a central commercial district surrounded by hotels and businesses — well outside the southern suburbs traditionally associated with Hezbollah's presence. The strikes mark a significant geographic expansion of Israel's Lebanese offensive and have drawn immediate international condemnation.",
       "image": ""
     },
     {
       "id": "u004",
-      "time": "15:00",
-      "label": "Context",
-      "headline": "What Led to the Ceasefire Collapse — A Timeline",
-      "text": "The ceasefire brokered by Egypt eleven days ago began to unravel late on Sunday night when Hamas-aligned factions launched a series of rocket attacks that Israel said targeted civilian areas in the southern part of the country. Israeli forces responded with airstrikes on northern Gaza within hours. By Monday morning both sides were accusing the other of initiating the breakdown. The emergency Security Council session was called by France and the UK within hours of the resumption of hostilities.",
+      "time": "09:15",
+      "label": "Update",
+      "headline": "Retaliatory Strikes Spread Across the Middle East",
+      "text": "Drone interceptions and explosions have been reported across multiple countries overnight including Dubai, Qatar, Kuwait, Iraq, Bahrain, and Saudi Arabia. In Tel Aviv, two people were killed in what Israeli authorities described as a retaliatory attack by Iran-aligned armed groups. The scale and geographic spread of the incidents suggests a significant and coordinated escalation by the axis of resistance.",
       "image": ""
     },
     {
       "id": "u005",
-      "time": "14:00",
+      "time": "08:30",
+      "label": "Context",
+      "headline": "US Military Used Bunker-Busting Bombs on Iranian Missile Sites",
+      "text": "The United States military has confirmed it deployed heavy bunker-busting bombs — including deep penetrator munitions — against Iranian missile launch infrastructure along the Strait of Hormuz. The vital oil shipping route has been effectively blocked by Iran since the conflict escalated, threatening global energy supply chains. The US strikes represent a significant direct military intervention by Washington in what had previously been framed as Israeli operations.",
+      "image": ""
+    },
+    {
+      "id": "u006",
+      "time": "07:30",
+      "label": "Context",
+      "headline": "Who Was Esmail Khatib — Iran's Intelligence Chief",
+      "text": "Esmail Khatib served as Iran's Minister of Intelligence since 2021, overseeing the country's vast domestic and foreign intelligence apparatus. He was a senior figure within the Islamic Revolutionary Guard Corps network and was considered one of the architects of Iran's regional intelligence operations. His elimination, if confirmed, would represent one of the most significant blows to Iran's intelligence leadership in decades and follows the killing of Larijani — Iran's top national security official — in what analysts are describing as a systematic Israeli campaign to decapitate Tehran's security establishment.",
+      "image": ""
+    },
+    {
+      "id": "u007",
+      "time": "06:45",
+      "label": "Quote",
+      "headline": "'Leaving Home Is Like Gambling With My Life' — Tehran Resident",
+      "text": "Residents of Tehran describe living under constant anxiety as the situation deteriorates. One woman told Alamin Network's correspondent that daily life has become almost unbearable, saying that every time she steps outside she feels as though she is taking a gamble with her own survival. Shops in several districts of the capital have closed early and queues have formed at petrol stations as residents prepare for the possibility of prolonged disruption.",
+      "image": ""
+    },
+    {
+      "id": "u008",
+      "time": "06:00",
       "label": "Started",
-      "headline": "Session Opens — 15 Member States Present",
-      "text": "The United Nations Security Council has convened its emergency session. All 15 member states are present. The session was called at the request of France and the United Kingdom following the overnight collapse of the Gaza ceasefire. The order of speakers has been set with the US, France, UK, Russia, and China scheduled to address the council in the first round.",
+      "headline": "Live Blog Opens — Rapidly Developing Situation Across the Middle East",
+      "text": "Alamin Network is covering a rapidly evolving situation following overnight Israeli strikes that have claimed the lives of senior Iranian officials. Our international desk is tracking developments across Israel, Iran, Lebanon, and the wider region. Refresh for the latest updates.",
       "image": ""
     }
   ]
