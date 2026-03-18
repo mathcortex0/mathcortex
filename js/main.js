@@ -100,9 +100,9 @@ function initEdition() {
     const btn = document.getElementById('live-header-btn');
     if (!btn) return;
     if (data && data.active) {
-      btn.style.display = 'flex';
+      btn.classList.add('visible');
     } else {
-      btn.style.display = 'none';
+      btn.classList.remove('visible');
     }
   });
 }
