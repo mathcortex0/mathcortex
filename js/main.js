@@ -256,29 +256,57 @@ function initBreaking(data) {
     const inlineNav = document.getElementById('header-inline-nav');
     const curY      = window.scrollY;
     const diff      = curY - lastY;
+    const isMobile  = window.innerWidth <= 768;
 
-    // 1. Toggle scrolled state — inline nav appears, cat-nav hides
-    if (curY > SCROLL_AT && !isScrolled) {
-      isScrolled = true;
-      if (header)    header.classList.add('scrolled');
-      if (catNav)    { catNav.classList.add('hidden'); navHidden = true; }
-      if (inlineNav) {
-        inlineNav.style.display = 'flex';
-        requestAnimationFrame(() => inlineNav.classList.add('visible'));
-      }
-      downAccum = 0; upAccum = 0;
-    } else if (curY <= SCROLL_AT && isScrolled) {
+    if (isMobile) {
+      // ── MOBILE: simple cat-nav hide/show on scroll ──
+      if (header) header.classList.remove('scrolled');
+      if (inlineNav) { inlineNav.classList.remove('visible'); inlineNav.style.display = 'none'; }
       isScrolled = false;
-      if (header)    header.classList.remove('scrolled');
-      if (catNav)    { catNav.classList.remove('hidden'); navHidden = false; }
-      if (inlineNav) {
-        inlineNav.classList.remove('visible');
-        setTimeout(() => { if (!isScrolled) inlineNav.style.display = 'none'; }, 250);
+
+      if (catNav) {
+        if (curY <= 10) {
+          downAccum = 0; upAccum = 0;
+          if (navHidden) { catNav.classList.remove('hidden'); navHidden = false; }
+        } else if (diff > 0) {
+          upAccum = 0; downAccum += diff;
+          if (!navHidden && curY > SCROLL_AT && downAccum > HIDE_DELTA) {
+            catNav.classList.add('hidden');
+            navHidden = true; downAccum = 0;
+          }
+        } else if (diff < 0) {
+          downAccum = 0; upAccum += Math.abs(diff);
+          if (navHidden && upAccum > SHOW_DELTA) {
+            catNav.classList.remove('hidden');
+            navHidden = false; upAccum = 0;
+          }
+        }
       }
-      downAccum = 0; upAccum = 0;
+
+    } else {
+      // ── DESKTOP: inline nav replaces cat-nav on scroll ──
+      if (curY > SCROLL_AT && !isScrolled) {
+        isScrolled = true;
+        if (header)    header.classList.add('scrolled');
+        if (catNav)    { catNav.classList.add('hidden'); navHidden = true; }
+        if (inlineNav) {
+          inlineNav.style.display = 'flex';
+          requestAnimationFrame(() => inlineNav.classList.add('visible'));
+        }
+        downAccum = 0; upAccum = 0;
+      } else if (curY <= SCROLL_AT && isScrolled) {
+        isScrolled = false;
+        if (header)    header.classList.remove('scrolled');
+        if (catNav)    { catNav.classList.remove('hidden'); navHidden = false; }
+        if (inlineNav) {
+          inlineNav.classList.remove('visible');
+          setTimeout(() => { if (!isScrolled) inlineNav.style.display = 'none'; }, 250);
+        }
+        downAccum = 0; upAccum = 0;
+      }
     }
 
-    // 2. Scroll to top button
+    // Scroll to top button — both platforms
     if (curY > TOP_BTN_AT) topBtn.classList.add('visible');
     else                    topBtn.classList.remove('visible');
 
