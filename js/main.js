@@ -95,6 +95,14 @@ function initEdition() {
   const name = h < 12 ? 'Morning Edition' : h < 17 ? 'Afternoon Edition' : 'Evening Edition';
   $$('#edition-name, #drawer-edition-name').forEach(el => { if (el) el.textContent = name; });
 
+  // Make logo clickable → homepage on every page
+  const logo = $('.header-logo');
+  if (logo && !logo.dataset.linked) {
+    logo.style.cursor = 'pointer';
+    logo.dataset.linked = 'true';
+    logo.addEventListener('click', () => { location.href = 'index.html'; });
+  }
+
   // Inject LIVE button into header if not already present
   if (!document.getElementById('live-header-btn')) {
     const actions = $('.header-actions');
@@ -105,7 +113,6 @@ function initEdition() {
       btn.title     = 'Live Coverage';
       btn.className = 'live-header-btn';
       btn.innerHTML = '<span class="live-header-dot"></span>LIVE';
-      // Insert as first child of header-actions
       actions.insertBefore(btn, actions.firstChild);
     }
   }
