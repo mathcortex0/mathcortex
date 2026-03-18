@@ -169,17 +169,11 @@ function initBreaking(data) {
   inner.textContent = text + '   ·   ·   ·   ' + text;
 }
 
-// ── SCROLL NAV HIDE ───────────────────────────────────
-
-// ── 1. SLIM HEADER + NAV HIDE + SCROLL TO TOP ────────
+// ── SCROLL: SLIM HEADER + NAV HIDE + SCROLL TO TOP ───
 
 (function() {
-  let lastY   = 0;
-  let ticking = false;
-  const HIDE  = 80;
-  const SHOW  = 8;
 
-  // Create scroll-to-top button via JS — no HTML needed
+  // Inject scroll-to-top button
   const topBtn = document.createElement('button');
   topBtn.className = 'scroll-top-btn';
   topBtn.title     = 'Back to top';
@@ -187,12 +181,12 @@ function initBreaking(data) {
   topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   document.body.appendChild(topBtn);
 
-  // Create page transition overlay — no HTML needed
+  // Inject page transition overlay
   const overlay = document.createElement('div');
   overlay.className = 'page-transition';
   document.body.appendChild(overlay);
 
-  // Fade in on load
+  // Fade in page on load
   requestAnimationFrame(() => {
     requestAnimationFrame(() => { overlay.style.opacity = '0'; });
   });
@@ -210,32 +204,59 @@ function initBreaking(data) {
     setTimeout(() => { location.href = href; }, 220);
   });
 
+  // Scroll state
+  let lastY     = window.scrollY;
+  let ticking   = false;
+  let navHidden = false;
+  let downAccum = 0;
+  let upAccum   = 0;
+
+  // Thresholds
+  const SLIM_AT    = 60;
+  const HIDE_AT    = 100;
+  const HIDE_DELTA = 40;
+  const SHOW_DELTA = 12;
+  const TOP_BTN_AT = 400;
+
   function update() {
     const header = $('.site-header');
     const nav    = $('.cat-nav');
     const curY   = window.scrollY;
     const diff   = curY - lastY;
 
-    // Slim header after 60px
+    // 1. Slim header
     if (header) {
-      if (curY > 60) header.classList.add('slim');
-      else header.classList.remove('slim');
+      if (curY > SLIM_AT) header.classList.add('slim');
+      else                header.classList.remove('slim');
     }
 
-    // Nav hide/show
+    // 2. Nav hide/show with accumulation to prevent shaking
     if (nav) {
       if (curY <= 10) {
-        nav.classList.remove('hidden');
-      } else if (diff > 0 && curY > HIDE) {
-        nav.classList.add('hidden');
-      } else if (diff < -SHOW) {
-        nav.classList.remove('hidden');
+        downAccum = 0; upAccum = 0;
+        if (navHidden) { nav.classList.remove('hidden'); navHidden = false; }
+      } else if (diff > 0) {
+        upAccum    = 0;
+        downAccum += diff;
+        if (!navHidden && curY > HIDE_AT && downAccum > HIDE_DELTA) {
+          nav.classList.add('hidden');
+          navHidden = true;
+          downAccum = 0;
+        }
+      } else if (diff < 0) {
+        downAccum  = 0;
+        upAccum   += Math.abs(diff);
+        if (navHidden && upAccum > SHOW_DELTA) {
+          nav.classList.remove('hidden');
+          navHidden = false;
+          upAccum   = 0;
+        }
       }
     }
 
-    // Scroll to top button
-    if (curY > 400) topBtn.classList.add('visible');
-    else topBtn.classList.remove('visible');
+    // 3. Scroll to top button
+    if (curY > TOP_BTN_AT) topBtn.classList.add('visible');
+    else                    topBtn.classList.remove('visible');
 
     lastY   = curY <= 0 ? 0 : curY;
     ticking = false;
@@ -244,6 +265,10 @@ function initBreaking(data) {
   window.addEventListener('scroll', () => {
     if (!ticking) { requestAnimationFrame(update); ticking = true; }
   }, { passive: true });
+
+  // Run once on load
+  update();
+
 })();
 
 // ── 2. BREADCRUMB (injected on article page) ──────────
@@ -668,3 +693,4 @@ function downloadSummary() {
   link.href = canvas.toDataURL('image/png');
   link.click();
 }
+u
