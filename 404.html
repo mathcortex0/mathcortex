@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Not Found — Alamin Network</title>
+  <link rel="icon" type="image/png" href="logo_alaminnetwork.png" />
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    .error-page {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    .error-code {
+      font-family: var(--display);
+      font-size: clamp(5rem, 15vw, 10rem);
+      font-weight: 700;
+      color: var(--surf-deep);
+      line-height: 1;
+      margin-bottom: .5rem;
+      letter-spacing: -.04em;
+    }
+    .error-title {
+      font-family: var(--display);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: .8rem;
+    }
+    .error-text {
+      font-family: var(--ui);
+      font-size: .9rem;
+      color: var(--text-3);
+      max-width: 420px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .error-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .error-btn-primary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--navy); color: #fff;
+      font-family: var(--ui); font-size: .78rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .7rem 1.6rem; border-radius: var(--r);
+      transition: background .18s;
+    }
+    .error-btn-primary:hover { background: var(--navy-mid); }
+    .error-btn-secondary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--surf-alt); color: var(--text-2);
+      font-family: var(--ui); font-size: .78rem; font-weight: 500;
+      padding: .7rem 1.6rem; border-radius: var(--r);
+      border: 1px solid var(--border); transition: background .18s;
+    }
+    .error-btn-secondary:hover { background: var(--surf-deep); }
+    .error-cats {
+      margin-top: 3rem;
+      display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center;
+    }
+    .error-cat-link {
+      font-family: var(--ui); font-size: .7rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: .4rem .9rem; border-radius: 30px;
+      border: 1px solid var(--border); color: var(--text-3);
+      transition: all .18s;
+    }
+    .error-cat-link:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-brand-row">
+    <div class="header-logo">
+      <img class="logo-img" src="logo_alaminnetwork.png" alt="Alamin Network" />
+      <div class="logo-divider"></div>
+      <div class="logo-text">
+        <span class="logo-text-main">Alamin Network</span>
+        <span class="logo-text-sub">Reporting the World With Precision</span>
+      </div>
+    </div>
+    <div class="edition-badge">
+      <span class="edition-name" id="edition-name">Morning Edition</span>
+      Independent · Accurate · Trusted
+    </div>
+    <div class="header-actions">
+      <button class="hamburger-btn" id="hamburger-btn" onclick="openDrawer()" title="Menu">
+        <span class="ham-bar"></span><span class="ham-bar"></span><span class="ham-bar"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<nav class="drawer" id="drawer">
+  <div class="drawer-head"><img class="drawer-logo" src="logo_alaminnetwork.png" alt="Alamin Network" /><button class="drawer-x" onclick="closeDrawer()">✕</button></div>
+  <div class="drawer-edition"><strong id="drawer-edition-name">Morning Edition</strong>Independent · Accurate · Trusted</div>
+  <div>
+    <div class="drawer-nav-label">News</div>
+    <a href="index.html" class="drawer-link" data-page="home"><span class="drawer-dot"></span>Home</a>
+    <a href="category.html?cat=international" class="drawer-link" data-cat="international"><span class="drawer-dot"></span>International</a>
+    <a href="category.html?cat=bangladesh"    class="drawer-link" data-cat="bangladesh"><span class="drawer-dot"></span>Bangladesh</a>
+    <a href="category.html?cat=politics"      class="drawer-link" data-cat="politics"><span class="drawer-dot"></span>Politics</a>
+    <a href="category.html?cat=business"      class="drawer-link" data-cat="business"><span class="drawer-dot"></span>Business</a>
+  </div>
+  <div>
+    <div class="drawer-nav-label">More</div>
+    <a href="category.html?cat=sports"        class="drawer-link" data-cat="sports"><span class="drawer-dot"></span>Sports</a>
+    <a href="category.html?cat=technology"    class="drawer-link" data-cat="technology"><span class="drawer-dot"></span>Technology</a>
+    <a href="category.html?cat=entertainment" class="drawer-link" data-cat="entertainment"><span class="drawer-dot"></span>Entertainment</a>
+    <a href="category.html?cat=explained"     class="drawer-link" data-cat="explained"><span class="drawer-dot"></span>Explained</a>
+    <a href="category.html?cat=opinion"       class="drawer-link" data-cat="opinion"><span class="drawer-dot"></span>Opinion</a>
+  </div>
+  <div>
+    <div class="drawer-nav-label">Pages</div>
+    <a href="about.html" class="drawer-link"><span class="drawer-dot" style="background:var(--gold)"></span>About Us</a>
+  </div>
+  <div class="drawer-foot"><div class="drawer-foot-title">Follow Us</div><div class="drawer-social"><a href="#">Facebook</a><a href="#">𝕏 Twitter</a><a href="#">YouTube</a></div></div>
+</nav>
+
+<main>
+  <div class="error-page">
+    <div class="error-code">404</div>
+    <h1 class="error-title">Page Not Found</h1>
+    <p class="error-text">The page you are looking for may have been moved, deleted, or never existed. Try heading back to the homepage or browsing a category.</p>
+    <div class="error-actions">
+      <a href="index.html" class="error-btn-primary">← Homepage</a>
+      <a href="javascript:history.back()" class="error-btn-secondary">Go Back</a>
+    </div>
+    <div class="error-cats">
+      <a href="category.html?cat=international" class="error-cat-link">International</a>
+      <a href="category.html?cat=bangladesh"    class="error-cat-link">Bangladesh</a>
+      <a href="category.html?cat=politics"      class="error-cat-link">Politics</a>
+      <a href="category.html?cat=business"      class="error-cat-link">Business</a>
+      <a href="category.html?cat=sports"        class="error-cat-link">Sports</a>
+      <a href="category.html?cat=technology"    class="error-cat-link">Technology</a>
+      <a href="category.html?cat=explained"     class="error-cat-link">Explained</a>
+      <a href="category.html?cat=opinion"       class="error-cat-link">Opinion</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-bottom" style="border-top:none">
+    <span>© 2026 Alamin Network. All rights reserved.</span>
+    <span>Designed & Built by Md. Al Amin</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>initEdition();</script>
+</body>
+</html>
