@@ -163,14 +163,37 @@ function initBreaking(data) {
 // ── SCROLL NAV HIDE ───────────────────────────────────
 
 (function() {
-  let last = 0;
-  window.addEventListener('scroll', () => {
+  let lastY     = 0;
+  let ticking   = false;
+  const HIDE_THRESHOLD = 80;  // px scrolled down before hiding
+  const SHOW_THRESHOLD = 8;   // px scrolled up before showing
+
+  function updateNav() {
     const nav = $('.cat-nav');
     if (!nav) return;
-    const cur = window.scrollY;
-    if (cur > 60 && cur > last) nav.classList.add('hidden');
-    else nav.classList.remove('hidden');
-    last = cur <= 0 ? 0 : cur;
+    const curY = window.scrollY;
+    const diff = curY - lastY;
+
+    if (curY <= 10) {
+      // At very top — always show
+      nav.classList.remove('hidden');
+    } else if (diff > 0 && curY > HIDE_THRESHOLD) {
+      // Scrolling DOWN past threshold — hide immediately
+      nav.classList.add('hidden');
+    } else if (diff < -SHOW_THRESHOLD) {
+      // Scrolling UP meaningfully — show smoothly
+      nav.classList.remove('hidden');
+    }
+
+    lastY = curY <= 0 ? 0 : curY;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateNav);
+      ticking = true;
+    }
   }, { passive: true });
 })();
 
@@ -571,6 +594,9 @@ function downloadSummary() {
   ctx.fillStyle = '#c9a84c'; ctx.fillRect(0, H-5, W, 5);
   const link = document.createElement('a');
   link.download = 'alamin-' + _currentArticle.id + '.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+}
   link.href = canvas.toDataURL('image/png');
   link.click();
 }
