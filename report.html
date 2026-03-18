@@ -25,29 +25,25 @@
 <header class="site-header">
   <div class="header-brand-row">
     <div class="header-logo">
-      <img class="logo-img" src="logo_alaminnetwork.png" alt="Alamin Network" />
-      <div class="logo-divider"></div>
-      <div class="logo-text">
-        <span class="logo-text-main">Alamin Network</span>
-        <span class="logo-text-sub">Reporting the World With Precision</span>
-      </div>
+      <a href="index.html" style="display:flex;align-items:center;gap:.9rem;text-decoration:none">
+        <img class="logo-img" src="logo_alaminnetwork.png" alt="Alamin Network" />
+        <div class="logo-divider"></div>
+        <div class="logo-text">
+          <span class="logo-text-main">Alamin Network</span>
+          <span class="logo-text-sub">Reporting the World With Precision</span>
+        </div>
+      </a>
     </div>
     <div class="edition-badge"><span class="edition-name" id="edition-name">Morning Edition</span>Independent · Accurate · Trusted</div>
     <div class="header-actions">
+      <a href="live.html" class="live-header-btn" id="live-header-btn" title="Live Coverage">
+        <span class="live-header-dot"></span>LIVE
+      </a>
       <button class="header-btn" onclick="openSearch()" title="Search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
       <button class="header-btn" onclick="window.print()" title="Print"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
       <button class="hamburger-btn" id="hamburger-btn" onclick="openDrawer()" title="Menu"><span class="ham-bar"></span><span class="ham-bar"></span><span class="ham-bar"></span></button>
     </div>
   </div>
-  <nav class="cat-nav" id="cat-nav">
-    <div class="cat-nav-inner">
-      <a href="index.html" class="cat-link">Home</a>
-      <a href="category.html?cat=international" class="cat-link" data-cat="international">International</a>
-      <a href="category.html?cat=bangladesh"    class="cat-link" data-cat="bangladesh">Bangladesh</a>
-      <a href="category.html?cat=politics"      class="cat-link" data-cat="politics">Politics</a>
-      <a href="category.html?cat=sports"        class="cat-link" data-cat="sports">Sports</a>
-    </div>
-  </nav>
 </header>
 <div class="drawer-backdrop" id="drawer-backdrop"></div>
 <nav class="drawer" id="drawer">
