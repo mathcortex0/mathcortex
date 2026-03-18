@@ -3,33 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Alamin Network — Breaking news, national, international and sports coverage." />
+  <meta name="description" content="Alamin Network — Breaking news, Bangladesh, international and sports coverage." />
   <meta name="theme-color" content="#ffffff" />
   <meta property="og:site_name" content="Alamin Network" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Alamin Network — World News" />
-  <meta property="og:description" content="Breaking news, national, international and sports coverage from Bangladesh and around the world." />
-  <meta property="og:image" content="https://raw.githubusercontent.com/mathcortex0/mathcortex/main/logo_alaminnetwork.png" />
+  <meta property="og:description" content="Breaking news from Bangladesh and around the world." />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Alamin Network — World News" />
-  <meta name="twitter:description" content="Breaking news from Bangladesh and around the world." />
   <title>Alamin Network — World News</title>
-  <link rel="icon" type="image/png" href="anlogo.png" />
+  <link rel="icon" type="image/png" href="logo_alaminnetwork.png" />
   <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 
-<!-- BREAKING BANNER -->
 <div class="breaking-banner" id="breaking-banner">
   <div class="breaking-tag"><div class="breaking-dot"></div>Breaking</div>
   <div class="breaking-scroll"><span class="breaking-scroll-inner" id="breaking-inner"></span></div>
 </div>
 
-<!-- HEADER -->
 <header class="site-header">
   <div class="header-brand-row">
-
-    <!-- Logo -->
     <div class="header-logo">
       <img class="logo-img" src="logo_alaminnetwork.png" alt="Alamin Network" />
       <div class="logo-divider"></div>
@@ -38,43 +31,31 @@
         <span class="logo-text-sub">Reporting the World With Precision</span>
       </div>
     </div>
-
-    <!-- Edition -->
     <div class="edition-badge">
       <span class="edition-name" id="edition-name">Morning Edition</span>
       Independent · Accurate · Trusted
     </div>
-
-    <!-- Actions -->
     <div class="header-actions">
       <button class="header-btn" onclick="openSearch()" title="Search">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </button>
       <button class="hamburger-btn" id="hamburger-btn" onclick="openDrawer()" title="Menu">
-        <span class="ham-bar"></span>
-        <span class="ham-bar"></span>
-        <span class="ham-bar"></span>
+        <span class="ham-bar"></span><span class="ham-bar"></span><span class="ham-bar"></span>
       </button>
     </div>
-
   </div>
-
-  <!-- Category nav -->
   <nav class="cat-nav" id="cat-nav">
     <div class="cat-nav-inner">
       <a href="index.html" class="cat-link active">Home</a>
-      <a href="category.html?cat=national"      class="cat-link" data-cat="national">National</a>
       <a href="category.html?cat=international" class="cat-link" data-cat="international">International</a>
+      <a href="category.html?cat=bangladesh"    class="cat-link" data-cat="bangladesh">Bangladesh</a>
       <a href="category.html?cat=politics"      class="cat-link" data-cat="politics">Politics</a>
       <a href="category.html?cat=sports"        class="cat-link" data-cat="sports">Sports</a>
     </div>
   </nav>
 </header>
 
-<!-- DRAWER BACKDROP -->
 <div class="drawer-backdrop" id="drawer-backdrop"></div>
-
-<!-- DRAWER -->
 <nav class="drawer" id="drawer">
   <div class="drawer-head">
     <img class="drawer-logo" src="logo_alaminnetwork.png" alt="Alamin Network" />
@@ -86,29 +67,32 @@
   </div>
   <div>
     <div class="drawer-nav-label">News</div>
-    <a href="index.html"                        class="drawer-link active" data-page="home"><span class="drawer-dot"></span>Home</a>
-    <a href="category.html?cat=national"        class="drawer-link" data-cat="national"><span class="drawer-dot"></span>National</a>
-    <a href="category.html?cat=international"   class="drawer-link" data-cat="international"><span class="drawer-dot"></span>International</a>
-    <a href="category.html?cat=politics"        class="drawer-link" data-cat="politics"><span class="drawer-dot"></span>Politics</a>
-    <a href="category.html?cat=business"        class="drawer-link" data-cat="business"><span class="drawer-dot"></span>Business</a>
+    <a href="index.html"                      class="drawer-link active" data-page="home"><span class="drawer-dot"></span>Home</a>
+    <a href="category.html?cat=international" class="drawer-link" data-cat="international"><span class="drawer-dot"></span>International</a>
+    <a href="category.html?cat=bangladesh"    class="drawer-link" data-cat="bangladesh"><span class="drawer-dot"></span>Bangladesh</a>
+    <a href="category.html?cat=politics"      class="drawer-link" data-cat="politics"><span class="drawer-dot"></span>Politics</a>
+    <a href="category.html?cat=business"      class="drawer-link" data-cat="business"><span class="drawer-dot"></span>Business</a>
   </div>
   <div>
     <div class="drawer-nav-label">More</div>
-    <a href="category.html?cat=sports"          class="drawer-link" data-cat="sports"><span class="drawer-dot"></span>Sports</a>
-    <a href="category.html?cat=technology"      class="drawer-link" data-cat="technology"><span class="drawer-dot"></span>Technology</a>
-    <a href="category.html?cat=entertainment"   class="drawer-link" data-cat="entertainment"><span class="drawer-dot"></span>Entertainment</a>
+    <a href="category.html?cat=sports"        class="drawer-link" data-cat="sports"><span class="drawer-dot"></span>Sports</a>
+    <a href="category.html?cat=technology"    class="drawer-link" data-cat="technology"><span class="drawer-dot"></span>Technology</a>
+    <a href="category.html?cat=entertainment" class="drawer-link" data-cat="entertainment"><span class="drawer-dot"></span>Entertainment</a>
+    <a href="category.html?cat=explained"     class="drawer-link" data-cat="explained"><span class="drawer-dot"></span>Explained</a>
+    <a href="category.html?cat=opinion"       class="drawer-link" data-cat="opinion"><span class="drawer-dot"></span>Opinion</a>
+  </div>
+  <div>
+    <div class="drawer-nav-label">Pages</div>
+    <a href="about.html" class="drawer-link"><span class="drawer-dot" style="background:var(--gold)"></span>About Us</a>
   </div>
   <div class="drawer-foot">
     <div class="drawer-foot-title">Follow Us</div>
     <div class="drawer-social">
-      <a href="#">Facebook</a>
-      <a href="#">𝕏 Twitter</a>
-      <a href="#">YouTube</a>
+      <a href="#">Facebook</a><a href="#">𝕏 Twitter</a><a href="#">YouTube</a>
     </div>
   </div>
 </nav>
 
-<!-- SEARCH OVERLAY -->
 <div class="search-overlay" id="search-overlay">
   <div class="search-box">
     <div class="search-box-label">Search Articles</div>
@@ -121,14 +105,10 @@
   </div>
 </div>
 
-<!-- MAIN -->
 <main class="site-main">
 
-  <!-- HERO -->
   <section class="hero">
-    <div class="hero-main" id="hero-main">
-      <div style="width:100%;height:100%;min-height:420px" class="sk"></div>
-    </div>
+    <div class="hero-main" id="hero-main"><div style="width:100%;height:100%;min-height:420px" class="sk"></div></div>
     <div class="hero-stack" id="hero-stack">
       <div style="flex:1" class="sk"></div>
       <div style="flex:1;margin-top:2px" class="sk"></div>
@@ -136,72 +116,76 @@
     </div>
   </section>
 
-  <!-- TRENDING -->
   <div class="trending">
     <div class="trending-label">Trending</div>
     <div class="trending-items" id="trending-items"></div>
   </div>
 
-  <!-- LATEST NEWS -->
   <section>
     <div class="section-head">
-      <div class="section-head-left">
-        <div class="section-bar"></div>
-        <h2 class="section-title">Latest News</h2>
-      </div>
+      <div class="section-head-left"><div class="section-bar"></div><h2 class="section-title">Latest News</h2></div>
     </div>
     <div class="news-grid" id="news-grid"></div>
   </section>
 
-  <!-- STRIPS -->
   <div class="cat-strips">
     <section>
       <div class="section-head">
-        <div class="section-head-left">
-          <div class="section-bar" style="background:var(--cat-int)"></div>
-          <h2 class="section-title">International</h2>
-        </div>
+        <div class="section-head-left"><div class="section-bar" style="background:var(--cat-int)"></div><h2 class="section-title">International</h2></div>
         <a href="category.html?cat=international" class="section-all">View All →</a>
       </div>
       <div class="strip-list" id="strip-international"></div>
     </section>
     <section>
       <div class="section-head">
-        <div class="section-head-left">
-          <div class="section-bar" style="background:var(--cat-nat)"></div>
-          <h2 class="section-title">National</h2>
-        </div>
-        <a href="category.html?cat=national" class="section-all">View All →</a>
+        <div class="section-head-left"><div class="section-bar" style="background:#c0392b"></div><h2 class="section-title">Bangladesh</h2></div>
+        <a href="category.html?cat=bangladesh" class="section-all">View All →</a>
       </div>
-      <div class="strip-list" id="strip-national"></div>
+      <div class="strip-list" id="strip-bangladesh"></div>
     </section>
     <section>
       <div class="section-head">
-        <div class="section-head-left">
-          <div class="section-bar" style="background:var(--cat-spt)"></div>
-          <h2 class="section-title">Sports</h2>
-        </div>
+        <div class="section-head-left"><div class="section-bar" style="background:#0891b2"></div><h2 class="section-title">Business</h2></div>
+        <a href="category.html?cat=business" class="section-all">View All →</a>
+      </div>
+      <div class="strip-list" id="strip-business"></div>
+    </section>
+    <section>
+      <div class="section-head">
+        <div class="section-head-left"><div class="section-bar" style="background:var(--cat-spt)"></div><h2 class="section-title">Sports</h2></div>
         <a href="category.html?cat=sports" class="section-all">View All →</a>
       </div>
       <div class="strip-list" id="strip-sports"></div>
+    </section>
+    <section>
+      <div class="section-head">
+        <div class="section-head-left"><div class="section-bar" style="background:#7c3aed"></div><h2 class="section-title">Politics</h2></div>
+        <a href="category.html?cat=politics" class="section-all">View All →</a>
+      </div>
+      <div class="strip-list" id="strip-politics"></div>
     </section>
   </div>
 
 </main>
 
-<!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-main">
     <div>
       <img class="footer-logo" src="logo_alaminnetwork.png" alt="Alamin Network" />
-      <p class="footer-desc">Independent journalism covering Bangladesh and the world. Accurate, accountable, and precise in every report.</p>
+      <p class="footer-desc">Independent journalism covering Bangladesh and the world. Accurate, accountable, and precise.</p>
     </div>
     <div>
       <div class="footer-col-title">Coverage</div>
       <div class="footer-links">
-        <a href="category.html?cat=national">National</a>
         <a href="category.html?cat=international">International</a>
+        <a href="category.html?cat=bangladesh">Bangladesh</a>
+        <a href="category.html?cat=politics">Politics</a>
+        <a href="category.html?cat=business">Business</a>
         <a href="category.html?cat=sports">Sports</a>
+        <a href="category.html?cat=technology">Technology</a>
+        <a href="category.html?cat=entertainment">Entertainment</a>
+        <a href="category.html?cat=explained">Explained</a>
+        <a href="category.html?cat=opinion">Opinion</a>
       </div>
     </div>
     <div>
@@ -215,15 +199,13 @@
     <div>
       <div class="footer-col-title">Follow</div>
       <div class="footer-links">
-        <a href="#">Facebook</a>
-        <a href="#">𝕏 Twitter</a>
-        <a href="#">YouTube</a>
+        <a href="#">Facebook</a><a href="#">𝕏 Twitter</a><a href="#">YouTube</a>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
     <span>© 2026 Alamin Network. All rights reserved.</span>
-    <span>Independent · Accountable · Precise</span>
+    <span>Designed & Built by Md. Al Amin</span>
   </div>
 </footer>
 
