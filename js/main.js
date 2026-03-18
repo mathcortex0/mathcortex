@@ -384,10 +384,20 @@ async function initArticlePage() {
 
   if (!id) { showError(); return; }
 
-  const catData = await getJSON('data/' + cat + '.json');
-  if (!catData) { showError(); return; }
+  // First try main category JSON
+  let catData = await getJSON('data/' + cat + '.json');
+  let article = catData ? catData.find(a => a.id === id) : null;
 
-  const article = catData.find(a => a.id === id);
+  // If not found, try archive JSON as fallback
+  if (!article) {
+    const archiveData = await getJSON('data/archive-' + cat + '.json');
+    if (archiveData) {
+      article = archiveData.find(a => a.id === id);
+      // Use archive data for related articles too
+      if (article) catData = archiveData;
+    }
+  }
+
   if (!article) { showError(); return; }
 
   _currentArticle = article;
