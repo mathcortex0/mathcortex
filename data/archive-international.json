@@ -6,25 +6,34 @@
     "date": "2026-03-13",
     "time": "16:00",
     "category": "International",
-    "image": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=80",
+    "featured": false,
+    "breaking": false,
+    "content": "<p>The Federal Reserve held its benchmark interest rate unchanged at a target range of 4.25 to 4.50 percent on Wednesday, as policymakers signalled they needed more evidence of sustained disinflation before committing to the rate cuts that financial markets have been anticipating since late last year.</p><p>Federal Reserve Chair Jerome Powell, speaking at a press conference following the two-day Federal Open Market Committee meeting, acknowledged that inflation had continued to moderate but said the pace of decline remained insufficient to justify easing monetary conditions. He pointed in particular to stubbornly elevated services inflation, which has proven more resistant to higher rates than the goods sector.</p><p>Financial markets responded with modest declines in equity indices and a slight strengthening of the dollar, as traders adjusted expectations for the first rate cut further into the year. Futures pricing now implies a roughly 40 percent probability of a cut at the June meeting, down from over 60 percent a week ago.</p><p>The decision comes against a backdrop of growing uncertainty about the global economic outlook, with slowing growth in China, persistent geopolitical disruptions to energy and commodity markets, and ongoing fiscal pressures in several major European economies all weighing on the Fed's assessment of the risks facing the US economy.</p><p>For Bangladesh and other emerging economies, the Fed's hold is a double-edged development. While higher US rates support the dollar and complicate debt servicing for countries with dollar-denominated obligations, a premature Fed pivot that reignited US inflation could ultimately prove more damaging to global financial stability than the current period of elevated rates.</p>"
   },
   {
     "id": "i005",
     "title": "EU Parliament Approves Landmark AI Liability Directive",
-    "summary": "The sweeping regulation makes it easier for citizens to seek compensation when harmed by AI-powered systems, setting a global benchmark.",
+    "summary": "The sweeping regulation makes it easier for citizens to seek compensation when harmed by AI-powered systems, setting a global benchmark for accountability.",
     "date": "2026-03-11",
     "time": "10:00",
     "category": "International",
-    "image": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&q=80",
+    "featured": false,
+    "breaking": false,
+    "content": "<p>The European Parliament voted by a substantial majority on Tuesday to approve the AI Liability Directive, a landmark piece of legislation that will make it significantly easier for European citizens and businesses to seek compensation when they suffer harm caused by artificial intelligence systems.</p><p>The directive, which passed 418 votes to 209, introduces a presumption of causality in AI-related damage claims — meaning that plaintiffs no longer need to prove precisely how an AI system caused their harm, only that it was involved and that the developer or deployer failed to meet the applicable standard of care.</p><p>Technology industry groups warned that the rules, which will apply to all AI systems operating in EU markets regardless of where they were developed, would impose significant compliance costs and create legal uncertainty that could slow innovation. The directive goes substantially further than similar legislation being developed in the United States and United Kingdom.</p><p>Consumer rights organisations, however, hailed the vote as a historic step toward meaningful accountability in an era of increasingly autonomous systems. The directive covers a broad range of AI applications, from recruitment algorithms and credit scoring tools to medical diagnostic systems and autonomous vehicles.</p><p>The legislation now moves to the Council of the European Union for final approval before entering into force. Member states will have two years to transpose the directive into national law. Bangladesh's ICT Ministry has already indicated it is monitoring EU AI legislation closely as a reference point for developing its own regulatory framework.</p>"
   },
   {
     "id": "i006",
-    "title": "China and Brazil Sign Landmark Currency Swap Agreement",
+    "title": "China and Brazil Sign Landmark Currency Swap Agreement Bypassing US Dollar",
     "summary": "The deal allows bilateral trade to be settled in yuan and reais, bypassing the US dollar in what analysts call a significant shift in global finance.",
     "date": "2026-03-08",
     "time": "09:00",
     "category": "International",
-    "image": "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=1200&q=80",
+    "featured": false,
+    "breaking": false,
+    "content": "<p>China and Brazil signed a comprehensive bilateral currency swap agreement in Beijing on Friday, establishing a framework that will allow trade between the two countries to be settled directly in Chinese yuan and Brazilian reais without the intermediate conversion to US dollars that has historically characterised international transactions between emerging market economies.</p><p>The agreement, signed by the central bank governors of both countries at a ceremony attended by Chinese Premier Li Qiang and Brazilian President Luiz Inácio Lula da Silva, covers bilateral trade flows that amounted to approximately $150 billion in 2025, making it the largest non-dollar trade settlement arrangement between any two developing economies in history.</p><p>Chinese state media described the deal as a milestone in the gradual internationalisation of the renminbi and an expression of the growing economic partnership between the two BRICS anchor nations. Brazilian officials were more circumspect, emphasising that the arrangement was a practical measure to reduce transaction costs and currency conversion risks rather than a geopolitical statement about the role of the US dollar in the global financial system.</p><p>American and European financial analysts have nevertheless described the agreement as part of a broader pattern of de-dollarisation efforts across the Global South that, while individually modest, collectively represent the most significant challenge to dollar hegemony since the Bretton Woods system was established after World War Two.</p><p>For Bangladesh, which conducts significant trade with both China and Brazil and holds the majority of its foreign exchange reserves in dollar-denominated assets, the broader trend toward currency diversification in international trade raises both risks and potential opportunities that policymakers at Bangladesh Bank are understood to be actively assessing.</p>"
   },
   {
     "id": "i007",
@@ -33,15 +42,21 @@
     "date": "2026-03-05",
     "time": "14:00",
     "category": "International",
-    "image": "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=1200&q=80",
+    "featured": false,
+    "breaking": false,
+    "content": "<p>NATO member states agreed at a summit in Brussels on Thursday to raise the alliance's collective defence spending target to 3 percent of gross domestic product, the highest benchmark in the organisation's 77-year history and a significant escalation from the 2 percent target that most members only recently began to meet following years of American pressure and the shock of Russia's full-scale invasion of Ukraine in 2022.</p><p>The agreement, which NATO Secretary-General Mark Rutte described as a generational commitment to European security, was reached after intensive negotiations that exposed deep divisions between larger economies like Germany and France, which expressed concern about the fiscal implications of the new target, and eastern flank members like Poland and the Baltic states, which have been pushing for even higher commitments given their proximity to Russia.</p><p>US President's national security team, which had made the 3 percent target a non-negotiable condition for continued American support for the alliance, welcomed the outcome. However, several analysts noted that the agreement lacks a binding timeline and that the gap between member states' stated commitments and their actual defence budget trajectories has historically been substantial.</p><p>The summit communiqué also addressed the expanding security challenges posed by China's military modernisation and its deepening partnership with Russia, as well as the growing threat of hybrid warfare including cyberattacks, disinformation campaigns, and interference in democratic elections — areas where the alliance's traditional deterrence frameworks have proven less effective than in conventional military domains.</p><p>For Bangladesh, which maintains a traditionally non-aligned foreign policy posture, the NATO summit's outcomes are of indirect but real relevance. The reconfiguration of European defence spending will reshape global arms markets, procurement patterns, and the diplomatic alignments of countries that supply or seek to supply advanced military technology.</p>"
   },
   {
     "id": "i008",
     "title": "WHO Declares End of Mpox Public Health Emergency of International Concern",
-    "summary": "The global health body says the outbreak has been brought under sufficient control, though warns vigilance remains essential.",
+    "summary": "The global health body says the outbreak has been brought under sufficient control, though warns vigilance remains essential to prevent resurgence.",
     "date": "2026-03-01",
     "time": "11:30",
     "category": "International",
-    "image": "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=800&q=80"
+    "image": "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=1200&q=80",
+    "featured": false,
+    "breaking": false,
+    "content": "<p>The World Health Organisation declared on Saturday that the global mpox outbreak no longer constitutes a Public Health Emergency of International Concern, the organisation's highest level of alert, marking the formal end of a health crisis that spread to over 100 countries and infected more than 100,000 people globally since its emergence in 2022.</p><p>WHO Director-General Tedros Adhanom Ghebreyesus announced the decision following a recommendation from the International Health Regulations Emergency Committee, which concluded that while mpox continues to circulate in several regions, the overall trajectory of the outbreak has been brought under sufficient control to justify de-escalation from emergency status.</p><p>The announcement was welcomed by public health authorities globally, though the WHO and independent experts were careful to emphasise that the declaration does not mean mpox has been eradicated or that the risk of resurgence is negligible. Sustained surveillance, vaccination programmes in high-risk populations, and international reporting obligations under the International Health Regulations will all continue.</p><p>The end of the PHEIC designation has immediate practical implications for the funding and political attention directed toward mpox response. Several countries are likely to redirect resources currently allocated to outbreak management, raising concerns among epidemiologists about the maintenance of surveillance capacity in regions where the virus continues to circulate at low levels.</p><p>Bangladesh recorded a small number of confirmed mpox cases during the peak of the outbreak and implemented border health screening measures that public health officials credited with preventing wider community transmission. The lifting of the PHEIC is expected to reduce the operational burden on those screening systems, though the health ministry indicated it would maintain enhanced surveillance protocols through at least the end of 2026.</p>"
   }
 ]
