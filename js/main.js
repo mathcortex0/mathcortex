@@ -95,16 +95,19 @@ function initEdition() {
   const name = h < 12 ? 'Morning Edition' : h < 17 ? 'Afternoon Edition' : 'Evening Edition';
   $$('#edition-name, #drawer-edition-name').forEach(el => { if (el) el.textContent = name; });
 
-  // Check live.json and show/hide LIVE button
-  getJSON('data/live.json').then(data => {
-    const btn = document.getElementById('live-header-btn');
-    if (!btn) return;
-    if (data && data.active) {
-      btn.classList.add('visible');
-    } else {
-      btn.classList.remove('visible');
-    }
-  });
+  // Check live.json and show/hide LIVE button — always fresh, never cached
+  fetch('data/live.json?_=' + Date.now())
+    .then(r => r.json())
+    .then(data => {
+      const btn = document.getElementById('live-header-btn');
+      if (!btn) return;
+      if (data && data.active) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    })
+    .catch(() => {});
 }
 
 function setActiveNav() {
