@@ -104,8 +104,8 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
 .hamburger-btn.open .ham-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 
 /* Category nav */
-.cat-nav{border-top:1px solid var(--border-lt);background:var(--surface);overflow:hidden;max-height:44px;transition:max-height .3s var(--ease),opacity .3s var(--ease)}
-.cat-nav.hidden{max-height:0;opacity:0}
+.cat-nav{border-top:1px solid var(--border-lt);background:var(--surface);overflow:hidden;max-height:44px;transition:max-height .25s cubic-bezier(.4,0,.2,1),opacity .25s cubic-bezier(.4,0,.2,1),transform .25s cubic-bezier(.4,0,.2,1);opacity:1;transform:translateY(0);will-change:transform,opacity,max-height}
+.cat-nav.hidden{max-height:0;opacity:0;transform:translateY(-4px)}
 .cat-nav-inner{max-width:1380px;margin:0 auto;padding:0 2rem;display:flex;align-items:center}
 .cat-link{font-family:var(--ui);font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);padding:.68rem 1.1rem;position:relative;transition:color .18s}
 .cat-link::after{content:'';position:absolute;bottom:0;left:1.1rem;right:1.1rem;height:2px;background:var(--navy);transform:scaleX(0);transition:transform .22s var(--ease)}
@@ -455,7 +455,4 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
 @keyframes live-pulse {
   0%,100% { opacity: 1; transform: scale(1); }
   50%      { opacity: .5; transform: scale(.8); }
-}
-  link.href = canvas.toDataURL('image/png');
-  link.click();
 }
