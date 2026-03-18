@@ -90,10 +90,11 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
   max-width: 1380px;
   margin: 0 auto;
   padding: .85rem 2rem;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
+  flex-wrap: nowrap;
   align-items: center;
-  gap: 1.2rem;
+  gap: .8rem;
+  overflow: hidden;
 }
 
 .header-logo{
@@ -141,7 +142,8 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
   text-transform: uppercase;
   transition: opacity .25s ease;
   opacity: 1;
-  justify-self: center;
+  flex-shrink: 0;
+  margin: 0 auto;
 }
 .edition-name{display:block;color:var(--navy);font-weight:600;font-size:.68rem;margin-bottom:.1rem}
 
@@ -597,3 +599,11 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
 /* ── PAGE TRANSITIONS ──────────────────────────────── */
 .page-transition{position:fixed;inset:0;background:var(--surface);z-index:9998;pointer-events:none;opacity:0;transition:opacity .22s var(--ease)}
 .page-transition.fade-in{opacity:1}
+
+/* ── INLINE NAV — desktop only ─────────────────────── */
+@media(max-width:768px){
+  #header-inline-nav{ display:none !important; }
+  .site-header.scrolled .edition-badge{ opacity:1; pointer-events:auto; flex:1; }
+  .site-header.scrolled .logo-text{ opacity:1; max-width:200px; pointer-events:auto; }
+  .site-header.scrolled .logo-divider{ opacity:1; width:1px; }
+}
