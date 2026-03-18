@@ -102,12 +102,16 @@ function initEdition() {
       const btn = document.getElementById('live-header-btn');
       if (!btn) return;
       if (data && data.active) {
+        btn.classList.remove('hidden');
         btn.classList.add('visible');
       } else {
+        btn.classList.add('hidden');
         btn.classList.remove('visible');
       }
     })
-    .catch(() => {});
+    .catch(() => {
+      // If fetch fails, keep button visible as fallback
+    });
 }
 
 function setActiveNav() {
