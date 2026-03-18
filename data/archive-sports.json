@@ -1,0 +1,29 @@
+[
+  {
+    "id": "s004",
+    "title": "Paris Saint-Germain Eliminated From Champions League in Stunning Upset",
+    "summary": "Benfica's disciplined defensive display and a clinical counter-attacking performance send PSG crashing out at the quarter-final stage.",
+    "date": "2026-03-12",
+    "time": "23:00",
+    "category": "Sports",
+    "image": "https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=800&q=80"
+  },
+  {
+    "id": "s005",
+    "title": "Dhaka Premier League: Abahani Extend Lead With Dominant Derby Victory",
+    "summary": "Two goals from striker Suman Reza and a commanding defensive display give Abahani a five-point cushion at the top of the table.",
+    "date": "2026-03-10",
+    "time": "17:00",
+    "category": "Sports",
+    "image": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80"
+  },
+  {
+    "id": "s006",
+    "title": "Bangladesh Women's Cricket Team Wins Asia Cup for First Time",
+    "summary": "A stunning final over finish against India gives Bangladesh their maiden Asia Cup title and a place in the ICC Women's Championship.",
+    "date": "2026-03-06",
+    "time": "18:30",
+    "category": "Sports",
+    "image": "https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=800&q=80"
+  }
+]
