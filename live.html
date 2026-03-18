@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Live Coverage — Alamin Network" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Live — Alamin Network</title>
+  <link rel="icon" type="image/png" href="logo_alaminnetwork.png" />
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    /* ── LIVE PAGE STYLES ─────────────────────────── */
+
+    .live-hero {
+      background: var(--navy);
+      padding: 2.5rem 2rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .live-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 0% 50%, rgba(192,57,43,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .live-hero-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--red, #c0392b);
+      color: #fff;
+      font-family: var(--ui);
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      padding: .3em .9em;
+      border-radius: 2px;
+      margin-bottom: 1rem;
+    }
+    .live-badge-dot {
+      width: 6px; height: 6px;
+      background: #fff;
+      border-radius: 50%;
+      animation: blink 1s ease-in-out infinite;
+    }
+    .live-main-title {
+      font-family: var(--display);
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: .75rem;
+      letter-spacing: -.01em;
+    }
+    .live-subtitle {
+      font-family: var(--ui);
+      font-size: .9rem;
+      color: rgba(255,255,255,.6);
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+      max-width: 680px;
+    }
+    .live-meta-bar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: .8rem;
+      font-family: var(--ui);
+      font-size: .7rem;
+      color: rgba(255,255,255,.45);
+      padding-top: .9rem;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .live-meta-bar strong { color: rgba(255,255,255,.75); font-weight: 500; }
+    .live-meta-sep { color: rgba(255,255,255,.2); }
+    .live-last-updated { color: var(--gold-rich, #c9a84c); font-weight: 600; }
+
+    /* Ended state */
+    .live-ended-banner {
+      background: var(--surf-alt, #f2f0eb);
+      border: 1px solid var(--border, #ddd9d0);
+      border-radius: var(--r, 5px);
+      padding: 1.2rem 1.5rem;
+      margin: 2rem auto;
+      max-width: 860px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .live-ended-text {
+      font-family: var(--ui);
+      font-size: .85rem;
+      color: var(--text-3, #5a6270);
+    }
+    .live-ended-link {
+      font-family: var(--ui);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--navy, #0f2040);
+      white-space: nowrap;
+      transition: opacity .18s;
+    }
+    .live-ended-link:hover { opacity: .7; }
+
+    /* Main layout */
+    .live-layout {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 5rem;
+    }
+
+    /* Auto-refresh indicator */
+    .live-refresh-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: .9rem;
+      border-bottom: 2px solid var(--navy, #0f2040);
+    }
+    .live-refresh-label {
+      font-family: var(--ui);
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--text-4, #8a9099);
+    }
+    .live-refresh-status {
+      font-family: var(--ui);
+      font-size: .65rem;
+      color: var(--text-4, #8a9099);
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .live-refresh-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--cat-spt, #1e7e46);
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    /* Update cards */
+    .live-updates { display: flex; flex-direction: column; gap: 0; }
+
+    .live-update {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 0;
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--border-lt, #eae6de);
+      animation: fadeIn .4s ease both;
+    }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+    .live-update-time-col {
+      padding-top: .18rem;
+      flex-shrink: 0;
+    }
+    .live-update-time {
+      font-family: var(--ui);
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--text-3, #5a6270);
+      letter-spacing: .04em;
+    }
+
+    .live-update-body {
+      border-left: 3px solid var(--border, #ddd9d0);
+      padding-left: 1.3rem;
+    }
+
+    /* Label colours */
+    .live-label {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      font-family: var(--ui);
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      padding: .22em .7em;
+      border-radius: 2px;
+      margin-bottom: .7rem;
+    }
+    .label-breaking    { background: rgba(192,57,43,.1);  color: #c0392b; border-left-color: #c0392b; }
+    .label-update      { background: rgba(184,146,42,.1); color: #b8922a; }
+    .label-context     { background: rgba(15,32,64,.07);  color: var(--navy, #0f2040); }
+    .label-quote       { background: rgba(109,40,217,.08);color: #6d28d9; }
+    .label-photo       { background: rgba(30,126,70,.08); color: #1e7e46; }
+    .label-started     { background: rgba(30,126,70,.08); color: #1e7e46; }
+    .label-analysis    { background: rgba(2,132,199,.08); color: #0284c7; }
+
+    /* Border colour per label */
+    .live-update.type-breaking .live-update-body  { border-left-color: #c0392b; }
+    .live-update.type-update   .live-update-body  { border-left-color: #b8922a; }
+    .live-update.type-quote    .live-update-body  { border-left-color: #6d28d9; }
+    .live-update.type-photo    .live-update-body  { border-left-color: #1e7e46; }
+    .live-update.type-started  .live-update-body  { border-left-color: #1e7e46; }
+    .live-update.type-context  .live-update-body  { border-left-color: var(--navy, #0f2040); }
+    .live-update.type-analysis .live-update-body  { border-left-color: #0284c7; }
+
+    .live-update-headline {
+      font-family: var(--display, 'Cormorant Garamond', serif);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy, #0f2040);
+      line-height: 1.3;
+      margin-bottom: .7rem;
+    }
+    .live-update-text {
+      font-family: var(--display, 'Cormorant Garamond', serif);
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--text-2, #2c3440);
+    }
+    .live-update-img {
+      width: 100%;
+      border-radius: var(--r-lg, 12px);
+      margin: .9rem 0;
+      display: block;
+      max-height: 420px;
+      object-fit: cover;
+    }
+
+    /* Skeleton */
+    .live-sk { display: flex; flex-direction: column; gap: 0; }
+    .live-sk-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--border-lt, #eae6de);
+      gap: 0;
+    }
+    .live-sk-body { border-left: 3px solid var(--border, #ddd9d0); padding-left: 1.3rem; }
+
+    @media (max-width: 600px) {
+      .live-hero { padding: 2rem 1rem 1.5rem; }
+      .live-layout { padding: 1.5rem 1rem 4rem; }
+      .live-update { grid-template-columns: 54px 1fr; }
+      .live-update-headline { font-size: 1.05rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="breaking-banner" id="breaking-banner">
+  <div class="breaking-tag"><div class="breaking-dot"></div>Breaking</div>
+  <div class="breaking-scroll"><span class="breaking-scroll-inner" id="breaking-inner"></span></div>
+</div>
+
+<header class="site-header">
+  <div class="header-brand-row">
+    <div class="header-logo">
+      <a href="index.html" style="display:flex;align-items:center;gap:.9rem;text-decoration:none">
+        <img class="logo-img" src="logo_alaminnetwork.png" alt="Alamin Network" />
+        <div class="logo-divider"></div>
+        <div class="logo-text">
+          <span class="logo-text-main">Alamin Network</span>
+          <span class="logo-text-sub">Reporting the World With Precision</span>
+        </div>
+      </a>
+    </div>
+    <div class="edition-badge">
+      <span class="edition-name" id="edition-name">Morning Edition</span>
+      Independent · Accurate · Trusted
+    </div>
+    <div class="header-actions">
+      <a href="live.html" class="live-header-btn" id="live-header-btn" title="Live Coverage" style="display:none">
+        <span class="live-header-dot"></span>LIVE
+      </a>
+      <button class="header-btn" onclick="openSearch()" title="Search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="hamburger-btn" id="hamburger-btn" onclick="openDrawer()" title="Menu">
+        <span class="ham-bar"></span><span class="ham-bar"></span><span class="ham-bar"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="cat-nav" id="cat-nav">
+    <div class="cat-nav-inner">
+      <a href="index.html" class="cat-link">Home</a>
+      <a href="category.html?cat=international" class="cat-link" data-cat="international">International</a>
+      <a href="category.html?cat=bangladesh"    class="cat-link" data-cat="bangladesh">Bangladesh</a>
+      <a href="category.html?cat=politics"      class="cat-link" data-cat="politics">Politics</a>
+      <a href="category.html?cat=sports"        class="cat-link" data-cat="sports">Sports</a>
+    </div>
+  </nav>
+</header>
+
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<nav class="drawer" id="drawer">
+  <div class="drawer-head">
+    <img class="drawer-logo" src="logo_alaminnetwork.png" alt="Alamin Network" />
+    <button class="drawer-x" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-edition">
+    <strong id="drawer-edition-name">Morning Edition</strong>
+    Independent · Accurate · Trusted
+  </div>
+  <div>
+    <div class="drawer-nav-label">News</div>
+    <a href="index.html"                      class="drawer-link" data-page="home"><span class="drawer-dot"></span>Home</a>
+    <a href="category.html?cat=international" class="drawer-link" data-cat="international"><span class="drawer-dot"></span>International</a>
+    <a href="category.html?cat=bangladesh"    class="drawer-link" data-cat="bangladesh"><span class="drawer-dot"></span>Bangladesh</a>
+    <a href="category.html?cat=politics"      class="drawer-link" data-cat="politics"><span class="drawer-dot"></span>Politics</a>
+    <a href="category.html?cat=business"      class="drawer-link" data-cat="business"><span class="drawer-dot"></span>Business</a>
+  </div>
+  <div>
+    <div class="drawer-nav-label">More</div>
+    <a href="category.html?cat=sports"        class="drawer-link" data-cat="sports"><span class="drawer-dot"></span>Sports</a>
+    <a href="category.html?cat=technology"    class="drawer-link" data-cat="technology"><span class="drawer-dot"></span>Technology</a>
+    <a href="category.html?cat=entertainment" class="drawer-link" data-cat="entertainment"><span class="drawer-dot"></span>Entertainment</a>
+    <a href="category.html?cat=explained"     class="drawer-link" data-cat="explained"><span class="drawer-dot"></span>Explained</a>
+    <a href="category.html?cat=opinion"       class="drawer-link" data-cat="opinion"><span class="drawer-dot"></span>Opinion</a>
+  </div>
+  <div>
+    <div class="drawer-nav-label">Pages</div>
+    <a href="about.html"   class="drawer-link"><span class="drawer-dot" style="background:var(--gold)"></span>About Us</a>
+    <a href="archive.html" class="drawer-link"><span class="drawer-dot" style="background:var(--text-4)"></span>Archive</a>
+  </div>
+  <div class="drawer-foot">
+    <div class="drawer-foot-title">Follow Us</div>
+    <div class="drawer-social">
+      <a href="#">Facebook</a><a href="#">𝕏 Twitter</a><a href="#">YouTube</a>
+    </div>
+  </div>
+</nav>
+
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-box-label">Search Articles</div>
+    <div class="search-input-row">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search-input" placeholder="Type to search…" oninput="runSearch(this.value)" autocomplete="off" />
+      <button class="search-close-btn" onclick="closeSearch()">✕</button>
+    </div>
+    <div id="search-results"></div>
+  </div>
+</div>
+
+<!-- LIVE HERO -->
+<div id="live-hero-section"></div>
+
+<!-- LIVE CONTENT -->
+<div class="live-layout">
+  <div class="live-refresh-bar">
+    <div class="live-refresh-label">Live Updates</div>
+    <div class="live-refresh-status">
+      <span class="live-refresh-dot"></span>
+      <span id="refresh-status">Auto-refreshing every 30 seconds</span>
+    </div>
+  </div>
+  <div id="live-updates-container">
+    <!-- Skeleton -->
+    <div class="live-sk">
+      <div class="live-sk-item"><div></div><div class="live-sk-body"><div class="sk" style="height:.55rem;width:15%;margin-bottom:.6rem"></div><div class="sk" style="height:1.2rem;width:80%;margin-bottom:.4rem"></div><div class="sk" style="height:1rem;width:100%;margin-bottom:.3rem"></div><div class="sk" style="height:1rem;width:90%"></div></div></div>
+      <div class="live-sk-item"><div></div><div class="live-sk-body"><div class="sk" style="height:.55rem;width:12%;margin-bottom:.6rem"></div><div class="sk" style="height:1.2rem;width:70%;margin-bottom:.4rem"></div><div class="sk" style="height:1rem;width:100%;margin-bottom:.3rem"></div><div class="sk" style="height:1rem;width:75%"></div></div></div>
+      <div class="live-sk-item"><div></div><div class="live-sk-body"><div class="sk" style="height:.55rem;width:18%;margin-bottom:.6rem"></div><div class="sk" style="height:1.2rem;width:85%;margin-bottom:.4rem"></div><div class="sk" style="height:1rem;width:100%"></div></div></div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <div>
+      <img class="footer-logo" src="logo_alaminnetwork.png" alt="Alamin Network" />
+      <p class="footer-desc">Independent journalism covering Bangladesh and the world. Accurate, accountable, and precise.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Coverage</div>
+      <div class="footer-links">
+        <a href="category.html?cat=international">International</a>
+        <a href="category.html?cat=bangladesh">Bangladesh</a>
+        <a href="category.html?cat=politics">Politics</a>
+        <a href="category.html?cat=business">Business</a>
+        <a href="category.html?cat=sports">Sports</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Network</div>
+      <div class="footer-links">
+        <a href="about.html">About Us</a>
+        <a href="archive.html">Archive</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Follow</div>
+      <div class="footer-links">
+        <a href="#">Facebook</a><a href="#">𝕏 Twitter</a><a href="#">YouTube</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Alamin Network. All rights reserved.</span>
+    <span>Designed & Built by Md. Al Amin</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+
+initEdition();
+setActiveNav();
+
+// Label config
+const LABEL_CONFIG = {
+  'Breaking':  { cls: 'label-breaking',  icon: '🔴', type: 'breaking'  },
+  'Update':    { cls: 'label-update',    icon: '🟡', type: 'update'    },
+  'Context':   { cls: 'label-context',   icon: '📌', type: 'context'   },
+  'Quote':     { cls: 'label-quote',     icon: '💬', type: 'quote'     },
+  'Photo':     { cls: 'label-photo',     icon: '📷', type: 'photo'     },
+  'Started':   { cls: 'label-started',   icon: '🟢', type: 'started'   },
+  'Analysis':  { cls: 'label-analysis',  icon: '🔵', type: 'analysis'  }
+};
+
+let _liveData = null;
+let _lastUpdatedTime = null;
+let _refreshInterval = null;
+let _tickInterval = null;
+
+function fmtLiveTime(t) {
+  if (!t) return '';
+  const [h, m] = t.split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const h12  = h % 12 || 12;
+  return h12 + ':' + String(m).padStart(2,'0') + ' ' + ampm;
+}
+
+function timeSince(dateStr, timeStr) {
+  const dt   = new Date(dateStr + 'T' + (timeStr || '00:00') + ':00');
+  const diff = Math.floor((Date.now() - dt) / 1000);
+  if (diff < 60)      return 'Just now';
+  if (diff < 3600)    return Math.floor(diff / 60) + ' min ago';
+  if (diff < 86400)   return Math.floor(diff / 3600) + ' hr ago';
+  return Math.floor(diff / 86400) + ' days ago';
+}
+
+async function loadLive() {
+  const data = await getJSON('data/live.json');
+  if (!data) return;
+  _liveData = data;
+  _lastUpdatedTime = new Date();
+
+  // Show live button in header
+  const liveBtn = document.getElementById('live-header-btn');
+  if (liveBtn) liveBtn.style.display = data.active ? 'flex' : 'none';
+
+  renderHero(data);
+  renderUpdates(data);
+  startTicker(data);
+}
+
+function renderHero(data) {
+  const el = document.getElementById('live-hero-section');
+  if (!el) return;
+
+  if (!data.active) {
+    el.innerHTML = `
+      <div class="live-ended-banner">
+        <div class="live-ended-text">📋 This live blog has concluded. Thank you for following our coverage.</div>
+        ${data.endedReport ? `<a href="${data.endedReport}" class="live-ended-link">Read Full Report →</a>` : ''}
+      </div>`;
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="live-hero">
+      <div class="live-hero-inner">
+        <div class="live-badge"><span class="live-badge-dot"></span>Live</div>
+        <h1 class="live-main-title">${data.title}</h1>
+        <p class="live-subtitle">${data.subtitle || ''}</p>
+        <div class="live-meta-bar">
+          <span>Started <strong>${fmtLiveTime(data.startTime)}</strong></span>
+          <span class="live-meta-sep">·</span>
+          <span><strong>${data.coveringBy}</strong></span>
+          <span class="live-meta-sep">·</span>
+          <span>Last updated <strong class="live-last-updated" id="last-updated-label">${fmtLiveTime(data.updatedTime)}</strong></span>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderUpdates(data) {
+  const container = document.getElementById('live-updates-container');
+  if (!container || !data.updates) return;
+
+  container.innerHTML = data.updates.map((u, i) => {
+    const cfg   = LABEL_CONFIG[u.label] || LABEL_CONFIG['Update'];
+    const delay = i * 0.06;
+    return `
+      <div class="live-update type-${cfg.type}" style="animation-delay:${delay}s">
+        <div class="live-update-time-col">
+          <div class="live-update-time">${fmtLiveTime(u.time)}</div>
+        </div>
+        <div class="live-update-body">
+          <div class="live-label ${cfg.cls}">${cfg.icon} ${u.label}</div>
+          <div class="live-update-headline">${u.headline}</div>
+          ${u.image ? `<img class="live-update-img" src="${u.image}" alt="${u.headline}" loading="lazy" onerror="this.style.display='none'" />` : ''}
+          <div class="live-update-text">${u.text}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function startTicker(data) {
+  // Update "last updated X ago" every minute
+  if (_tickInterval) clearInterval(_tickInterval);
+  _tickInterval = setInterval(() => {
+    const el = document.getElementById('last-updated-label');
+    if (el && _liveData) {
+      el.textContent = fmtLiveTime(_liveData.updatedTime);
+    }
+    const rs = document.getElementById('refresh-status');
+    if (rs && _lastUpdatedTime) {
+      const secs = Math.floor((Date.now() - _lastUpdatedTime) / 1000);
+      const next = Math.max(0, 30 - secs);
+      rs.textContent = next > 0
+        ? 'Next refresh in ' + next + 's'
+        : 'Refreshing…';
+    }
+  }, 1000);
+}
+
+// Auto-refresh every 30 seconds
+async function startAutoRefresh() {
+  await loadLive();
+  _refreshInterval = setInterval(async () => {
+    await loadLive();
+  }, 30000);
+}
+
+// Check breaking news from live data
+if (_liveData && _liveData.active) {
+  initBreaking([{ breaking: true, title: _liveData.title }]);
+}
+
+startAutoRefresh();
+
+</script>
+</body>
+</html>
