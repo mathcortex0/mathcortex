@@ -79,7 +79,17 @@ let _feed = [];
 let _currentArticle = null;
 
 const ALL_CATS  = ['international','bangladesh','business','sports','politics','technology','entertainment','explained','opinion'];
-const HOME_CATS = ['international','bangladesh','business','sports','politics'];
+const HOME_CATS = ['international','bangladesh','business','sports','politics','explained'];
+
+// How many articles to show per category on homepage
+const HOME_COUNTS = {
+  international: 5,
+  bangladesh:    2,
+  business:      2,
+  sports:        3,
+  politics:      1,
+  explained:     2
+};
 
 // ── COMMON ────────────────────────────────────────────
 
@@ -351,10 +361,11 @@ async function initHomepage() {
   let feed = [], allArticles = [];
   results.forEach((data, i) => {
     if (!data) return;
-    const cat = HOME_CATS[i];
+    const cat   = HOME_CATS[i];
+    const count = HOME_COUNTS[cat] || 3;
     const tagged = data.map(a => ({ ...a, cat }));
     allArticles = allArticles.concat(tagged);
-    feed = feed.concat(tagged.slice(0, 3));
+    feed = feed.concat(tagged.slice(0, count));
   });
 
   _feed = allArticles;
