@@ -169,11 +169,11 @@ function initBreaking(data) {
   inner.textContent = text + '   ·   ·   ·   ' + text;
 }
 
-// ── SCROLL: INLINE NAV + SCROLL TO TOP ───────────────
+// ── SCROLL: NAV HIDE + COMPACT NAV + SCROLL TO TOP ───
 
 (function() {
 
-  // Inject scroll-to-top button
+  // ── Scroll to top button (injected, no HTML needed)
   const topBtn = document.createElement('button');
   topBtn.className = 'scroll-top-btn';
   topBtn.title     = 'Back to top';
@@ -181,17 +181,13 @@ function initBreaking(data) {
   topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   document.body.appendChild(topBtn);
 
-  // Inject page transition overlay
+  // ── Page transition overlay (injected, no HTML needed)
   const overlay = document.createElement('div');
   overlay.className = 'page-transition';
   document.body.appendChild(overlay);
-
-  // Fade in page on load
   requestAnimationFrame(() => {
     requestAnimationFrame(() => { overlay.style.opacity = '0'; });
   });
-
-  // Intercept internal link clicks for smooth transition
   document.addEventListener('click', e => {
     const link = e.target.closest('a[href]');
     if (!link) return;
@@ -204,111 +200,91 @@ function initBreaking(data) {
     setTimeout(() => { location.href = href; }, 220);
   });
 
-  // Build inline nav inside header-brand-row — cloned from cat-nav
-  function buildInlineNav() {
-    const brandRow = $('.header-brand-row');
-    const catNav   = $('.cat-nav');
-    if (!brandRow || !catNav || document.getElementById('header-inline-nav')) return;
+  // ── Compact nav bar (desktop only — injected below header)
+  function buildCompactNav() {
+    if (document.getElementById('compact-nav')) return;
+    const catNav = $('.cat-nav');
+    const header = $('.site-header');
+    if (!catNav || !header) return;
 
-    const inlineNav = document.createElement('nav');
-    inlineNav.id        = 'header-inline-nav';
-    inlineNav.className = 'header-inline-nav';
+    const bar = document.createElement('nav');
+    bar.id        = 'compact-nav';
+    bar.className = 'compact-nav';
 
-    // Clone all cat-links
-    const links = catNav.querySelectorAll('.cat-link');
-    links.forEach(link => {
+    catNav.querySelectorAll('.cat-link').forEach(link => {
       const a = document.createElement('a');
-      a.href      = link.href;
-      a.textContent = link.textContent;
+      a.href        = link.href;
+      a.textContent = link.textContent.trim();
       if (link.dataset.cat) a.dataset.cat = link.dataset.cat;
       if (link.classList.contains('active')) a.classList.add('active');
-      inlineNav.appendChild(a);
+      bar.appendChild(a);
     });
 
-    // Insert between header-logo and header-actions
-    const actions = brandRow.querySelector('.header-actions');
-    if (actions) brandRow.insertBefore(inlineNav, actions);
+    // Insert immediately after the site-header
+    header.insertAdjacentElement('afterend', bar);
   }
 
-  // Run after DOM ready to ensure cat-nav is rendered
-  document.addEventListener('DOMContentLoaded', buildInlineNav);
-  // Also try immediately in case DOM is already ready
-  if (document.readyState !== 'loading') {
-    setTimeout(buildInlineNav, 100);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', buildCompactNav);
+  } else {
+    setTimeout(buildCompactNav, 50);
   }
 
-  // Scroll state
+  // ── Scroll state
   let lastY     = window.scrollY;
   let ticking   = false;
-  let isScrolled = false;
-  let navHidden  = false;
-  let downAccum  = 0;
-  let upAccum    = 0;
+  let navHidden = false;
+  let downAccum = 0;
+  let upAccum   = 0;
 
-  const SCROLL_AT  = 80;
+  const HIDE_AT    = 80;
   const HIDE_DELTA = 40;
-  const SHOW_DELTA = 12;
-  const TOP_BTN_AT = 400;
+  const SHOW_DELTA = 10;
+  const TOP_AT     = 400;
 
   function update() {
-    const header    = $('.site-header');
-    const catNav    = $('.cat-nav');
-    const inlineNav = document.getElementById('header-inline-nav');
-    const curY      = window.scrollY;
-    const diff      = curY - lastY;
-    const isMobile  = window.innerWidth <= 768;
+    const catNav     = $('.cat-nav');
+    const compactNav = document.getElementById('compact-nav');
+    const curY       = window.scrollY;
+    const diff       = curY - lastY;
+    const isMobile   = window.innerWidth <= 768;
 
-    if (isMobile) {
-      // ── MOBILE: simple cat-nav hide/show on scroll ──
-      if (header) header.classList.remove('scrolled');
-      if (inlineNav) { inlineNav.classList.remove('visible'); inlineNav.style.display = 'none'; }
-      isScrolled = false;
-
-      if (catNav) {
-        if (curY <= 10) {
-          downAccum = 0; upAccum = 0;
-          if (navHidden) { catNav.classList.remove('hidden'); navHidden = false; }
-        } else if (diff > 0) {
-          upAccum = 0; downAccum += diff;
-          if (!navHidden && curY > SCROLL_AT && downAccum > HIDE_DELTA) {
-            catNav.classList.add('hidden');
-            navHidden = true; downAccum = 0;
-          }
-        } else if (diff < 0) {
-          downAccum = 0; upAccum += Math.abs(diff);
-          if (navHidden && upAccum > SHOW_DELTA) {
-            catNav.classList.remove('hidden');
-            navHidden = false; upAccum = 0;
-          }
-        }
-      }
-
-    } else {
-      // ── DESKTOP: inline nav replaces cat-nav on scroll ──
-      if (curY > SCROLL_AT && !isScrolled) {
-        isScrolled = true;
-        if (header)    header.classList.add('scrolled');
-        if (catNav)    { catNav.classList.add('hidden'); navHidden = true; }
-        if (inlineNav) {
-          inlineNav.style.display = 'flex';
-          requestAnimationFrame(() => inlineNav.classList.add('visible'));
-        }
+    // ── Hide/show cat-nav (both devices)
+    if (catNav) {
+      if (curY <= 10) {
+        // Always show at very top
         downAccum = 0; upAccum = 0;
-      } else if (curY <= SCROLL_AT && isScrolled) {
-        isScrolled = false;
-        if (header)    header.classList.remove('scrolled');
-        if (catNav)    { catNav.classList.remove('hidden'); navHidden = false; }
-        if (inlineNav) {
-          inlineNav.classList.remove('visible');
-          setTimeout(() => { if (!isScrolled) inlineNav.style.display = 'none'; }, 250);
+        if (navHidden) {
+          catNav.classList.remove('hidden');
+          navHidden = false;
+          if (!isMobile && compactNav) compactNav.classList.remove('visible');
         }
-        downAccum = 0; upAccum = 0;
+      } else if (diff > 0) {
+        // Scrolling DOWN
+        upAccum = 0; downAccum += diff;
+        if (!navHidden && downAccum > HIDE_DELTA) {
+          catNav.classList.add('hidden');
+          navHidden = true;
+          downAccum = 0;
+          // Desktop only — show compact nav
+          if (!isMobile && compactNav) compactNav.classList.add('visible');
+        }
+      } else if (diff < 0) {
+        // Scrolling UP
+        downAccum = 0; upAccum += Math.abs(diff);
+        if (navHidden && upAccum > SHOW_DELTA) {
+          catNav.classList.remove('hidden');
+          navHidden = false;
+          upAccum = 0;
+          // Desktop only — hide compact nav
+          if (!isMobile && compactNav) compactNav.classList.remove('visible');
+        }
       }
     }
 
-    // Scroll to top button — both platforms
-    if (curY > TOP_BTN_AT) topBtn.classList.add('visible');
-    else                    topBtn.classList.remove('visible');
+    // ── Scroll to top button
+    if (curY > TOP_AT) topBtn.classList.add('visible');
+    else               topBtn.classList.remove('visible');
 
     lastY   = curY <= 0 ? 0 : curY;
     ticking = false;
