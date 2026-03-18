@@ -1,0 +1,52 @@
+{
+  "active": true,
+  "title": "UN Security Council Convenes Emergency Session Over Gaza Ceasefire Collapse",
+  "subtitle": "World leaders demand accountability as the fragile truce breaks down along the Gaza corridor.",
+  "started": "2026-03-17",
+  "startTime": "14:00",
+  "updatedTime": "16:45",
+  "coveringBy": "Alamin Network International Desk",
+  "endedReport": "",
+  "updates": [
+    {
+      "id": "u001",
+      "time": "16:45",
+      "label": "Breaking",
+      "headline": "US Vetoes Ceasefire Resolution at Security Council",
+      "text": "The United States has exercised its veto power, blocking a draft resolution that would have demanded an immediate and permanent ceasefire in Gaza. The vote was 13 in favour, 1 against, and 1 abstention. The US representative called the language of the resolution unenforceable without greater accountability mechanisms, drawing sharp condemnation from Arab League and OIC member states.",
+      "image": "https://images.unsplash.com/photo-1590736969955-71cc94901144?w=1200&q=80"
+    },
+    {
+      "id": "u002",
+      "time": "16:10",
+      "label": "Update",
+      "headline": "Guterres Calls for Immediate 72-Hour Humanitarian Pause",
+      "text": "UN Secretary-General António Guterres took the floor and called for a 72-hour humanitarian pause to allow aid convoys through the Rafah and Kerem Shalom crossings. He described the situation as a catastrophe unfolding in real time, warning that over 2.3 million people in Gaza remain critically dependent on external food supplies. Egypt and Qatar are understood to be working on a framework for the pause behind the scenes.",
+      "image": ""
+    },
+    {
+      "id": "u003",
+      "time": "15:40",
+      "label": "Quote",
+      "headline": "France: 'The World Is Watching and the World Is Appalled'",
+      "text": "The French ambassador delivered a statement calling the collapse of the ceasefire a profound failure of international diplomacy. Referring directly to the mediating powers, she said all parties had an obligation to return to the table immediately and that France would support any mechanism that restored the truce. The UK ambassador echoed the statement, saying the humanitarian consequences of continued hostilities were simply unacceptable.",
+      "image": ""
+    },
+    {
+      "id": "u004",
+      "time": "15:00",
+      "label": "Context",
+      "headline": "What Led to the Ceasefire Collapse — A Timeline",
+      "text": "The ceasefire brokered by Egypt eleven days ago began to unravel late on Sunday night when Hamas-aligned factions launched a series of rocket attacks that Israel said targeted civilian areas in the southern part of the country. Israeli forces responded with airstrikes on northern Gaza within hours. By Monday morning both sides were accusing the other of initiating the breakdown. The emergency Security Council session was called by France and the UK within hours of the resumption of hostilities.",
+      "image": ""
+    },
+    {
+      "id": "u005",
+      "time": "14:00",
+      "label": "Started",
+      "headline": "Session Opens — 15 Member States Present",
+      "text": "The United Nations Security Council has convened its emergency session. All 15 member states are present. The session was called at the request of France and the United Kingdom following the overnight collapse of the Gaza ceasefire. The order of speakers has been set with the US, France, UK, Russia, and China scheduled to address the council in the first round.",
+      "image": ""
+    }
+  ]
+}
