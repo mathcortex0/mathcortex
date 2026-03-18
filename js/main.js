@@ -161,40 +161,98 @@ function initBreaking(data) {
 
 // ── SCROLL NAV HIDE ───────────────────────────────────
 
+// ── 1. SLIM HEADER + NAV HIDE + SCROLL TO TOP ────────
+
 (function() {
-  let lastY     = 0;
-  let ticking   = false;
-  const HIDE_THRESHOLD = 80;  // px scrolled down before hiding
-  const SHOW_THRESHOLD = 8;   // px scrolled up before showing
+  let lastY   = 0;
+  let ticking = false;
+  const HIDE  = 80;
+  const SHOW  = 8;
 
-  function updateNav() {
-    const nav = $('.cat-nav');
-    if (!nav) return;
-    const curY = window.scrollY;
-    const diff = curY - lastY;
+  // Create scroll-to-top button via JS — no HTML needed
+  const topBtn = document.createElement('button');
+  topBtn.className = 'scroll-top-btn';
+  topBtn.title     = 'Back to top';
+  topBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>';
+  topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  document.body.appendChild(topBtn);
 
-    if (curY <= 10) {
-      // At very top — always show
-      nav.classList.remove('hidden');
-    } else if (diff > 0 && curY > HIDE_THRESHOLD) {
-      // Scrolling DOWN past threshold — hide immediately
-      nav.classList.add('hidden');
-    } else if (diff < -SHOW_THRESHOLD) {
-      // Scrolling UP meaningfully — show smoothly
-      nav.classList.remove('hidden');
+  // Create page transition overlay — no HTML needed
+  const overlay = document.createElement('div');
+  overlay.className = 'page-transition';
+  document.body.appendChild(overlay);
+
+  // Fade in on load
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => { overlay.style.opacity = '0'; });
+  });
+
+  // Intercept internal link clicks for smooth transition
+  document.addEventListener('click', e => {
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('http') ||
+        href.startsWith('mailto') || href.startsWith('javascript') ||
+        link.target === '_blank') return;
+    e.preventDefault();
+    overlay.classList.add('fade-in');
+    setTimeout(() => { location.href = href; }, 220);
+  });
+
+  function update() {
+    const header = $('.site-header');
+    const nav    = $('.cat-nav');
+    const curY   = window.scrollY;
+    const diff   = curY - lastY;
+
+    // Slim header after 60px
+    if (header) {
+      if (curY > 60) header.classList.add('slim');
+      else header.classList.remove('slim');
     }
 
-    lastY = curY <= 0 ? 0 : curY;
+    // Nav hide/show
+    if (nav) {
+      if (curY <= 10) {
+        nav.classList.remove('hidden');
+      } else if (diff > 0 && curY > HIDE) {
+        nav.classList.add('hidden');
+      } else if (diff < -SHOW) {
+        nav.classList.remove('hidden');
+      }
+    }
+
+    // Scroll to top button
+    if (curY > 400) topBtn.classList.add('visible');
+    else topBtn.classList.remove('visible');
+
+    lastY   = curY <= 0 ? 0 : curY;
     ticking = false;
   }
 
   window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(updateNav);
-      ticking = true;
-    }
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
   }, { passive: true });
 })();
+
+// ── 2. BREADCRUMB (injected on article page) ──────────
+
+function injectBreadcrumb(cat, title) {
+  const container = $('#article-container');
+  if (!container) return;
+  const catLabel = cap(cat || 'News');
+  const catURL   = 'category.html?cat=' + (cat || '');
+  const crumb    = document.createElement('div');
+  crumb.className = 'article-breadcrumb';
+  crumb.innerHTML =
+    '<a href="index.html">Home</a>' +
+    '<span class="article-breadcrumb-sep">›</span>' +
+    '<a href="' + catURL + '">' + catLabel + '</a>' +
+    '<span class="article-breadcrumb-sep">›</span>' +
+    '<span class="article-breadcrumb-current">' + (title || '') + '</span>';
+  container.insertBefore(crumb, container.firstChild);
+}
 
 // ── DRAWER ────────────────────────────────────────────
 
@@ -477,6 +535,9 @@ async function initArticlePage() {
 
   renderArticle(article, cat);
   renderRelated(catData.filter(a => a.id !== id).slice(0, 5), cat);
+
+  // Inject breadcrumb
+  injectBreadcrumb(cat, article.title);
 }
 
 function renderArticle(a, cat) {
