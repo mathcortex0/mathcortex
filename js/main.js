@@ -1,12 +1,10 @@
 /* =====================================================
    ALAMIN NETWORK — main.js
-   Reads full articles from category JSONs.
-   Article URL: report.html?id=n001&cat=national
+   No index.json. Homepage auto-fetches from categories.
+   Article URL: report.html?id=bd001&cat=bangladesh
    ===================================================== */
 
 'use strict';
-
-// ── HELPERS ──────────────────────────────────────────
 
 const $ = (s, ctx = document) => ctx.querySelector(s);
 const $$ = (s, ctx = document) => [...ctx.querySelectorAll(s)];
@@ -15,21 +13,37 @@ function qs(key) {
   return new URLSearchParams(window.location.search).get(key);
 }
 
-// Clean fetch — no cache-busting suffix (breaks local file:// protocol)
 async function getJSON(url) {
   try {
     const r = await fetch(url);
     if (!r.ok) return null;
     return await r.json();
-  } catch (e) {
-    return null;
-  }
+  } catch (e) { return null; }
 }
 
-function fmt(d) {
+function fmtDate(d) {
   return new Date(d + 'T00:00:00').toLocaleDateString('en-GB', {
     day: 'numeric', month: 'long', year: 'numeric'
   });
+}
+
+function fmtDateTime(date, time) {
+  if (!time) return fmtDate(date);
+  const [h, m] = time.split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const h12 = h % 12 || 12;
+  return fmtDate(date) + ', ' + h12 + ':' + String(m).padStart(2, '0') + ' ' + ampm;
+}
+
+function timeAgo(date, time) {
+  const posted = new Date(date + 'T' + (time || '00:00') + ':00');
+  const diff = Math.floor((Date.now() - posted) / 1000);
+  if (diff < 60)         return 'Just now';
+  if (diff < 3600)       return Math.floor(diff / 60) + ' min ago';
+  if (diff < 86400)      return Math.floor(diff / 3600) + ' hr ago';
+  if (diff < 604800)     return Math.floor(diff / 86400) + ' days ago';
+  if (diff < 2592000)    return Math.floor(diff / 604800) + ' weeks ago';
+  return fmtDate(date);
 }
 
 function readTime(html) {
@@ -38,18 +52,25 @@ function readTime(html) {
 }
 
 function catColor(cat) {
-  const c = (cat || '').toLowerCase();
-  if (c === 'national') return 'national';
-  if (c === 'sports')   return 'sports';
-  return 'international';
+  const map = {
+    bangladesh: 'bangladesh', international: 'international',
+    sports: 'sports', politics: 'politics', business: 'business',
+    technology: 'technology', entertainment: 'entertainment',
+    explained: 'explained', opinion: 'opinion'
+  };
+  return map[(cat || '').toLowerCase()] || 'international';
 }
 
-function cap(s) {
-  return s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
-}
+function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
 
 function articleURL(id, cat) {
   return 'report.html?id=' + id + '&cat=' + (cat || '').toLowerCase();
+}
+
+function timeMeta(date, time) {
+  return '<span class="time-ago">' + timeAgo(date, time) + '</span>' +
+         '<span class="time-sep">·</span>' +
+         '<span class="time-full">' + fmtDateTime(date, time) + '</span>';
 }
 
 // ── STATE ─────────────────────────────────────────────
@@ -57,7 +78,10 @@ function articleURL(id, cat) {
 let _feed = [];
 let _currentArticle = null;
 
-// ── COMMON INIT ───────────────────────────────────────
+const ALL_CATS  = ['international','bangladesh','business','sports','politics','technology','entertainment','explained','opinion'];
+const HOME_CATS = ['international','bangladesh','business','sports','politics'];
+
+// ── COMMON ────────────────────────────────────────────
 
 function initDate() {
   const el = $('#live-date');
@@ -76,13 +100,11 @@ function setActiveNav() {
   const cat  = qs('cat');
   const path = window.location.pathname;
   const home = path.endsWith('index.html') || path === '/' || path.endsWith('/');
-
   $$('.cat-link').forEach(l => {
     l.classList.remove('active');
     if (l.dataset.cat && l.dataset.cat === cat) l.classList.add('active');
     if (!l.dataset.cat && home) l.classList.add('active');
   });
-
   $$('.drawer-link').forEach(l => {
     l.classList.remove('active');
     if (l.dataset.cat && l.dataset.cat === cat) l.classList.add('active');
@@ -91,30 +113,25 @@ function setActiveNav() {
 }
 
 function initBreaking(data) {
-  const banner = $('#breaking-banner');
-  const inner  = $('#breaking-inner');
+  const banner = $('#breaking-banner'), inner = $('#breaking-inner');
   if (!banner || !inner || !data) return;
   const items = data.filter(a => a.breaking);
   if (!items.length) return;
   banner.classList.add('visible');
-  // Duplicate text for seamless marquee loop
   const text = items.map(a => '⚡ ' + a.title).join('   ·   ');
   inner.textContent = text + '   ·   ·   ·   ' + text;
 }
 
-// ── SCROLL: HIDE/SHOW CATEGORY NAV ───────────────────
+// ── SCROLL NAV HIDE ───────────────────────────────────
 
-(function () {
+(function() {
   let last = 0;
-  window.addEventListener('scroll', function () {
+  window.addEventListener('scroll', () => {
     const nav = $('.cat-nav');
     if (!nav) return;
     const cur = window.scrollY;
-    if (cur > 60 && cur > last) {
-      nav.classList.add('hidden');
-    } else {
-      nav.classList.remove('hidden');
-    }
+    if (cur > 60 && cur > last) nav.classList.add('hidden');
+    else nav.classList.remove('hidden');
     last = cur <= 0 ? 0 : cur;
   }, { passive: true });
 })();
@@ -122,23 +139,17 @@ function initBreaking(data) {
 // ── DRAWER ────────────────────────────────────────────
 
 function openDrawer() {
-  const drawer   = $('#drawer');
-  const backdrop = $('#drawer-backdrop');
-  const btn      = $('#hamburger-btn');
-  if (!drawer) return;
-  drawer.classList.add('open');
-  if (backdrop) backdrop.classList.add('open');
+  const d = $('#drawer'), b = $('#drawer-backdrop'), btn = $('#hamburger-btn');
+  if (!d) return;
+  d.classList.add('open'); if (b) b.classList.add('open');
   if (btn) btn.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 
 function closeDrawer() {
-  const drawer   = $('#drawer');
-  const backdrop = $('#drawer-backdrop');
-  const btn      = $('#hamburger-btn');
-  if (!drawer) return;
-  drawer.classList.remove('open');
-  if (backdrop) backdrop.classList.remove('open');
+  const d = $('#drawer'), b = $('#drawer-backdrop'), btn = $('#hamburger-btn');
+  if (!d) return;
+  d.classList.remove('open'); if (b) b.classList.remove('open');
   if (btn) btn.classList.remove('open');
   document.body.style.overflow = '';
 }
@@ -149,10 +160,7 @@ function openSearch() {
   const o = $('#search-overlay');
   if (!o) return;
   o.classList.add('open');
-  setTimeout(() => {
-    const inp = $('#search-input');
-    if (inp) inp.focus();
-  }, 60);
+  setTimeout(() => { const i = $('#search-input'); if (i) i.focus(); }, 60);
 }
 
 function closeSearch() {
@@ -172,46 +180,47 @@ function runSearch(q) {
     el.innerHTML = '<div style="color:var(--text-4);font-size:.85rem;padding:.8rem 0">No results found.</div>';
     return;
   }
-  el.innerHTML = hits.slice(0, 6).map(function (a) {
-    var cat = a.cat || a.category || 'international';
-    return '<div class="search-result-item" onclick="location.href=\'' + articleURL(a.id, cat) + '\'">' +
-      '<span class="search-result-cat cat-' + catColor(cat) + '">' + cap(cat) + '</span>' +
-      '<span class="search-result-title">' + a.title + '</span>' +
-      '</div>';
+  el.innerHTML = hits.slice(0, 6).map(a => {
+    const cat = a.cat || a.category || 'international';
+    return `<div class="search-result-item" onclick="location.href='${articleURL(a.id, cat)}'">
+      <span class="search-result-cat cat-${catColor(cat)}">${cap(cat)}</span>
+      <span class="search-result-title">${a.title}</span>
+    </div>`;
   }).join('');
 }
 
-// ── KEYBOARD ──────────────────────────────────────────
-
-document.addEventListener('keydown', function (e) {
+document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeSearch(); closeDrawer(); }
-  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
-    e.preventDefault(); openSearch();
-  }
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); openSearch(); }
 });
 
-// Backdrop click closes drawer
-document.addEventListener('DOMContentLoaded', function () {
-  var bd = $('#drawer-backdrop');
+document.addEventListener('DOMContentLoaded', () => {
+  const bd = $('#drawer-backdrop');
   if (bd) bd.addEventListener('click', closeDrawer);
 });
 
 // ── CARD HTML ─────────────────────────────────────────
 
 function cardHTML(a) {
-  var cat = a.cat || a.category || 'international';
-  var url = articleURL(a.id, cat);
-  return '<div class="news-card" onclick="location.href=\'' + url + '\'">' +
-    '<div class="card-img-wrap">' +
-    '<img class="card-img" src="' + (a.image || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80') + '" alt="' + a.title + '" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80\'" />' +
-    '<div class="card-img-overlay"></div>' +
-    '<div class="card-chip chip-' + catColor(cat) + '">' + cap(cat) + '</div>' +
-    '</div>' +
-    '<div class="card-body">' +
-    '<h3 class="card-title">' + a.title + '</h3>' +
-    (a.summary ? '<p class="card-summary">' + a.summary + '</p>' : '') +
-    '<div class="card-footer"><span class="card-date">' + fmt(a.date) + '</span><div class="card-arrow">→</div></div>' +
-    '</div></div>';
+  const cat = (a.cat || a.category || 'international').toLowerCase();
+  const url = articleURL(a.id, cat);
+  return `<div class="news-card" onclick="location.href='${url}'">
+    <div class="card-img-wrap">
+      <img class="card-img" src="${a.image || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80'}"
+        alt="${a.title}" loading="lazy"
+        onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80'" />
+      <div class="card-img-overlay"></div>
+      <div class="card-chip chip-${catColor(cat)}">${cap(cat)}</div>
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">${a.title}</h3>
+      ${a.summary ? `<p class="card-summary">${a.summary}</p>` : ''}
+      <div class="card-footer">
+        <div class="card-time-wrap">${timeMeta(a.date, a.time)}</div>
+        <div class="card-arrow">→</div>
+      </div>
+    </div>
+  </div>`;
 }
 
 // ── HOMEPAGE ──────────────────────────────────────────
@@ -219,87 +228,99 @@ function cardHTML(a) {
 async function initHomepage() {
   initDate(); initEdition(); setActiveNav();
 
-  var feed = await getJSON('data/index.json');
-  if (!feed || !feed.length) return;
-  _feed = feed;
-  initBreaking(feed);
+  const results = await Promise.all(HOME_CATS.map(cat => getJSON('data/' + cat + '.json')));
 
-  // Hero
-  var featured = feed.find(function (a) { return a.featured; }) || feed[0];
+  let feed = [], allArticles = [];
+  results.forEach((data, i) => {
+    if (!data) return;
+    const cat = HOME_CATS[i];
+    const tagged = data.map(a => ({ ...a, cat }));
+    allArticles = allArticles.concat(tagged);
+    feed = feed.concat(tagged.slice(0, 3));
+  });
+
+  _feed = allArticles;
+  initBreaking(allArticles);
+
+  const featured = feed.find(a => a.featured) || feed[0];
   renderHero(featured);
-
-  // Hero stack
-  var stackItems = feed.filter(function (a) { return a.id !== featured.id; }).slice(0, 3);
-  renderHeroStack(stackItems);
-
-  // Trending
+  renderHeroStack(feed.filter(a => a.id !== featured.id).slice(0, 3));
   renderTrending(feed.slice(0, 6));
 
-  // News grid
-  var grid = $('#news-grid');
+  const grid = $('#news-grid');
   if (grid) grid.innerHTML = feed.map(cardHTML).join('');
 
-  // Category strips
-  var natData = await getJSON('data/national.json');
-  var intData = await getJSON('data/international.json');
-  var sptData = await getJSON('data/sports.json');
-  renderStrip(intData, '#strip-international', 'international');
-  renderStrip(natData, '#strip-national', 'national');
-  renderStrip(sptData, '#strip-sports', 'sports');
+  // 5 strips
+  const stripCats = ['international','bangladesh','business','sports','politics'];
+  const stripData = await Promise.all(stripCats.map(cat => getJSON('data/' + cat + '.json')));
+  stripCats.forEach((cat, i) => {
+    if (stripData[i]) renderStrip(stripData[i], '#strip-' + cat, cat);
+  });
 }
 
 function renderHero(a) {
-  var el = $('#hero-main');
+  const el = $('#hero-main');
   if (!el) return;
-  var cat = a.cat || a.category || 'international';
-  el.innerHTML =
-    '<img class="hero-main-img" src="' + (a.image || '') + '" alt="' + a.title + '" loading="eager" onerror="this.src=\'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=80\'" />' +
-    '<div class="hero-main-overlay"></div>' +
-    '<div class="hero-content">' +
-    '<div class="hero-cat">' + cap(cat) + '</div>' +
-    '<h2 class="hero-title">' + a.title + '</h2>' +
-    '<p class="hero-summary">' + (a.summary || '') + '</p>' +
-    '<div class="hero-meta"><span>' + fmt(a.date) + '</span><span class="hero-meta-dot">●</span><span>Alamin Network</span></div>' +
-    '<a href="' + articleURL(a.id, cat) + '" class="hero-read-btn">Read Full Report <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>' +
-    '</div>';
-  el.onclick = function (e) { if (!e.target.closest('a')) location.href = articleURL(a.id, cat); };
+  const cat = (a.cat || a.category || 'international').toLowerCase();
+  el.innerHTML = `
+    <img class="hero-main-img" src="${a.image || ''}" alt="${a.title}" loading="eager"
+      onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=80'" />
+    <div class="hero-main-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-cat">${cap(cat)}</div>
+      <h2 class="hero-title">${a.title}</h2>
+      <p class="hero-summary">${a.summary || ''}</p>
+      <div class="hero-meta">${timeMeta(a.date, a.time)}</div>
+      <a href="${articleURL(a.id, cat)}" class="hero-read-btn">Read Full Report
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>`;
+  el.onclick = e => { if (!e.target.closest('a')) location.href = articleURL(a.id, cat); };
 }
 
 function renderHeroStack(items) {
-  var el = $('#hero-stack');
+  const el = $('#hero-stack');
   if (!el) return;
-  el.innerHTML = items.map(function (a) {
-    var cat = a.cat || a.category || 'international';
-    return '<div class="hero-stack-item" onclick="location.href=\'' + articleURL(a.id, cat) + '\'">' +
-      '<img class="hero-stack-img" src="' + (a.image || '') + '" alt="' + a.title + '" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=80\'" />' +
-      '<div class="hero-stack-overlay"></div>' +
-      '<div class="hero-stack-content">' +
-      '<div class="stack-cat">' + cap(cat) + '</div>' +
-      '<div class="stack-title">' + a.title + '</div>' +
-      '<div class="stack-date">' + fmt(a.date) + '</div>' +
-      '</div></div>';
+  el.innerHTML = items.map(a => {
+    const cat = (a.cat || a.category || 'international').toLowerCase();
+    return `<div class="hero-stack-item" onclick="location.href='${articleURL(a.id, cat)}'">
+      <img class="hero-stack-img" src="${a.image || ''}" alt="${a.title}" loading="lazy"
+        onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=80'" />
+      <div class="hero-stack-overlay"></div>
+      <div class="hero-stack-content">
+        <div class="stack-cat">${cap(cat)}</div>
+        <div class="stack-title">${a.title}</div>
+        <div class="stack-date">${timeAgo(a.date, a.time)}</div>
+      </div>
+    </div>`;
   }).join('');
 }
 
 function renderTrending(items) {
-  var el = $('#trending-items');
+  const el = $('#trending-items');
   if (!el) return;
-  el.innerHTML = items.map(function (a, i) {
-    var cat = a.cat || a.category || 'international';
-    return '<a class="trending-item" href="' + articleURL(a.id, cat) + '">' +
-      '<span class="trending-num">' + (i + 1) + '</span>' + a.title + '</a>';
+  el.innerHTML = items.map((a, i) => {
+    const cat = (a.cat || a.category || 'international').toLowerCase();
+    return `<a class="trending-item" href="${articleURL(a.id, cat)}">
+      <span class="trending-num">${i + 1}</span>${a.title}
+    </a>`;
   }).join('');
 }
 
 function renderStrip(items, selector, cat) {
-  var el = $(selector);
+  const el = $(selector);
   if (!el || !items) return;
-  el.innerHTML = items.slice(0, 4).map(function (a) {
-    return '<div class="strip-item" onclick="location.href=\'' + articleURL(a.id, cat) + '\'">' +
-      '<img class="strip-img" src="' + (a.image || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=200&q=60') + '" alt="' + a.title + '" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=200&q=60\'" />' +
-      '<div><div class="strip-title">' + a.title + '</div><div class="strip-date">' + fmt(a.date) + '</div></div>' +
-      '</div>';
-  }).join('');
+  el.innerHTML = items.slice(0, 3).map(a => `
+    <div class="strip-item" onclick="location.href='${articleURL(a.id, cat)}'">
+      <img class="strip-img"
+        src="${a.image || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=200&q=60'}"
+        alt="${a.title}" loading="lazy"
+        onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=200&q=60'" />
+      <div>
+        <div class="strip-title">${a.title}</div>
+        <div class="strip-date">${timeAgo(a.date, a.time)}</div>
+      </div>
+    </div>`).join('');
 }
 
 // ── CATEGORY PAGE ─────────────────────────────────────
@@ -307,28 +328,37 @@ function renderStrip(items, selector, cat) {
 async function initCategoryPage() {
   initDate(); initEdition(); setActiveNav();
 
-  var cat = qs('cat') || 'national';
+  const cat = qs('cat') || 'bangladesh';
   document.title = cap(cat) + ' — Alamin Network';
 
-  var feed = await getJSON('data/index.json');
-  if (feed) { _feed = feed; initBreaking(feed); }
+  const allData = await Promise.all(ALL_CATS.map(c => getJSON('data/' + c + '.json')));
+  allData.forEach((data, i) => {
+    if (data) _feed = _feed.concat(data.map(a => ({ ...a, cat: ALL_CATS[i] })));
+  });
+  initBreaking(_feed);
 
-  var data = await getJSON('data/' + cat + '.json');
+  const data = await getJSON('data/' + cat + '.json');
   if (!data) return;
 
-  var labelEl = $('#cat-label'); if (labelEl) labelEl.textContent = 'Category';
-  var titleEl = $('#cat-title'); if (titleEl) titleEl.textContent = cap(cat);
-  var countEl = $('#cat-count'); if (countEl) countEl.textContent = String(data.length).padStart(2, '0');
+  const labelEl = $('#cat-label'); if (labelEl) labelEl.textContent = 'Category';
+  const titleEl = $('#cat-title'); if (titleEl) titleEl.textContent = cap(cat);
+  const countEl = $('#cat-count'); if (countEl) countEl.textContent = String(data.length).padStart(2, '0');
 
-  var listEl = $('#cat-list');
+  const listEl = $('#cat-list');
   if (!listEl) return;
-  listEl.innerHTML = data.map(function (a, i) {
-    return '<div class="cat-list-item" onclick="location.href=\'' + articleURL(a.id, cat) + '\'" style="animation-delay:' + (i * 0.06) + 's">' +
-      '<img class="cat-list-img" src="' + (a.image || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=200&q=60') + '" alt="' + a.title + '" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=200&q=60\'" />' +
-      '<div><div class="cat-list-title">' + a.title + '</div><div class="cat-list-meta">' + fmt(a.date) + '</div></div>' +
-      '<div class="cat-list-arrow">›</div>' +
-      '</div>';
-  }).join('');
+  listEl.innerHTML = data.map((a, i) => `
+    <div class="cat-list-item" onclick="location.href='${articleURL(a.id, cat)}'"
+      style="animation-delay:${i * 0.06}s">
+      <img class="cat-list-img"
+        src="${a.image || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=200&q=60'}"
+        alt="${a.title}" loading="lazy"
+        onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=200&q=60'" />
+      <div>
+        <div class="cat-list-title">${a.title}</div>
+        <div class="cat-list-meta">${fmtDateTime(a.date, a.time)} · ${timeAgo(a.date, a.time)}</div>
+      </div>
+      <div class="cat-list-arrow">›</div>
+    </div>`).join('');
 }
 
 // ── ARTICLE PAGE ──────────────────────────────────────
@@ -336,38 +366,37 @@ async function initCategoryPage() {
 async function initArticlePage() {
   initDate(); initEdition(); setActiveNav();
 
-  var id  = qs('id');
-  var cat = qs('cat') || 'national';
+  const id  = qs('id');
+  const cat = qs('cat') || 'bangladesh';
 
-  window.addEventListener('scroll', function () {
-    var bar = $('#article-progress');
+  window.addEventListener('scroll', () => {
+    const bar = $('#article-progress');
     if (!bar) return;
-    var s = document.documentElement.scrollHeight - window.innerHeight;
+    const s = document.documentElement.scrollHeight - window.innerHeight;
     bar.style.width = (s > 0 ? (window.scrollY / s) * 100 : 0) + '%';
   }, { passive: true });
 
-  var feed = await getJSON('data/index.json');
-  if (feed) { _feed = feed; initBreaking(feed); }
+  const allData = await Promise.all(ALL_CATS.map(c => getJSON('data/' + c + '.json')));
+  allData.forEach((data, i) => {
+    if (data) _feed = _feed.concat(data.map(a => ({ ...a, cat: ALL_CATS[i] })));
+  });
+  initBreaking(_feed);
 
   if (!id) { showError(); return; }
 
-  var catData = await getJSON('data/' + cat + '.json');
+  const catData = await getJSON('data/' + cat + '.json');
   if (!catData) { showError(); return; }
 
-  var article = null;
-  for (var i = 0; i < catData.length; i++) {
-    if (catData[i].id === id) { article = catData[i]; break; }
-  }
+  const article = catData.find(a => a.id === id);
   if (!article) { showError(); return; }
 
   _currentArticle = article;
   document.title = article.title + ' — Alamin Network';
 
-  // Inject Open Graph meta tags with article data
-  function setMeta(id, val) {
-    var el = document.getElementById(id);
+  const setMeta = (mid, val) => {
+    const el = document.getElementById(mid);
     if (el && val) el.setAttribute('content', val);
-  }
+  };
   setMeta('og-title',       article.title + ' — Alamin Network');
   setMeta('og-description', article.summary || article.title);
   setMeta('og-image',       article.image || '');
@@ -376,115 +405,123 @@ async function initArticlePage() {
   setMeta('tw-description', article.summary || article.title);
   setMeta('tw-image',       article.image || '');
 
-  renderArticle(article);
-
-  // Related = other items from same category JSON
-  var related = catData.filter(function (a) { return a.id !== id; }).slice(0, 5);
-  renderRelated(related, cat);
+  renderArticle(article, cat);
+  renderRelated(catData.filter(a => a.id !== id).slice(0, 5), cat);
 }
 
-function renderArticle(a) {
-  var el = $('#article-container');
+function renderArticle(a, cat) {
+  const el = $('#article-container');
   if (!el) return;
-  var color = catColor(a.category);
-  el.innerHTML =
-    (a.image ? '<div class="article-hero-wrap"><img class="article-hero-img" src="' + a.image + '" alt="' + a.title + '" onerror="this.style.display=\'none\'" /><div class="article-hero-caption">Photo: Alamin Network / ' + a.category + '</div></div>' : '') +
-    '<div class="article-cat-row">' +
-    '<span class="article-cat-pill cat-' + color + '">' + a.category + '</span>' +
-    (a.breaking ? '<span class="article-breaking">⚡ Breaking</span>' : '') +
-    '</div>' +
-    '<h1 class="article-title">' + a.title + '</h1>' +
-    '<div class="article-meta-bar">' +
-    '<div class="article-meta-item"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' + fmt(a.date) + '</div>' +
-    '<span class="article-meta-sep">●</span>' +
-    '<div class="article-meta-item"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + readTime(a.content) + '</div>' +
-    '<span class="article-meta-sep">●</span>' +
-    '<div class="article-meta-item">Alamin Network</div>' +
-    '</div>' +
-    '<div class="article-body">' + (a.content || '<p>Content not available.</p>') + '</div>';
+  const color = catColor(a.category || cat);
+  const backURL = 'category.html?cat=' + cat;
+
+  el.innerHTML = `
+    <a href="${backURL}" class="article-back-btn">← ${cap(cat)}</a>
+    ${a.image ? `<div class="article-hero-wrap">
+      <img class="article-hero-img" src="${a.image}" alt="${a.title}"
+        onerror="this.style.display='none'" />
+      <div class="article-hero-caption">Photo: Alamin Network / ${a.category || cap(cat)}</div>
+    </div>` : ''}
+    <div class="article-cat-row">
+      <span class="article-cat-pill cat-${color}">${a.category || cap(cat)}</span>
+      ${a.breaking ? '<span class="article-breaking">⚡ Breaking</span>' : ''}
+    </div>
+    <h1 class="article-title">${a.title}</h1>
+    <div class="article-meta-bar">
+      <div class="article-meta-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        ${fmtDateTime(a.date, a.time)}
+      </div>
+      <span class="article-meta-sep">●</span>
+      <div class="article-meta-item">🕐 ${timeAgo(a.date, a.time)}</div>
+      <span class="article-meta-sep">●</span>
+      <div class="article-meta-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        ${readTime(a.content)}
+      </div>
+      <span class="article-meta-sep">●</span>
+      <div class="article-meta-item">Alamin Network</div>
+    </div>
+    <div class="article-body">${a.content || '<p>Content not available.</p>'}</div>`;
 }
 
 function renderRelated(items, cat) {
-  var el = $('#related-list');
+  const el = $('#related-list');
   if (!el) return;
-  el.innerHTML = items.map(function (a) {
-    return '<div class="related-item" onclick="location.href=\'' + articleURL(a.id, cat) + '\'">' +
-      '<img class="related-item-img" src="' + (a.image || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=100&q=60') + '" alt="' + a.title + '" loading="lazy" onerror="this.src=\'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=100&q=60\'" />' +
-      '<div class="related-item-title">' + a.title + '</div>' +
-      '</div>';
-  }).join('');
+  el.innerHTML = items.map(a => `
+    <div class="related-item" onclick="location.href='${articleURL(a.id, cat)}'">
+      <img class="related-item-img"
+        src="${a.image || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=100&q=60'}"
+        alt="${a.title}" loading="lazy"
+        onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=100&q=60'" />
+      <div class="related-item-title">${a.title}</div>
+    </div>`).join('');
 }
 
 function showError() {
-  var el = $('#article-container');
+  const el = $('#article-container');
   if (!el) return;
-  el.innerHTML = '<div style="text-align:center;padding:5rem 0;color:var(--text-4)">' +
-    '<div style="font-size:3rem;margin-bottom:1rem">📰</div>' +
-    '<div style="font-family:var(--display);font-size:1.5rem;color:var(--navy);margin-bottom:.5rem">Article Not Found</div>' +
-    '<div style="font-size:.85rem;margin-bottom:2rem">This article may have been moved or removed.</div>' +
-    '<a href="index.html" style="color:var(--gold);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase">← Return to Homepage</a>' +
-    '</div>';
+  el.innerHTML = `<div style="text-align:center;padding:5rem 0;color:var(--text-4)">
+    <div style="font-size:3rem;margin-bottom:1rem">📰</div>
+    <div style="font-family:var(--display);font-size:1.5rem;color:var(--navy);margin-bottom:.5rem">Article Not Found</div>
+    <div style="font-size:.85rem;margin-bottom:2rem">This article may have been moved or removed.</div>
+    <a href="index.html" style="color:var(--gold);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase">← Return to Homepage</a>
+  </div>`;
 }
 
-// ── SHARE ─────────────────────────────────────────────
+// ── SHARE & DOWNLOAD ─────────────────────────────────
 
 function shareTo(platform) {
-  var url   = encodeURIComponent(window.location.href);
-  var title = encodeURIComponent(document.title);
-  var links = {
-    twitter:  'https://twitter.com/intent/tweet?url=' + url + '&text=' + title,
-    facebook: 'https://www.facebook.com/sharer/sharer.php?u=' + url,
-    whatsapp: 'https://wa.me/?text=' + title + '%20' + url
+  const url = encodeURIComponent(window.location.href);
+  const title = encodeURIComponent(document.title);
+  const links = {
+    twitter:  `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+    whatsapp: `https://wa.me/?text=${title}%20${url}`
   };
   if (links[platform]) window.open(links[platform], '_blank', 'noopener,width=600,height=500');
 }
 
 function copyLink() {
-  navigator.clipboard.writeText(window.location.href).then(function () {
-    var btn = $('#copy-btn');
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    const btn = $('#copy-btn');
     if (!btn) return;
-    var orig = btn.innerHTML;
+    const orig = btn.innerHTML;
     btn.innerHTML = '✓ Copied!';
     btn.style.color = 'var(--cat-spt)';
-    setTimeout(function () { btn.innerHTML = orig; btn.style.color = ''; }, 2000);
+    setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; }, 2000);
   });
 }
 
 function downloadSummary() {
   if (!_currentArticle) return;
-  var canvas = document.createElement('canvas');
-  var ctx = canvas.getContext('2d');
-  var W = 1200, H = 630;
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  const W = 1200, H = 630;
   canvas.width = W; canvas.height = H;
-
-  var bg = ctx.createLinearGradient(0, 0, W, H);
+  const bg = ctx.createLinearGradient(0, 0, W, H);
   bg.addColorStop(0, '#04080f'); bg.addColorStop(1, '#0c1a35');
   ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
-
   ctx.strokeStyle = 'rgba(201,168,76,.04)'; ctx.lineWidth = 1;
-  for (var x = 0; x < W; x += 80) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
-  for (var y = 0; y < H; y += 80) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
-
+  for (let x = 0; x < W; x += 80) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+  for (let y = 0; y < H; y += 80) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
   ctx.fillStyle = '#c9a84c'; ctx.fillRect(60, 80, 4, H - 160);
   ctx.font = '500 13px Arial'; ctx.fillStyle = '#c9a84c';
   ctx.fillText('ALAMIN NETWORK  ·  ' + (_currentArticle.category || '').toUpperCase(), 84, 110);
-
   ctx.font = 'bold 48px Georgia'; ctx.fillStyle = '#ffffff';
-  var words = _currentArticle.title.split(' ');
-  var line = '', ty = 200;
-  for (var wi = 0; wi < words.length; wi++) {
-    var test = line + words[wi] + ' ';
-    if (ctx.measureText(test).width > W - 200 && line) { ctx.fillText(line.trim(), 84, ty); line = words[wi] + ' '; ty += 62; }
+  const words = _currentArticle.title.split(' ');
+  let line = '', ty = 200;
+  for (const word of words) {
+    const test = line + word + ' ';
+    if (ctx.measureText(test).width > W - 200 && line) { ctx.fillText(line.trim(), 84, ty); line = word + ' '; ty += 62; }
     else line = test;
     if (ty > 440) break;
   }
   if (line.trim()) ctx.fillText(line.trim(), 84, ty);
-
   ctx.font = '400 16px Arial'; ctx.fillStyle = 'rgba(244,241,235,.4)';
-  ctx.fillText(fmt(_currentArticle.date) + '  ·  ' + readTime(_currentArticle.content || ''), 84, H - 80);
-  ctx.fillStyle = '#c9a84c'; ctx.fillRect(0, H - 5, W, 5);
-
-  var link = document.createElement('a');
+  ctx.fillText(fmtDateTime(_currentArticle.date, _currentArticle.time) + '  ·  ' + readTime(_currentArticle.content || ''), 84, H - 80);
+  ctx.fillStyle = '#c9a84c'; ctx.fillRect(0, H-5, W, 5);
+  const link = document.createElement('a');
   link.download = 'alamin-' + _currentArticle.id + '.png';
   link.href = canvas.toDataURL('image/png');
   link.click();
