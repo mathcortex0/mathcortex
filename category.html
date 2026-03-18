@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Category — Alamin Network</title>
   <link rel="icon" type="image/png" href="logo_alaminnetwork.png" />
   <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
-
 <div class="breaking-banner" id="breaking-banner">
   <div class="breaking-tag"><div class="breaking-dot"></div>Breaking</div>
   <div class="breaking-scroll"><span class="breaking-scroll-inner" id="breaking-inner"></span></div>
 </div>
-
 <header class="site-header">
   <div class="header-brand-row">
     <div class="header-logo">
@@ -24,47 +21,31 @@
         <span class="logo-text-sub">Reporting the World With Precision</span>
       </div>
     </div>
-    <div class="edition-badge">
-      <span class="edition-name" id="edition-name">Morning Edition</span>
-      Independent · Accurate · Trusted
-    </div>
+    <div class="edition-badge"><span class="edition-name" id="edition-name">Morning Edition</span>Independent · Accurate · Trusted</div>
     <div class="header-actions">
-      <button class="header-btn" onclick="openSearch()" title="Search">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      </button>
-      <button class="hamburger-btn" id="hamburger-btn" onclick="openDrawer()" title="Menu">
-        <span class="ham-bar"></span>
-        <span class="ham-bar"></span>
-        <span class="ham-bar"></span>
-      </button>
+      <button class="header-btn" onclick="openSearch()" title="Search"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+      <button class="hamburger-btn" id="hamburger-btn" onclick="openDrawer()" title="Menu"><span class="ham-bar"></span><span class="ham-bar"></span><span class="ham-bar"></span></button>
     </div>
   </div>
   <nav class="cat-nav" id="cat-nav">
     <div class="cat-nav-inner">
       <a href="index.html" class="cat-link">Home</a>
-      <a href="category.html?cat=national"      class="cat-link" data-cat="national">National</a>
       <a href="category.html?cat=international" class="cat-link" data-cat="international">International</a>
+      <a href="category.html?cat=bangladesh"    class="cat-link" data-cat="bangladesh">Bangladesh</a>
       <a href="category.html?cat=politics"      class="cat-link" data-cat="politics">Politics</a>
       <a href="category.html?cat=sports"        class="cat-link" data-cat="sports">Sports</a>
     </div>
   </nav>
 </header>
-
 <div class="drawer-backdrop" id="drawer-backdrop"></div>
 <nav class="drawer" id="drawer">
-  <div class="drawer-head">
-    <img class="drawer-logo" src="logo_alaminnetwork.png" alt="Alamin Network" />
-    <button class="drawer-x" onclick="closeDrawer()">✕</button>
-  </div>
-  <div class="drawer-edition">
-    <strong id="drawer-edition-name">Morning Edition</strong>
-    Independent · Accurate · Trusted
-  </div>
+  <div class="drawer-head"><img class="drawer-logo" src="logo_alaminnetwork.png" alt="Alamin Network" /><button class="drawer-x" onclick="closeDrawer()">✕</button></div>
+  <div class="drawer-edition"><strong id="drawer-edition-name">Morning Edition</strong>Independent · Accurate · Trusted</div>
   <div>
     <div class="drawer-nav-label">News</div>
-    <a href="index.html"                      class="drawer-link" data-page="home"><span class="drawer-dot"></span>Home</a>
-    <a href="category.html?cat=national"      class="drawer-link" data-cat="national"><span class="drawer-dot"></span>National</a>
+    <a href="index.html" class="drawer-link" data-page="home"><span class="drawer-dot"></span>Home</a>
     <a href="category.html?cat=international" class="drawer-link" data-cat="international"><span class="drawer-dot"></span>International</a>
+    <a href="category.html?cat=bangladesh"    class="drawer-link" data-cat="bangladesh"><span class="drawer-dot"></span>Bangladesh</a>
     <a href="category.html?cat=politics"      class="drawer-link" data-cat="politics"><span class="drawer-dot"></span>Politics</a>
     <a href="category.html?cat=business"      class="drawer-link" data-cat="business"><span class="drawer-dot"></span>Business</a>
   </div>
@@ -73,17 +54,15 @@
     <a href="category.html?cat=sports"        class="drawer-link" data-cat="sports"><span class="drawer-dot"></span>Sports</a>
     <a href="category.html?cat=technology"    class="drawer-link" data-cat="technology"><span class="drawer-dot"></span>Technology</a>
     <a href="category.html?cat=entertainment" class="drawer-link" data-cat="entertainment"><span class="drawer-dot"></span>Entertainment</a>
+    <a href="category.html?cat=explained"     class="drawer-link" data-cat="explained"><span class="drawer-dot"></span>Explained</a>
+    <a href="category.html?cat=opinion"       class="drawer-link" data-cat="opinion"><span class="drawer-dot"></span>Opinion</a>
   </div>
-  <div class="drawer-foot">
-    <div class="drawer-foot-title">Follow Us</div>
-    <div class="drawer-social">
-      <a href="#">Facebook</a>
-      <a href="#">𝕏 Twitter</a>
-      <a href="#">YouTube</a>
-    </div>
+  <div>
+    <div class="drawer-nav-label">Pages</div>
+    <a href="about.html" class="drawer-link"><span class="drawer-dot" style="background:var(--gold)"></span>About Us</a>
   </div>
+  <div class="drawer-foot"><div class="drawer-foot-title">Follow Us</div><div class="drawer-social"><a href="#">Facebook</a><a href="#">𝕏 Twitter</a><a href="#">YouTube</a></div></div>
 </nav>
-
 <div class="search-overlay" id="search-overlay">
   <div class="search-box">
     <div class="search-box-label">Search Articles</div>
@@ -95,14 +74,10 @@
     <div id="search-results"></div>
   </div>
 </div>
-
 <main class="site-main">
   <div class="cat-page-hero">
     <div class="cat-page-hero-inner">
-      <div>
-        <div class="cat-page-label" id="cat-label">Category</div>
-        <h1 class="cat-page-title" id="cat-title">Loading…</h1>
-      </div>
+      <div><div class="cat-page-label" id="cat-label">Category</div><h1 class="cat-page-title" id="cat-title">Loading…</h1></div>
       <div class="cat-page-count" id="cat-count">00</div>
     </div>
   </div>
@@ -112,44 +87,15 @@
     <div style="height:82px;border-radius:var(--r)" class="sk"></div>
   </div>
 </main>
-
 <footer class="site-footer">
   <div class="footer-main">
-    <div>
-      <img class="footer-logo" src="logo_alaminnetwork.png" alt="Alamin Network" />
-      <p class="footer-desc">Independent journalism covering Bangladesh and the world.</p>
-    </div>
-    <div>
-      <div class="footer-col-title">Coverage</div>
-      <div class="footer-links">
-        <a href="category.html?cat=national">National</a>
-        <a href="category.html?cat=international">International</a>
-        <a href="category.html?cat=sports">Sports</a>
-      </div>
-    </div>
-    <div>
-      <div class="footer-col-title">Network</div>
-      <div class="footer-links">
-        <a href="#">About Us</a>
-        <a href="#">Editorial Policy</a>
-        <a href="#">Contact</a>
-      </div>
-    </div>
-    <div>
-      <div class="footer-col-title">Follow</div>
-      <div class="footer-links">
-        <a href="#">Facebook</a>
-        <a href="#">𝕏 Twitter</a>
-        <a href="#">YouTube</a>
-      </div>
-    </div>
+    <div><img class="footer-logo" src="logo_alaminnetwork.png" alt="Alamin Network" /><p class="footer-desc">Independent journalism covering Bangladesh and the world.</p></div>
+    <div><div class="footer-col-title">Coverage</div><div class="footer-links"><a href="category.html?cat=international">International</a><a href="category.html?cat=bangladesh">Bangladesh</a><a href="category.html?cat=politics">Politics</a><a href="category.html?cat=business">Business</a><a href="category.html?cat=sports">Sports</a><a href="category.html?cat=technology">Technology</a><a href="category.html?cat=entertainment">Entertainment</a><a href="category.html?cat=explained">Explained</a><a href="category.html?cat=opinion">Opinion</a></div></div>
+    <div><div class="footer-col-title">Network</div><div class="footer-links"><a href="about.html">About Us</a><a href="#">Editorial Policy</a><a href="#">Contact</a></div></div>
+    <div><div class="footer-col-title">Follow</div><div class="footer-links"><a href="#">Facebook</a><a href="#">𝕏 Twitter</a><a href="#">YouTube</a></div></div>
   </div>
-  <div class="footer-bottom">
-    <span>© 2026 Alamin Network. All rights reserved.</span>
-    <span>Independent · Accountable · Precise</span>
-  </div>
+  <div class="footer-bottom"><span>© 2026 Alamin Network. All rights reserved.</span><span>Designed & Built by Md. Al Amin</span></div>
 </footer>
-
 <script src="js/main.js"></script>
 <script>initCategoryPage();</script>
 </body>
