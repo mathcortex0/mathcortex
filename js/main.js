@@ -224,10 +224,20 @@ function initBreaking(data) {
     header.insertAdjacentElement('afterend', bar);
   }
 
+  // ── Wrap cat-nav in clip wrapper (injected, no HTML needed)
+  function wrapCatNav() {
+    const catNav = $('.cat-nav');
+    if (!catNav || catNav.parentElement.classList.contains('cat-nav-wrap')) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'cat-nav-wrap';
+    catNav.parentNode.insertBefore(wrap, catNav);
+    wrap.appendChild(catNav);
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', buildCompactNav);
+    document.addEventListener('DOMContentLoaded', () => { wrapCatNav(); buildCompactNav(); });
   } else {
-    setTimeout(buildCompactNav, 50);
+    setTimeout(() => { wrapCatNav(); buildCompactNav(); }, 50);
   }
 
   // ── Scroll state
@@ -243,46 +253,41 @@ function initBreaking(data) {
   const TOP_AT     = 400;
 
   function update() {
-    const catNav     = $('.cat-nav');
+    const wrap       = $('.cat-nav-wrap');
     const compactNav = document.getElementById('compact-nav');
     const curY       = window.scrollY;
     const diff       = curY - lastY;
     const isMobile   = window.innerWidth <= 768;
 
-    // ── Hide/show cat-nav (both devices)
-    if (catNav) {
+    if (wrap) {
       if (curY <= 10) {
-        // Always show at very top
+        // Always show at very top — no accumulation needed
         downAccum = 0; upAccum = 0;
         if (navHidden) {
-          catNav.classList.remove('hidden');
+          wrap.classList.remove('hidden');
           navHidden = false;
           if (!isMobile && compactNav) compactNav.classList.remove('visible');
         }
       } else if (diff > 0) {
-        // Scrolling DOWN
+        // Scrolling DOWN — accumulate before hiding
         upAccum = 0; downAccum += diff;
         if (!navHidden && downAccum > HIDE_DELTA) {
-          catNav.classList.add('hidden');
-          navHidden = true;
-          downAccum = 0;
-          // Desktop only — show compact nav
+          wrap.classList.add('hidden');
+          navHidden = true; downAccum = 0;
           if (!isMobile && compactNav) compactNav.classList.add('visible');
         }
       } else if (diff < 0) {
-        // Scrolling UP
+        // Scrolling UP — accumulate before showing
         downAccum = 0; upAccum += Math.abs(diff);
         if (navHidden && upAccum > SHOW_DELTA) {
-          catNav.classList.remove('hidden');
-          navHidden = false;
-          upAccum = 0;
-          // Desktop only — hide compact nav
+          wrap.classList.remove('hidden');
+          navHidden = false; upAccum = 0;
           if (!isMobile && compactNav) compactNav.classList.remove('visible');
         }
       }
     }
 
-    // ── Scroll to top button
+    // Scroll to top button
     if (curY > TOP_AT) topBtn.classList.add('visible');
     else               topBtn.classList.remove('visible');
 
