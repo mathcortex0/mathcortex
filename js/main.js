@@ -169,7 +169,7 @@ function initBreaking(data) {
   inner.textContent = text + '   ·   ·   ·   ' + text;
 }
 
-// ── SCROLL: SLIM HEADER + NAV HIDE + SCROLL TO TOP ───
+// ── SCROLL: INLINE NAV + SCROLL TO TOP ───────────────
 
 (function() {
 
@@ -204,57 +204,81 @@ function initBreaking(data) {
     setTimeout(() => { location.href = href; }, 220);
   });
 
+  // Build inline nav inside header-brand-row — cloned from cat-nav
+  function buildInlineNav() {
+    const brandRow = $('.header-brand-row');
+    const catNav   = $('.cat-nav');
+    if (!brandRow || !catNav || document.getElementById('header-inline-nav')) return;
+
+    const inlineNav = document.createElement('nav');
+    inlineNav.id        = 'header-inline-nav';
+    inlineNav.className = 'header-inline-nav';
+
+    // Clone all cat-links
+    const links = catNav.querySelectorAll('.cat-link');
+    links.forEach(link => {
+      const a = document.createElement('a');
+      a.href      = link.href;
+      a.textContent = link.textContent;
+      if (link.dataset.cat) a.dataset.cat = link.dataset.cat;
+      if (link.classList.contains('active')) a.classList.add('active');
+      inlineNav.appendChild(a);
+    });
+
+    // Insert between header-logo and header-actions
+    const actions = brandRow.querySelector('.header-actions');
+    if (actions) brandRow.insertBefore(inlineNav, actions);
+  }
+
+  // Run after DOM ready to ensure cat-nav is rendered
+  document.addEventListener('DOMContentLoaded', buildInlineNav);
+  // Also try immediately in case DOM is already ready
+  if (document.readyState !== 'loading') {
+    setTimeout(buildInlineNav, 100);
+  }
+
   // Scroll state
   let lastY     = window.scrollY;
   let ticking   = false;
-  let navHidden = false;
-  let downAccum = 0;
-  let upAccum   = 0;
+  let isScrolled = false;
+  let navHidden  = false;
+  let downAccum  = 0;
+  let upAccum    = 0;
 
-  // Thresholds
-  const SLIM_AT    = 60;
-  const HIDE_AT    = 100;
+  const SCROLL_AT  = 80;
   const HIDE_DELTA = 40;
   const SHOW_DELTA = 12;
   const TOP_BTN_AT = 400;
 
   function update() {
-    const header = $('.site-header');
-    const nav    = $('.cat-nav');
-    const curY   = window.scrollY;
-    const diff   = curY - lastY;
+    const header    = $('.site-header');
+    const catNav    = $('.cat-nav');
+    const inlineNav = document.getElementById('header-inline-nav');
+    const curY      = window.scrollY;
+    const diff      = curY - lastY;
 
-    // 1. Slim header
-    if (header) {
-      if (curY > SLIM_AT) header.classList.add('slim');
-      else                header.classList.remove('slim');
-    }
-
-    // 2. Nav hide/show with accumulation to prevent shaking
-    if (nav) {
-      if (curY <= 10) {
-        downAccum = 0; upAccum = 0;
-        if (navHidden) { nav.classList.remove('hidden'); navHidden = false; }
-      } else if (diff > 0) {
-        upAccum    = 0;
-        downAccum += diff;
-        if (!navHidden && curY > HIDE_AT && downAccum > HIDE_DELTA) {
-          nav.classList.add('hidden');
-          navHidden = true;
-          downAccum = 0;
-        }
-      } else if (diff < 0) {
-        downAccum  = 0;
-        upAccum   += Math.abs(diff);
-        if (navHidden && upAccum > SHOW_DELTA) {
-          nav.classList.remove('hidden');
-          navHidden = false;
-          upAccum   = 0;
-        }
+    // 1. Toggle scrolled state — inline nav appears, cat-nav hides
+    if (curY > SCROLL_AT && !isScrolled) {
+      isScrolled = true;
+      if (header)    header.classList.add('scrolled');
+      if (catNav)    { catNav.classList.add('hidden'); navHidden = true; }
+      if (inlineNav) {
+        inlineNav.style.display = 'flex';
+        requestAnimationFrame(() => inlineNav.classList.add('visible'));
       }
+      downAccum = 0; upAccum = 0;
+    } else if (curY <= SCROLL_AT && isScrolled) {
+      isScrolled = false;
+      if (header)    header.classList.remove('scrolled');
+      if (catNav)    { catNav.classList.remove('hidden'); navHidden = false; }
+      if (inlineNav) {
+        inlineNav.classList.remove('visible');
+        setTimeout(() => { if (!isScrolled) inlineNav.style.display = 'none'; }, 250);
+      }
+      downAccum = 0; upAccum = 0;
     }
 
-    // 3. Scroll to top button
+    // 2. Scroll to top button
     if (curY > TOP_BTN_AT) topBtn.classList.add('visible');
     else                    topBtn.classList.remove('visible');
 
@@ -266,7 +290,6 @@ function initBreaking(data) {
     if (!ticking) { requestAnimationFrame(update); ticking = true; }
   }, { passive: true });
 
-  // Run once on load
   update();
 
 })();
