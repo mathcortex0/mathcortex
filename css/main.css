@@ -426,3 +426,35 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
 .cat-strips section:last-child:nth-child(odd){grid-column:span 2}
 @media(max-width:1100px){.cat-strips{grid-template-columns:1fr 1fr}}
 @media(max-width:768px){.cat-strips{grid-template-columns:1fr}}
+
+/* ── LIVE HEADER BUTTON ────────────────────────────── */
+.live-header-btn {
+  display: none;
+  align-items: center;
+  gap: .35rem;
+  font-family: var(--ui);
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #c0392b;
+  text-decoration: none;
+  padding: .3rem .1rem;
+  transition: opacity .18s;
+}
+.live-header-btn.visible {
+  display: flex !important;
+}
+.live-header-btn:hover { opacity: .7; }
+.live-header-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--red, #c0392b);
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: live-pulse 1.2s ease-in-out infinite;
+}
+@keyframes live-pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .5; transform: scale(.8); }
+}
