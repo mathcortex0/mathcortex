@@ -1,12 +1,22 @@
 [
   {
+  "id": "i013",
+  "cat": "international",
+  "title": "The Hollowed Center: Why Larijani's Death Changes Everything for Iran",
+  "summary": "The confirmation of Ali Larijani's death on March 17, following a targeted Israeli air strike at his daughter's home in Pardis, isn't just another casualty—it's the removal of the Islamic Republic's 'brain trust' and leaves Iran without its most strategic player.",
+  "date": "2026-03-18",
+  "image": "images/larijani-death.webp",
+  "featured": true,
+  "breaking": false
+},
+  {
   "id": "i012",
   "cat": "international",
   "title": "At Least 100 Killed in Pakistani Air Strike on Kabul Drug Rehab Centre",
   "summary": "More than 100 people have been killed after a Pakistani air strike leveled a major drug treatment facility in the Afghan capital, according to forensic sources. The strike targeted the Omid Addiction Treatment Hospital, a sprawling complex that was once a US military base.",
   "date": "2026-03-17",
   "image": "images/pak-attack-on-afg.jpg",
-  "featured": true,
+  "featured": false,
   "breaking": true
   },
   {
