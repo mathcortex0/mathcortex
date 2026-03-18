@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Alamin Network Archive — Browse all past articles by category." />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Archive — Alamin Network</title>
+  <link rel="icon" type="image/png" href="logo_alaminnetwork.png" />
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    /* ── ARCHIVE PAGE STYLES ──────────────────────── */
+
+    .archive-hero {
+      padding: 2.5rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+    .archive-hero-inner {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .archive-label {
+      font-family: var(--ui);
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .5rem;
+    }
+    .archive-title {
+      font-family: var(--display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+      letter-spacing: -.02em;
+    }
+    .archive-count-badge {
+      font-family: var(--ui);
+      font-size: .72rem;
+      color: var(--text-4);
+      background: var(--surf-alt);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: .4rem 1rem;
+      white-space: nowrap;
+    }
+    .archive-count-badge strong {
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    /* Search bar */
+    .archive-search-wrap {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    .archive-search-wrap svg {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-4);
+      pointer-events: none;
+    }
+    .archive-search {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: .85rem 1rem .85rem 2.8rem;
+      font-family: var(--ui);
+      font-size: .9rem;
+      color: var(--text-1);
+      outline: none;
+      transition: border-color .18s, box-shadow .18s;
+      box-shadow: var(--sh-xs);
+    }
+    .archive-search:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(15,32,64,.06);
+    }
+    .archive-search::placeholder { color: var(--text-5); }
+
+    /* Category filter chips */
+    .archive-filters {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .filter-chip {
+      font-family: var(--ui);
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .4em 1em;
+      border-radius: 30px;
+      border: 1.5px solid var(--border);
+      color: var(--text-3);
+      background: var(--surface);
+      cursor: pointer;
+      transition: all .18s;
+      white-space: nowrap;
+    }
+    .filter-chip:hover {
+      border-color: var(--navy);
+      color: var(--navy);
+      background: var(--surf-alt);
+    }
+    .filter-chip.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: #fff;
+    }
+    .filter-chip[data-cat="international"].active  { background: var(--cat-int); border-color: var(--cat-int); }
+    .filter-chip[data-cat="bangladesh"].active     { background: #c0392b; border-color: #c0392b; }
+    .filter-chip[data-cat="sports"].active         { background: var(--cat-spt); border-color: var(--cat-spt); }
+    .filter-chip[data-cat="politics"].active       { background: #7c3aed; border-color: #7c3aed; }
+    .filter-chip[data-cat="business"].active       { background: #0891b2; border-color: #0891b2; }
+    .filter-chip[data-cat="technology"].active     { background: #0284c7; border-color: #0284c7; }
+    .filter-chip[data-cat="entertainment"].active  { background: #db2777; border-color: #db2777; }
+    .filter-chip[data-cat="explained"].active      { background: #6d28d9; border-color: #6d28d9; }
+    .filter-chip[data-cat="opinion"].active        { background: #b45309; border-color: #b45309; }
+
+    /* Status line */
+    .archive-status {
+      font-family: var(--ui);
+      font-size: .75rem;
+      color: var(--text-4);
+      margin-bottom: 1.2rem;
+      padding-bottom: .8rem;
+      border-bottom: 1px solid var(--border-lt);
+    }
+    .archive-status strong { color: var(--navy); }
+
+    /* Archive list */
+    .archive-list { display: flex; flex-direction: column; }
+
+    .archive-item {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 1.2rem;
+      align-items: center;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border-lt);
+      cursor: pointer;
+      transition: padding-left .18s, background .18s;
+      border-radius: 0;
+      text-decoration: none;
+      color: inherit;
+    }
+    .archive-item:hover { padding-left: .5rem; }
+    .archive-item-img {
+      width: 90px;
+      height: 58px;
+      object-fit: cover;
+      border-radius: var(--r);
+      background: var(--surf-alt);
+      display: block;
+      flex-shrink: 0;
+    }
+    .archive-item-body {}
+    .archive-item-cat {
+      font-family: var(--ui);
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: .28rem;
+    }
+    .archive-item-title {
+      font-family: var(--heading);
+      font-size: .96rem;
+      line-height: 1.35;
+      color: var(--text-1);
+      margin-bottom: .3rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      transition: color .18s;
+    }
+    .archive-item:hover .archive-item-title { color: var(--navy); }
+    .archive-item-meta {
+      font-family: var(--ui);
+      font-size: .63rem;
+      color: var(--text-4);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .archive-item-ago {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    /* Empty state */
+    .archive-empty {
+      text-align: center;
+      padding: 4rem 0;
+      color: var(--text-4);
+    }
+    .archive-empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .archive-empty-title {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      color: var(--navy);
+      margin-bottom: .5rem;
+    }
+    .archive-empty-text {
+      font-family: var(--ui);
+      font-size: .85rem;
+      color: var(--text-3);
+    }
+
+    /* Loading skeleton */
+    .archive-skeleton { display: flex; flex-direction: column; gap: 0; }
+    .archive-sk-item {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 1.2rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border-lt);
+    }
+
+    @media (max-width: 480px) {
+      .archive-item { grid-template-columns: 70px 1fr; gap: .9rem; }
+      .archive-item-img { width: 70px; height: 46px; }
+      .archive-filters { gap: .4rem; }
+      .filter-chip { font-size: .6rem; padding: .35em .8em; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="breaking-banner" id="breaking-banner">
+  <div class="breaking-tag"><div class="breaking-dot"></div>Breaking</div>
+  <div class="breaking-scroll"><span class="breaking-scroll-inner" id="breaking-inner"></span></div>
+</div>
+
+<header class="site-header">
+  <div class="header-brand-row">
+    <div class="header-logo">
+      <img class="logo-img" src="logo_alaminnetwork.png" alt="Alamin Network" />
+      <div class="logo-divider"></div>
+      <div class="logo-text">
+        <span class="logo-text-main">Alamin Network</span>
+        <span class="logo-text-sub">Reporting the World With Precision</span>
+      </div>
+    </div>
+    <div class="edition-badge">
+      <span class="edition-name" id="edition-name">Morning Edition</span>
+      Independent · Accurate · Trusted
+    </div>
+    <div class="header-actions">
+      <button class="header-btn" onclick="openSearch()" title="Search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="hamburger-btn" id="hamburger-btn" onclick="openDrawer()" title="Menu">
+        <span class="ham-bar"></span><span class="ham-bar"></span><span class="ham-bar"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="cat-nav" id="cat-nav">
+    <div class="cat-nav-inner">
+      <a href="index.html" class="cat-link">Home</a>
+      <a href="category.html?cat=international" class="cat-link" data-cat="international">International</a>
+      <a href="category.html?cat=bangladesh"    class="cat-link" data-cat="bangladesh">Bangladesh</a>
+      <a href="category.html?cat=politics"      class="cat-link" data-cat="politics">Politics</a>
+      <a href="category.html?cat=sports"        class="cat-link" data-cat="sports">Sports</a>
+    </div>
+  </nav>
+</header>
+
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<nav class="drawer" id="drawer">
+  <div class="drawer-head">
+    <img class="drawer-logo" src="logo_alaminnetwork.png" alt="Alamin Network" />
+    <button class="drawer-x" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-edition">
+    <strong id="drawer-edition-name">Morning Edition</strong>
+    Independent · Accurate · Trusted
+  </div>
+  <div>
+    <div class="drawer-nav-label">News</div>
+    <a href="index.html"                      class="drawer-link" data-page="home"><span class="drawer-dot"></span>Home</a>
+    <a href="category.html?cat=international" class="drawer-link" data-cat="international"><span class="drawer-dot"></span>International</a>
+    <a href="category.html?cat=bangladesh"    class="drawer-link" data-cat="bangladesh"><span class="drawer-dot"></span>Bangladesh</a>
+    <a href="category.html?cat=politics"      class="drawer-link" data-cat="politics"><span class="drawer-dot"></span>Politics</a>
+    <a href="category.html?cat=business"      class="drawer-link" data-cat="business"><span class="drawer-dot"></span>Business</a>
+  </div>
+  <div>
+    <div class="drawer-nav-label">More</div>
+    <a href="category.html?cat=sports"        class="drawer-link" data-cat="sports"><span class="drawer-dot"></span>Sports</a>
+    <a href="category.html?cat=technology"    class="drawer-link" data-cat="technology"><span class="drawer-dot"></span>Technology</a>
+    <a href="category.html?cat=entertainment" class="drawer-link" data-cat="entertainment"><span class="drawer-dot"></span>Entertainment</a>
+    <a href="category.html?cat=explained"     class="drawer-link" data-cat="explained"><span class="drawer-dot"></span>Explained</a>
+    <a href="category.html?cat=opinion"       class="drawer-link" data-cat="opinion"><span class="drawer-dot"></span>Opinion</a>
+  </div>
+  <div>
+    <div class="drawer-nav-label">Pages</div>
+    <a href="about.html"   class="drawer-link"><span class="drawer-dot" style="background:var(--gold)"></span>About Us</a>
+    <a href="archive.html" class="drawer-link active"><span class="drawer-dot" style="background:var(--text-4)"></span>Archive</a>
+  </div>
+  <div class="drawer-foot">
+    <div class="drawer-foot-title">Follow Us</div>
+    <div class="drawer-social">
+      <a href="#">Facebook</a><a href="#">𝕏 Twitter</a><a href="#">YouTube</a>
+    </div>
+  </div>
+</nav>
+
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-box-label">Search Articles</div>
+    <div class="search-input-row">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search-input" placeholder="Type to search…" oninput="runSearch(this.value)" autocomplete="off" />
+      <button class="search-close-btn" onclick="closeSearch()">✕</button>
+    </div>
+    <div id="search-results"></div>
+  </div>
+</div>
+
+<main class="site-main">
+
+  <!-- Hero -->
+  <div class="archive-hero">
+    <div class="archive-hero-inner">
+      <div>
+        <div class="archive-label">Past Coverage</div>
+        <h1 class="archive-title">Archive</h1>
+      </div>
+      <div class="archive-count-badge">
+        <strong id="archive-total">—</strong> articles
+      </div>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="archive-search-wrap">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input class="archive-search" id="archive-search" type="text"
+      placeholder="Search archived articles…"
+      oninput="archiveFilter()" autocomplete="off" />
+  </div>
+
+  <!-- Category filters -->
+  <div class="archive-filters">
+    <button class="filter-chip active" data-cat="all" onclick="archiveSetCat('all', this)">All</button>
+    <button class="filter-chip" data-cat="international"  onclick="archiveSetCat('international', this)">International</button>
+    <button class="filter-chip" data-cat="bangladesh"     onclick="archiveSetCat('bangladesh', this)">Bangladesh</button>
+    <button class="filter-chip" data-cat="business"       onclick="archiveSetCat('business', this)">Business</button>
+    <button class="filter-chip" data-cat="sports"         onclick="archiveSetCat('sports', this)">Sports</button>
+    <button class="filter-chip" data-cat="politics"       onclick="archiveSetCat('politics', this)">Politics</button>
+    <button class="filter-chip" data-cat="technology"     onclick="archiveSetCat('technology', this)">Technology</button>
+    <button class="filter-chip" data-cat="entertainment"  onclick="archiveSetCat('entertainment', this)">Entertainment</button>
+    <button class="filter-chip" data-cat="explained"      onclick="archiveSetCat('explained', this)">Explained</button>
+    <button class="filter-chip" data-cat="opinion"        onclick="archiveSetCat('opinion', this)">Opinion</button>
+  </div>
+
+  <!-- Status -->
+  <div class="archive-status" id="archive-status">Loading archive…</div>
+
+  <!-- List -->
+  <div class="archive-list" id="archive-list">
+    <!-- Skeleton -->
+    <div class="archive-skeleton">
+      <div class="archive-sk-item"><div class="sk" style="width:90px;height:58px;border-radius:var(--r)"></div><div><div class="sk" style="height:.6rem;width:15%;margin-bottom:.5rem"></div><div class="sk" style="height:1rem;width:85%;margin-bottom:.3rem"></div><div class="sk" style="height:1rem;width:65%;margin-bottom:.5rem"></div><div class="sk" style="height:.6rem;width:25%"></div></div></div>
+      <div class="archive-sk-item"><div class="sk" style="width:90px;height:58px;border-radius:var(--r)"></div><div><div class="sk" style="height:.6rem;width:20%;margin-bottom:.5rem"></div><div class="sk" style="height:1rem;width:90%;margin-bottom:.3rem"></div><div class="sk" style="height:1rem;width:70%;margin-bottom:.5rem"></div><div class="sk" style="height:.6rem;width:20%"></div></div></div>
+      <div class="archive-sk-item"><div class="sk" style="width:90px;height:58px;border-radius:var(--r)"></div><div><div class="sk" style="height:.6rem;width:12%;margin-bottom:.5rem"></div><div class="sk" style="height:1rem;width:80%;margin-bottom:.3rem"></div><div class="sk" style="height:1rem;width:55%;margin-bottom:.5rem"></div><div class="sk" style="height:.6rem;width:22%"></div></div></div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <div>
+      <img class="footer-logo" src="logo_alaminnetwork.png" alt="Alamin Network" />
+      <p class="footer-desc">Independent journalism covering Bangladesh and the world. Accurate, accountable, and precise.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Coverage</div>
+      <div class="footer-links">
+        <a href="category.html?cat=international">International</a>
+        <a href="category.html?cat=bangladesh">Bangladesh</a>
+        <a href="category.html?cat=politics">Politics</a>
+        <a href="category.html?cat=business">Business</a>
+        <a href="category.html?cat=sports">Sports</a>
+        <a href="category.html?cat=technology">Technology</a>
+        <a href="category.html?cat=entertainment">Entertainment</a>
+        <a href="category.html?cat=explained">Explained</a>
+        <a href="category.html?cat=opinion">Opinion</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Network</div>
+      <div class="footer-links">
+        <a href="about.html">About Us</a>
+        <a href="archive.html">Archive</a>
+        <a href="#">Editorial Policy</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Follow</div>
+      <div class="footer-links">
+        <a href="#">Facebook</a><a href="#">𝕏 Twitter</a><a href="#">YouTube</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Alamin Network. All rights reserved.</span>
+    <span>Designed & Built by Md. Al Amin</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+
+// ── ARCHIVE PAGE ──────────────────────────────────────
+
+const ARCHIVE_CATS = [
+  'international','bangladesh','business','sports',
+  'politics','technology','entertainment','explained','opinion'
+];
+
+let _archiveAll = [];
+let _archiveCat = 'all';
+
+async function initArchivePage() {
+  initEdition();
+  setActiveNav();
+
+  // Load breaking from first available category
+  const feedCheck = await getJSON('data/international.json');
+  if (feedCheck) initBreaking(feedCheck);
+
+  // Fetch all archive files in parallel
+  const results = await Promise.all(
+    ARCHIVE_CATS.map(cat => getJSON('data/archive-' + cat + '.json'))
+  );
+
+  // Merge and tag with category
+  let all = [];
+  results.forEach((data, i) => {
+    if (!data || !data.length) return;
+    const cat = ARCHIVE_CATS[i];
+    data.forEach(a => all.push({ ...a, cat }));
+  });
+
+  // Sort by date descending (newest first)
+  all.sort((a, b) => {
+    const da = new Date(a.date + 'T' + (a.time || '00:00'));
+    const db = new Date(b.date + 'T' + (b.time || '00:00'));
+    return db - da;
+  });
+
+  _archiveAll = all;
+  _feed = all; // for global search
+
+  // Update total count
+  const totalEl = document.getElementById('archive-total');
+  if (totalEl) totalEl.textContent = all.length;
+
+  archiveRender();
+}
+
+function archiveSetCat(cat, btn) {
+  _archiveCat = cat;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  archiveFilter();
+}
+
+function archiveFilter() {
+  const q = (document.getElementById('archive-search')?.value || '').toLowerCase().trim();
+  let items = _archiveAll;
+
+  // Filter by category
+  if (_archiveCat !== 'all') {
+    items = items.filter(a => (a.cat || '').toLowerCase() === _archiveCat);
+  }
+
+  // Filter by search query
+  if (q.length >= 2) {
+    items = items.filter(a =>
+      a.title.toLowerCase().includes(q) ||
+      (a.summary || '').toLowerCase().includes(q)
+    );
+  }
+
+  archiveRender(items);
+}
+
+function archiveRender(items) {
+  if (!items) items = _archiveAll;
+  const listEl = document.getElementById('archive-list');
+  const statusEl = document.getElementById('archive-status');
+
+  if (statusEl) {
+    statusEl.innerHTML = 'Showing <strong>' + items.length + '</strong> article' +
+      (items.length !== 1 ? 's' : '') +
+      (_archiveCat !== 'all' ? ' in <strong>' + cap(_archiveCat) + '</strong>' : '') + '.';
+  }
+
+  if (!listEl) return;
+
+  if (!items.length) {
+    listEl.innerHTML = `
+      <div class="archive-empty">
+        <div class="archive-empty-icon">🗂️</div>
+        <div class="archive-empty-title">No articles found</div>
+        <div class="archive-empty-text">Try a different category or search term.</div>
+      </div>`;
+    return;
+  }
+
+  listEl.innerHTML = items.map(a => {
+    const cat = (a.cat || a.category || 'international').toLowerCase();
+    const url = 'report.html?id=' + a.id + '&cat=' + cat;
+    return `
+      <a class="archive-item" href="${url}">
+        <img class="archive-item-img"
+          src="${a.image || 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=200&q=60'}"
+          alt="${a.title}" loading="lazy"
+          onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=200&q=60'" />
+        <div class="archive-item-body">
+          <div class="archive-item-cat cat-${catColor(cat)}">${cap(cat)}</div>
+          <div class="archive-item-title">${a.title}</div>
+          <div class="archive-item-meta">
+            <span class="archive-item-ago">${timeAgo(a.date, a.time)}</span>
+            <span>·</span>
+            <span>${fmtDateTime(a.date, a.time)}</span>
+          </div>
+        </div>
+      </a>`;
+  }).join('');
+}
+
+initArchivePage();
+</script>
+</body>
+</html>
