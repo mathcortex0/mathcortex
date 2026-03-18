@@ -457,7 +457,10 @@ async function loadLive() {
 
   // Show live button in header
   const liveBtn = document.getElementById('live-header-btn');
-  if (liveBtn) liveBtn.style.display = data.active ? 'flex' : 'none';
+  if (liveBtn) {
+    if (data.active) liveBtn.classList.add('visible');
+    else liveBtn.classList.remove('visible');
+  }
 
   renderHero(data);
   renderUpdates(data);
