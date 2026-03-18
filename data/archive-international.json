@@ -1,0 +1,47 @@
+[
+  {
+    "id": "i004",
+    "title": "Federal Reserve Holds Rates Steady Amid Global Uncertainty",
+    "summary": "Fed Chair signals patience as inflation remains above target while labor market shows early signs of softening across key sectors.",
+    "date": "2026-03-13",
+    "time": "16:00",
+    "category": "International",
+    "image": "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80"
+  },
+  {
+    "id": "i005",
+    "title": "EU Parliament Approves Landmark AI Liability Directive",
+    "summary": "The sweeping regulation makes it easier for citizens to seek compensation when harmed by AI-powered systems, setting a global benchmark.",
+    "date": "2026-03-11",
+    "time": "10:00",
+    "category": "International",
+    "image": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80"
+  },
+  {
+    "id": "i006",
+    "title": "China and Brazil Sign Landmark Currency Swap Agreement",
+    "summary": "The deal allows bilateral trade to be settled in yuan and reais, bypassing the US dollar in what analysts call a significant shift in global finance.",
+    "date": "2026-03-08",
+    "time": "09:00",
+    "category": "International",
+    "image": "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800&q=80"
+  },
+  {
+    "id": "i007",
+    "title": "NATO Summit Ends With Pledge to Boost Defence Spending to 3% of GDP",
+    "summary": "Member states agree to the highest spending target in the alliance's history amid sustained pressure from the United States.",
+    "date": "2026-03-05",
+    "time": "14:00",
+    "category": "International",
+    "image": "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=800&q=80"
+  },
+  {
+    "id": "i008",
+    "title": "WHO Declares End of Mpox Public Health Emergency of International Concern",
+    "summary": "The global health body says the outbreak has been brought under sufficient control, though warns vigilance remains essential.",
+    "date": "2026-03-01",
+    "time": "11:30",
+    "category": "International",
+    "image": "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=800&q=80"
+  }
+]
