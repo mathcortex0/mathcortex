@@ -95,7 +95,22 @@ function initEdition() {
   const name = h < 12 ? 'Morning Edition' : h < 17 ? 'Afternoon Edition' : 'Evening Edition';
   $$('#edition-name, #drawer-edition-name').forEach(el => { if (el) el.textContent = name; });
 
-  // Check live.json and show/hide LIVE button — always fresh, never cached
+  // Inject LIVE button into header if not already present
+  if (!document.getElementById('live-header-btn')) {
+    const actions = $('.header-actions');
+    if (actions) {
+      const btn = document.createElement('a');
+      btn.id        = 'live-header-btn';
+      btn.href      = 'live.html';
+      btn.title     = 'Live Coverage';
+      btn.className = 'live-header-btn';
+      btn.innerHTML = '<span class="live-header-dot"></span>LIVE';
+      // Insert as first child of header-actions
+      actions.insertBefore(btn, actions.firstChild);
+    }
+  }
+
+  // Check live.json and show/hide LIVE button
   fetch('data/live.json?_=' + Date.now())
     .then(r => r.json())
     .then(data => {
@@ -109,9 +124,7 @@ function initEdition() {
         btn.classList.remove('visible');
       }
     })
-    .catch(() => {
-      // If fetch fails, keep button visible as fallback
-    });
+    .catch(() => {});
 }
 
 function setActiveNav() {
