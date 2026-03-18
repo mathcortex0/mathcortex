@@ -386,6 +386,34 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
   body{background:#fff!important}
   .article-body{color:#000!important}
 }
-  body{background:#fff!important}
-  .article-body{color:#000!important}
-}
+
+/* ── NEW CATEGORY COLORS ───────────────────────────── */
+.cat-bangladesh,.chip-bangladesh{color:#c0392b}
+.cat-explained,.chip-explained{color:#6d28d9}
+.cat-opinion,.chip-opinion{color:#b45309}
+.cat-link[data-cat="bangladesh"]::after{background:#c0392b}
+.cat-link[data-cat="bangladesh"].active{color:#c0392b}
+.cat-link[data-cat="explained"]::after{background:#6d28d9}
+.cat-link[data-cat="explained"].active{color:#6d28d9}
+.cat-link[data-cat="opinion"]::after{background:#b45309}
+.cat-link[data-cat="opinion"].active{color:#b45309}
+.drawer-link[data-cat="bangladesh"] .drawer-dot{background:#c0392b}
+.drawer-link[data-cat="explained"] .drawer-dot{background:#6d28d9}
+.drawer-link[data-cat="opinion"] .drawer-dot{background:#b45309}
+
+/* ── TIME META ─────────────────────────────────────── */
+.card-time-wrap{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.time-ago{font-family:var(--ui);font-size:.62rem;color:var(--gold);font-weight:600}
+.time-sep{color:var(--text-5);font-size:.5rem}
+.time-full{font-family:var(--ui);font-size:.6rem;color:var(--text-4)}
+.article-time-ago{color:var(--gold);font-weight:500}
+
+/* ── BACK BUTTON ───────────────────────────────────── */
+.article-back-btn{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--ui);font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3);margin-bottom:1.5rem;padding:.4rem 0;border-bottom:1px solid transparent;transition:color .18s,border-color .18s}
+.article-back-btn:hover{color:var(--navy);border-bottom-color:var(--navy)}
+
+/* ── 5-STRIP GRID ──────────────────────────────────── */
+.cat-strips{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-bottom:3.5rem}
+.cat-strips section:last-child:nth-child(odd){grid-column:span 2}
+@media(max-width:1100px){.cat-strips{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){.cat-strips{grid-template-columns:1fr}}
