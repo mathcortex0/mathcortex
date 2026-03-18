@@ -693,4 +693,3 @@ function downloadSummary() {
   link.href = canvas.toDataURL('image/png');
   link.click();
 }
-u
