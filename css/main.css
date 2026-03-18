@@ -76,38 +76,71 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
 .breaking-scroll-inner{display:inline-block;white-space:nowrap;animation:marquee 30s linear infinite;font-family:var(--ui);font-size:.78rem;color:rgba(255,255,255,.92);padding-left:100%;line-height:36px}
 @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
 
-/* ── HEADER ────────────────────────────────────────── */
-.site-header{position:sticky;top:0;z-index:200;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--sh-sm)}
+/* ── HEADER ── compact, slides as one unit with nav ── */
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--surface);
+  box-shadow: var(--sh-sm);
+  /* Slide entire header+nav as one unit */
+  will-change: transform;
+  transform: translateY(0);
+  transition: transform .32s cubic-bezier(.4,0,.2,1),
+              box-shadow .3s ease;
+}
+.site-header.hide-up{
+  transform: translateY(-100%);
+}
+.site-header.scrolled{
+  box-shadow: 0 2px 16px rgba(15,32,64,.12);
+}
 
-.header-brand-row{max-width:1380px;margin:0 auto;padding:.85rem 2rem;display:flex;align-items:center;gap:1rem}
+/* Compact brand row */
+.header-brand-row{
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: .55rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  border-bottom: 1px solid var(--border-lt);
+}
 
-.header-logo{display:flex;align-items:center;gap:.9rem}
-.logo-img{height:52px;width:auto;object-fit:contain}
-.logo-divider{width:1px;height:36px;background:var(--border);flex-shrink:0}
+.header-logo{display:flex;align-items:center;gap:.7rem;flex-shrink:0}
+
+/* Compact logo — small and professional */
+.logo-img{height:38px;width:auto;object-fit:contain;flex-shrink:0}
+.logo-divider{width:1px;height:26px;background:var(--border);flex-shrink:0}
 .logo-text{display:flex;flex-direction:column}
-.logo-text-main{font-family:var(--display);font-size:1.5rem;font-weight:700;color:var(--navy);line-height:1;letter-spacing:.01em}
-.logo-text-sub{font-family:var(--ui);font-size:.55rem;font-weight:500;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;margin-top:.2rem}
+.logo-text-main{font-family:var(--display);font-size:1.15rem;font-weight:700;color:var(--navy);line-height:1;letter-spacing:.01em;white-space:nowrap}
+.logo-text-sub{font-family:var(--ui);font-size:.48rem;font-weight:500;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-top:.15rem;white-space:nowrap}
 
-.edition-badge{text-align:center;font-family:var(--ui);font-size:.6rem;letter-spacing:.1em;color:var(--text-4);text-transform:uppercase;flex:1}
-.edition-name{display:block;color:var(--navy);font-weight:600;font-size:.68rem;margin-bottom:.1rem}
+/* Edition — centered, small */
+.edition-badge{
+  text-align:center;
+  font-family:var(--ui);
+  font-size:.55rem;
+  letter-spacing:.1em;
+  color:var(--text-4);
+  text-transform:uppercase;
+  flex:1;
+}
+.edition-name{display:block;color:var(--navy);font-weight:600;font-size:.6rem;margin-bottom:.1rem}
 
-.header-actions{display:flex;align-items:center;gap:.2rem;margin-left:auto;flex-shrink:0}
-.header-btn{background:none;border:none;color:var(--text-4);padding:.45rem .5rem;font-size:.72rem;display:flex;align-items:center;gap:.35rem;font-family:var(--ui);border-radius:var(--r);transition:color .18s var(--ease)}
+.header-actions{display:flex;align-items:center;gap:.15rem;margin-left:auto;flex-shrink:0}
+.header-btn{background:none;border:none;color:var(--text-4);padding:.4rem .45rem;font-size:.7rem;display:flex;align-items:center;gap:.3rem;font-family:var(--ui);border-radius:var(--r);transition:color .18s var(--ease)}
 .header-btn:hover{color:var(--navy)}
 
 /* Hamburger */
-.hamburger-btn{background:none;border:none;width:32px;height:32px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;border-radius:var(--r);transition:opacity .18s}
+.hamburger-btn{background:none;border:none;width:30px;height:30px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;border-radius:var(--r);transition:opacity .18s}
 .hamburger-btn:hover{opacity:.6}
-.ham-bar{width:18px;height:2px;background:var(--navy);border-radius:2px;transition:background .18s,transform .25s var(--ease),opacity .25s;display:block}
-.hamburger-btn.open .ham-bar:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.ham-bar{width:17px;height:1.5px;background:var(--navy);border-radius:2px;transition:background .18s,transform .25s var(--ease),opacity .25s;display:block}
+.hamburger-btn.open .ham-bar:nth-child(1){transform:translateY(5.5px) rotate(45deg)}
 .hamburger-btn.open .ham-bar:nth-child(2){opacity:0;transform:scaleX(0)}
-.hamburger-btn.open .ham-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.hamburger-btn.open .ham-bar:nth-child(3){transform:translateY(-5.5px) rotate(-45deg)}
 
-/* ── CATEGORY NAV ──────────────────────────────────── */
-
-
-
-
+/* ── CATEGORY NAV — scrollable strip, part of sticky header ── */
 /* ── BREAKING BANNER ───────────────────────────────── */
 .breaking-banner{background:var(--red);display:none;align-items:center;height:36px;overflow:hidden}
 .breaking-banner.visible{display:flex}
@@ -234,34 +267,9 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
   transition: color .18s;
   white-space: nowrap;
 }
-.header-inline-nav a::after{
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: .85rem;
-  right: .85rem;
-  height: 2px;
-  background: var(--navy);
-  transform: scaleX(0);
-  transition: transform .22s var(--ease);
-}
-.header-inline-nav a:hover{ color: var(--navy); }
-.header-inline-nav a:hover::after{ transform: scaleX(1); }
-.header-inline-nav a.active{ color: var(--navy); }
-.header-inline-nav a.active::after{ transform: scaleX(1); }
-
-/* ── SCROLLED STATE ── */
-.site-header.scrolled .logo-img{ height: 34px; }
-.site-header.scrolled .logo-divider{ opacity: 0; width: 0; overflow: hidden; }
-.site-header.scrolled .logo-text{ opacity: 0; max-width: 0; pointer-events: none; }
-.site-header.scrolled .edition-badge{ opacity: 0; pointer-events: none; }
-.site-header.scrolled .header-brand-row{ padding: .5rem 2rem; }
-.site-header.scrolled{ box-shadow: 0 2px 16px rgba(15,32,64,.1); }
-
-/* ── CATEGORY NAV — homepage only, horizontal scrollable ── */
+/* ── CATEGORY NAV — scrollable strip, compact ── */
 .cat-nav{
   border-top: 1px solid var(--border-lt);
-  border-bottom: 1px solid var(--border-lt);
   background: var(--surface);
   overflow-x: auto;
   overflow-y: hidden;
@@ -292,7 +300,7 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
   width: max-content;
   min-width: 100%;
 }
-.cat-link{font-family:var(--ui);font-size:.7rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--text-3);padding:.65rem 1rem;position:relative;transition:color .18s;white-space:nowrap;flex-shrink:0}
+.cat-link{font-family:var(--ui);font-size:.62rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--text-3);padding:.5rem .85rem;position:relative;transition:color .18s;white-space:nowrap;flex-shrink:0}
 .cat-link::after{content:'';position:absolute;bottom:0;left:1.1rem;right:1.1rem;height:2px;background:var(--navy);transform:scaleX(0);transition:transform .22s var(--ease)}
 .cat-link:hover{color:var(--navy)}
 .cat-link:hover::after,.cat-link.active::after{transform:scaleX(1)}
@@ -540,11 +548,11 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
 }
 @media(max-width:768px){
   .site-main{padding:0 1rem 4rem}
-  .header-brand-row{grid-template-columns:1fr auto;padding:.65rem 1rem}
+  .header-brand-row{padding:.45rem 1rem}
   .edition-badge{display:none}
   .logo-text{display:none}
   .logo-divider{display:none}
-  .logo-img{height:40px}
+  .logo-img{height:32px}
   .news-grid{grid-template-columns:1fr;gap:1rem}
   .news-grid .news-card:first-child{grid-column:span 1}
   .hero{margin:1rem 0 0}
