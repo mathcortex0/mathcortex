@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contact Alamin Network — Send us your news tips, press enquiries or editorial feedback." />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Contact — Alamin Network</title>
+  <link rel="icon" type="image/png" href="logo_alaminnetwork.png" />
+  <link rel="stylesheet" href="css/main.css" />
+  <style>
+    /* ── CONTACT PAGE ─────────────────────────────────── */
+    .contact-wrap{
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem 6rem;
+    }
+
+    .contact-label{
+      font-family: var(--ui);
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: .6rem;
+    }
+    .contact-title{
+      font-family: var(--display);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.1;
+      margin-bottom: .8rem;
+      letter-spacing: -.02em;
+    }
+    .contact-divider{
+      width: 48px;
+      height: 3px;
+      background: var(--gold-rich);
+      border-radius: 2px;
+      margin-bottom: 1.4rem;
+    }
+    .contact-desc{
+      font-family: var(--ui);
+      font-size: .88rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      padding: 1rem 1.2rem;
+      background: var(--surf-alt);
+      border-left: 3px solid var(--gold-rich);
+      border-radius: 0 var(--r) var(--r) 0;
+    }
+
+    /* Form */
+    .contact-form{ display: flex; flex-direction: column; gap: 1.3rem; }
+
+    .form-group{ display: flex; flex-direction: column; gap: .4rem; }
+    .form-row{ display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem; }
+
+    .form-label{
+      font-family: var(--ui);
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+    .form-label span{ color: #c0392b; margin-left: .2rem; }
+
+    .form-input, .form-select, .form-textarea{
+      width: 100%;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+      padding: .75rem 1rem;
+      font-family: var(--ui);
+      font-size: .88rem;
+      color: var(--text-1);
+      outline: none;
+      transition: border-color .18s, box-shadow .18s;
+      box-sizing: border-box;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus{
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(15,32,64,.06);
+    }
+    .form-input::placeholder, .form-textarea::placeholder{ color: var(--text-5); }
+
+    .form-textarea{
+      resize: vertical;
+      min-height: 150px;
+      line-height: 1.6;
+    }
+
+    .form-counter{
+      font-family: var(--ui);
+      font-size: .62rem;
+      color: var(--text-4);
+      text-align: right;
+      margin-top: -.2rem;
+    }
+    .form-counter.near{ color: var(--gold); }
+    .form-counter.over{ color: #c0392b; }
+
+    .form-submit{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+      background: var(--navy);
+      color: #fff;
+      font-family: var(--ui);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: .85rem 2.5rem;
+      border: none;
+      border-radius: var(--r);
+      cursor: pointer;
+      transition: background .18s, transform .18s;
+      align-self: flex-start;
+    }
+    .form-submit:hover{ background: var(--navy-mid); transform: translateY(-1px); }
+    .form-submit:disabled{
+      background: var(--text-5);
+      cursor: not-allowed;
+      transform: none;
+    }
+    .form-submit svg{ animation: spin 1s linear infinite; display: none; }
+    .form-submit.loading svg{ display: block; }
+    @keyframes spin{ to{ transform: rotate(360deg); } }
+
+    /* Blocked state */
+    .contact-blocked{
+      display: none;
+      background: var(--surf-alt);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 2.5rem;
+      text-align: center;
+    }
+    .contact-blocked.show{ display: block; }
+    .blocked-icon{ font-size: 2.5rem; margin-bottom: 1rem; }
+    .blocked-title{
+      font-family: var(--display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: .6rem;
+    }
+    .blocked-text{
+      font-family: var(--ui);
+      font-size: .85rem;
+      color: var(--text-3);
+      line-height: 1.7;
+    }
+    .blocked-countdown{
+      display: inline-block;
+      margin-top: 1.2rem;
+      background: var(--navy);
+      color: #fff;
+      font-family: var(--ui);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      padding: .4rem 1.2rem;
+      border-radius: 30px;
+    }
+
+    /* Success state */
+    .contact-success{
+      display: none;
+      text-align: center;
+      padding: 3rem 0;
+    }
+    .contact-success.show{ display: block; }
+    .success-icon{ font-size: 3rem; margin-bottom: 1rem; }
+    .success-title{
+      font-family: var(--display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: .6rem;
+    }
+    .success-text{
+      font-family: var(--ui);
+      font-size: .88rem;
+      color: var(--text-3);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .success-redirect{
+      font-family: var(--ui);
+      font-size: .75rem;
+      color: var(--text-4);
+    }
+    .success-redirect strong{ color: var(--navy); }
+
+    @media(max-width:600px){
+      .form-row{ grid-template-columns: 1fr; }
+      .contact-wrap{ padding: 2rem 1rem 5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="breaking-banner" id="breaking-banner">
+  <div class="breaking-tag"><div class="breaking-dot"></div>Breaking</div>
+  <div class="breaking-scroll"><span class="breaking-scroll-inner" id="breaking-inner"></span></div>
+</div>
+
+<header class="site-header">
+  <div class="header-brand-row">
+    <div class="header-logo">
+      <img class="logo-img" src="logo_alaminnetwork.png" alt="Alamin Network" />
+      <div class="logo-divider"></div>
+      <div class="logo-text">
+        <span class="logo-text-main">Alamin Network</span>
+        <span class="logo-text-sub">Reporting the World With Precision</span>
+      </div>
+    </div>
+    <div class="edition-badge">
+      <span class="edition-name" id="edition-name">Morning Edition</span>
+      Independent · Accurate · Trusted
+    </div>
+    <div class="header-actions">
+      <button class="header-btn" onclick="openSearch()" title="Search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="hamburger-btn" id="hamburger-btn" onclick="openDrawer()" title="Menu">
+        <span class="ham-bar"></span><span class="ham-bar"></span><span class="ham-bar"></span>
+      </button>
+    </div>
+  </div>
+  <nav class="cat-nav" id="cat-nav">
+    <div class="cat-nav-inner">
+      <a href="index.html" class="cat-link">Home</a>
+      <a href="category.html?cat=international"  class="cat-link" data-cat="international">International</a>
+      <a href="category.html?cat=bangladesh"     class="cat-link" data-cat="bangladesh">Bangladesh</a>
+      <a href="category.html?cat=politics"       class="cat-link" data-cat="politics">Politics</a>
+      <a href="category.html?cat=business"       class="cat-link" data-cat="business">Business</a>
+      <a href="category.html?cat=sports"         class="cat-link" data-cat="sports">Sports</a>
+      <a href="category.html?cat=technology"     class="cat-link" data-cat="technology">Technology</a>
+      <a href="category.html?cat=entertainment"  class="cat-link" data-cat="entertainment">Entertainment</a>
+      <a href="category.html?cat=explained"      class="cat-link" data-cat="explained">Explained</a>
+      <a href="category.html?cat=opinion"        class="cat-link" data-cat="opinion">Opinion</a>
+    </div>
+  </nav>
+</header>
+
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<nav class="drawer" id="drawer">
+  <div class="drawer-head">
+    <img class="drawer-logo" src="logo_alaminnetwork.png" alt="Alamin Network" />
+    <button class="drawer-x" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-edition">
+    <strong id="drawer-edition-name">Morning Edition</strong>
+    Independent · Accurate · Trusted
+  </div>
+  <div>
+    <div class="drawer-nav-label">News</div>
+    <a href="index.html"                      class="drawer-link" data-page="home"><span class="drawer-dot"></span>Home</a>
+    <a href="category.html?cat=international" class="drawer-link" data-cat="international"><span class="drawer-dot"></span>International</a>
+    <a href="category.html?cat=bangladesh"    class="drawer-link" data-cat="bangladesh"><span class="drawer-dot"></span>Bangladesh</a>
+    <a href="category.html?cat=politics"      class="drawer-link" data-cat="politics"><span class="drawer-dot"></span>Politics</a>
+    <a href="category.html?cat=business"      class="drawer-link" data-cat="business"><span class="drawer-dot"></span>Business</a>
+  </div>
+  <div>
+    <div class="drawer-nav-label">More</div>
+    <a href="category.html?cat=sports"        class="drawer-link" data-cat="sports"><span class="drawer-dot"></span>Sports</a>
+    <a href="category.html?cat=technology"    class="drawer-link" data-cat="technology"><span class="drawer-dot"></span>Technology</a>
+    <a href="category.html?cat=entertainment" class="drawer-link" data-cat="entertainment"><span class="drawer-dot"></span>Entertainment</a>
+    <a href="category.html?cat=explained"     class="drawer-link" data-cat="explained"><span class="drawer-dot"></span>Explained</a>
+    <a href="category.html?cat=opinion"       class="drawer-link" data-cat="opinion"><span class="drawer-dot"></span>Opinion</a>
+  </div>
+  <div>
+    <div class="drawer-nav-label">Pages</div>
+    <a href="about.html"   class="drawer-link"><span class="drawer-dot" style="background:var(--gold)"></span>About Us</a>
+    <a href="archive.html" class="drawer-link"><span class="drawer-dot" style="background:var(--text-4)"></span>Archive</a>
+    <a href="contact.html" class="drawer-link active"><span class="drawer-dot" style="background:var(--cat-int)"></span>Contact</a>
+  </div>
+  <div class="drawer-foot">
+    <div class="drawer-foot-title">Follow Us</div>
+    <div class="drawer-social">
+      <a href="#">Facebook</a><a href="#">𝕏 Twitter</a><a href="#">YouTube</a>
+    </div>
+  </div>
+</nav>
+
+<div class="search-overlay" id="search-overlay">
+  <div class="search-box">
+    <div class="search-box-label">Search Articles</div>
+    <div class="search-input-row">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search-input" placeholder="Type to search…" oninput="runSearch(this.value)" autocomplete="off" />
+      <button class="search-close-btn" onclick="closeSearch()">✕</button>
+    </div>
+    <div id="search-results"></div>
+  </div>
+</div>
+
+<main class="site-main">
+  <div class="contact-wrap">
+
+    <div class="contact-label">Get In Touch</div>
+    <h1 class="contact-title">Contact Alamin Network</h1>
+    <div class="contact-divider"></div>
+    <div class="contact-desc">
+      📌 This form is for <strong>news tips, press enquiries, and editorial feedback only.</strong>
+      To protect the quality of our inbox, each user may submit one message every 7 days.
+    </div>
+
+    <!-- BLOCKED STATE -->
+    <div class="contact-blocked" id="contact-blocked">
+      <div class="blocked-icon">🔒</div>
+      <div class="blocked-title">Message Already Sent</div>
+      <div class="blocked-text">
+        You have already sent a message recently. To ensure fair access for all users,
+        each person may contact us once every 7 days. Please check back later.
+      </div>
+      <div class="blocked-countdown" id="blocked-countdown">You can message again in —</div>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div class="contact-success" id="contact-success">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Message Sent</div>
+      <div class="success-text">
+        Thank you for reaching out to Alamin Network. We have received your message
+        and will respond if appropriate. We read every submission carefully.
+      </div>
+      <div class="success-redirect">Redirecting to homepage in <strong id="redirect-count">3</strong> seconds…</div>
+    </div>
+
+    <!-- CONTACT FORM -->
+    <form class="contact-form" id="contact-form"
+      action="https://formspree.io/f/xpwoyobe"
+      method="POST">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="name">Full Name <span>*</span></label>
+          <input class="form-input" type="text" id="name" name="name"
+            placeholder="Your full name" required autocomplete="name" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address <span>*</span></label>
+          <input class="form-input" type="email" id="email" name="email"
+            placeholder="your@email.com" required autocomplete="email" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="subject">Subject <span>*</span></label>
+        <input class="form-input" type="text" id="subject" name="subject"
+          placeholder="News tip / Press enquiry / Editorial feedback" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="message">Message <span>*</span></label>
+        <textarea class="form-textarea" id="message" name="message"
+          placeholder="Write your message here…"
+          maxlength="1000" required
+          oninput="updateCounter(this)"></textarea>
+        <div class="form-counter" id="msg-counter">0 / 1000</div>
+      </div>
+
+      <!-- Honeypot anti-spam -->
+      <input type="text" name="_gotcha" style="display:none" />
+      <!-- No redirect from Formspree — we handle it ourselves -->
+      <input type="hidden" name="_next" value="" />
+
+      <button class="form-submit" type="submit" id="submit-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+        Send Message
+      </button>
+
+    </form>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <div>
+      <img class="footer-logo" src="logo_alaminnetwork.png" alt="Alamin Network" />
+      <p class="footer-desc">Independent journalism covering the world. Accurate, accountable, and precise.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Coverage</div>
+      <div class="footer-links">
+        <a href="category.html?cat=international">International</a>
+        <a href="category.html?cat=bangladesh">Bangladesh</a>
+        <a href="category.html?cat=politics">Politics</a>
+        <a href="category.html?cat=sports">Sports</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Network</div>
+      <div class="footer-links">
+        <a href="about.html">About Us</a>
+        <a href="archive.html">Archive</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Follow</div>
+      <div class="footer-links">
+        <a href="#">Facebook</a><a href="#">𝕏 Twitter</a><a href="#">YouTube</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Alamin Network. All rights reserved.</span>
+    <span>Designed & Built by Md. Al Amin</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+
+initEdition();
+setActiveNav();
+
+// ── 7-DAY LIMIT ───────────────────────────────────────
+
+const STORAGE_KEY = 'an_contact_sent';
+const SEVEN_DAYS  = 7 * 24 * 60 * 60 * 1000;
+
+function checkLimit() {
+  const form    = document.getElementById('contact-form');
+  const blocked = document.getElementById('contact-blocked');
+  const counter = document.getElementById('blocked-countdown');
+
+  const lastSent = localStorage.getItem(STORAGE_KEY);
+  if (!lastSent) return; // never sent — show form
+
+  const elapsed   = Date.now() - parseInt(lastSent);
+  const remaining = SEVEN_DAYS - elapsed;
+
+  if (remaining > 0) {
+    // Block the form
+    form.style.display    = 'none';
+    blocked.classList.add('show');
+
+    // Show countdown
+    const days  = Math.floor(remaining / 86400000);
+    const hours = Math.floor((remaining % 86400000) / 3600000);
+    const mins  = Math.floor((remaining % 3600000) / 60000);
+
+    let txt = 'You can message again in ';
+    if (days > 0)       txt += days + ' day' + (days > 1 ? 's' : '');
+    else if (hours > 0) txt += hours + ' hour' + (hours > 1 ? 's' : '');
+    else                txt += mins + ' minute' + (mins > 1 ? 's' : '');
+
+    counter.textContent = txt;
+  }
+}
+
+checkLimit();
+
+// ── CHARACTER COUNTER ────────────────────────────────
+
+function updateCounter(el) {
+  const counter = document.getElementById('msg-counter');
+  const len     = el.value.length;
+  counter.textContent = len + ' / 1000';
+  counter.className = 'form-counter' +
+    (len > 900 ? ' over' : len > 750 ? ' near' : '');
+}
+
+// ── FORM SUBMISSION ──────────────────────────────────
+
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const btn     = document.getElementById('submit-btn');
+  const form    = document.getElementById('contact-form');
+  const success = document.getElementById('contact-success');
+  const count   = document.getElementById('redirect-count');
+
+  btn.classList.add('loading');
+  btn.disabled = true;
+  btn.querySelector('svg').style.display = 'block';
+
+  try {
+    const data = new FormData(this);
+    const res  = await fetch(this.action, {
+      method:  'POST',
+      body:    data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      // Save timestamp
+      localStorage.setItem(STORAGE_KEY, Date.now().toString());
+
+      // Show success
+      form.style.display = 'none';
+      success.classList.add('show');
+
+      // Countdown redirect
+      let secs = 3;
+      const timer = setInterval(() => {
+        secs--;
+        count.textContent = secs;
+        if (secs <= 0) {
+          clearInterval(timer);
+          window.location.href = 'index.html';
+        }
+      }, 1000);
+
+    } else {
+      btn.classList.remove('loading');
+      btn.disabled = false;
+      alert('Something went wrong. Please try again.');
+    }
+  } catch (err) {
+    btn.classList.remove('loading');
+    btn.disabled = false;
+    alert('Network error. Please check your connection and try again.');
+  }
+});
+
+</script>
+</body>
+</html>
