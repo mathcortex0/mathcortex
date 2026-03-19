@@ -682,9 +682,9 @@ function autoId() {
   document.getElementById('id-preview').innerHTML = 'ID: <span>' + id + '</span>';
 }
 
-// ── GEMINI AI FORMATTER ────────────────────────────────
-const GEMINI_KEY = 'AIzaSyASCbryU0Yq1DZWc3hGItdoSRYacfbs_8A';
-const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=' + GEMINI_KEY;
+// ── GROQ AI FORMATTER ─────────────────────────────────
+const GROQ_KEY = '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';
+const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 async function formatWithAI() {
   const raw    = document.getElementById('raw-input').value.trim();
@@ -696,7 +696,7 @@ async function formatWithAI() {
     return;
   }
 
-  btn.disabled   = true;
+  btn.disabled    = true;
   btn.textContent = '⏳ Formatting…';
   status.style.display = 'inline';
 
@@ -720,15 +720,17 @@ Raw article text:
 ${raw}`;
 
   try {
-    const res = await fetch(GEMINI_URL, {
+    const res = await fetch(GROQ_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + GROQ_KEY
+      },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: {
-          temperature: 0.3,
-          maxOutputTokens: 4000
-        }
+        model: 'llama3-8b-8192',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.3,
+        max_tokens: 4000
       })
     });
 
@@ -738,20 +740,19 @@ ${raw}`;
       throw new Error(data.error?.message || 'API error ' + res.status);
     }
 
-    if (data.candidates && data.candidates[0]) {
-      let html = data.candidates[0].content.parts[0].text;
-      // Clean any markdown code blocks if Gemini wraps in them
+    if (data.choices && data.choices[0]) {
+      let html = data.choices[0].message.content;
+      // Clean any markdown code blocks
       html = html.replace(/```html\n?/gi, '').replace(/```\n?/gi, '').trim();
       document.getElementById('content-editor').value = html;
       document.getElementById('raw-input').value = '';
 
-      // Show success
       btn.textContent  = '✅ Done!';
       btn.style.background = '#0f5c2e';
       setTimeout(() => {
-        btn.textContent = '✨ Format with AI';
+        btn.textContent      = '✨ Format with AI';
         btn.style.background = '#1a7a4a';
-        btn.disabled = false;
+        btn.disabled         = false;
       }, 2000);
     } else {
       throw new Error('No response from AI');
