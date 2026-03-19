@@ -69,12 +69,31 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
 /* ── BREAKING BANNER ───────────────────────────────── */
 .breaking-banner{background:var(--red);display:none;align-items:center;height:36px;overflow:hidden;width:100%}
 .breaking-banner.visible{display:flex}
-.breaking-tag{background:rgba(0,0,0,.2);color:#fff;font-family:var(--ui);font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:0 1.2rem;height:100%;display:flex;align-items:center;gap:.5rem;flex-shrink:0;white-space:nowrap}
+.breaking-tag{background:rgba(0,0,0,.2);color:#fff;font-family:var(--ui);font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:0 1.2rem;height:100%;display:flex;align-items:center;gap:.5rem;flex-shrink:0;white-space:nowrap;cursor:default}
 .breaking-dot{width:6px;height:6px;background:#fff;border-radius:50%;animation:blink 1s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.breaking-scroll{flex:1;overflow:hidden}
-.breaking-scroll-inner{display:inline-block;white-space:nowrap;animation:marquee 30s linear infinite;font-family:var(--ui);font-size:.78rem;color:rgba(255,255,255,.92);padding-left:100%;line-height:36px}
-@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+.breaking-scroll{flex:1;overflow:hidden;cursor:pointer}
+.breaking-scroll-inner{display:inline-flex;align-items:center;white-space:nowrap;animation:marquee 35s linear infinite;padding-left:100%;line-height:36px;height:36px}
+.breaking-scroll-inner:hover{animation-play-state:paused}
+.breaking-item{
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--ui);
+  font-size: .75rem;
+  color: rgba(255,255,255,.95);
+  padding: 0 1.5rem 0 0;
+  text-decoration: none;
+  height: 36px;
+  transition: color .18s;
+  cursor: pointer;
+}
+.breaking-item:hover{ color: #fff; text-decoration: underline; }
+.breaking-item-sep{
+  color: rgba(255,255,255,.35);
+  padding: 0 .5rem 0 0;
+  font-size: .5rem;
+}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* ── HEADER ── compact, slides as one unit with nav ── */
 .site-header{
