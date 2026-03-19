@@ -74,7 +74,6 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 .breaking-scroll{flex:1;overflow:hidden;cursor:pointer}
 .breaking-scroll-inner{display:inline-flex;align-items:center;white-space:nowrap;animation:marquee 35s linear infinite;padding-left:100%;line-height:36px;height:36px}
-.breaking-scroll-inner:hover{animation-play-state:paused}
 .breaking-item{
   display: inline-flex;
   align-items: center;
