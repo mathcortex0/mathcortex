@@ -512,6 +512,8 @@ async function initCategoryPage() {
   allData.forEach((data, i) => {
     if (data) _feed = _feed.concat(data.map(a => ({ ...a, cat: ALL_CATS[i] })));
   });
+
+  // initBreaking with explicit breaking:true check
   initBreaking(_feed);
 
   const data = await getJSON('data/' + cat + '.json');
