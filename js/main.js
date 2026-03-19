@@ -171,8 +171,16 @@ function initBreaking(data) {
   if (!items.length) return;
 
   banner.classList.add('visible');
-  const text = items.map(a => '⚡ ' + a.title).join('   ·   ');
-  inner.textContent = text + '   ·   ·   ·   ' + text;
+
+  // Build clickable items — duplicated for seamless loop
+  const buildItems = () => items.map(a => {
+    const cat = (a.cat || a.category || 'international').toLowerCase();
+    const url = articleURL(a.id, cat);
+    return `<a class="breaking-item" href="${url}">⚡ ${a.title}</a><span class="breaking-item-sep">◆</span>`;
+  }).join('');
+
+  // Duplicate for seamless infinite scroll
+  inner.innerHTML = buildItems() + buildItems();
 }
 
 // ── SCROLL: HEADER SLIDES AS ONE UNIT ───────────────
