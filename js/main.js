@@ -162,13 +162,17 @@ function initBreaking(data) {
   const path = window.location.pathname;
   const allowed = path.endsWith('index.html') ||
                   path.endsWith('/') ||
-                  path.endsWith('category.html');
+                  path.endsWith('category.html') ||
+                  path === '/';
   if (!allowed) return;
 
-  const banner = $('#breaking-banner'), inner = $('#breaking-inner');
-  if (!banner || !inner || !data) return;
-  const items = data.filter(a => a.breaking);
+  const banner = $('#breaking-banner');
+  const inner  = $('#breaking-inner');
+  if (!banner || !inner || !data || !data.length) return;
+
+  const items = data.filter(a => a.breaking === true);
   if (!items.length) return;
+
   banner.classList.add('visible');
   const text = items.map(a => '⚡ ' + a.title).join('   ·   ');
   inner.textContent = text + '   ·   ·   ·   ' + text;
