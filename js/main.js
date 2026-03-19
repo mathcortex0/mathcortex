@@ -79,16 +79,14 @@ let _feed = [];
 let _currentArticle = null;
 
 const ALL_CATS  = ['international','bangladesh','business','sports','politics','technology','entertainment','explained','opinion'];
-const HOME_CATS = ['international','bangladesh','business','sports','politics','explained'];
+const HOME_CATS = ['international','bangladesh','sports','explained'];
 
 // How many articles to show per category on homepage
 const HOME_COUNTS = {
-  international: 5,
+  international: 7,
   bangladesh:    2,
-  business:      2,
-  sports:        3,
-  politics:      1,
-  explained:     2
+  sports:        2,
+  explained:     3
 };
 
 // ── COMMON ────────────────────────────────────────────
