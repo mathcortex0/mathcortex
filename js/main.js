@@ -158,12 +158,9 @@ function setActiveNav() {
 }
 
 function initBreaking(data) {
-  // Only show breaking banner on homepage and category pages
+  // Only show breaking banner on homepage
   const path = window.location.pathname;
-  const allowed = path.endsWith('index.html') ||
-                  path.endsWith('/') ||
-                  path.endsWith('category.html') ||
-                  path === '/';
+  const allowed = path.endsWith('index.html') || path.endsWith('/');
   if (!allowed) return;
 
   const banner = $('#breaking-banner');
