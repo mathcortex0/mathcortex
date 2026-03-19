@@ -181,6 +181,40 @@ function initBreaking(data) {
 
   // Duplicate for seamless infinite scroll
   inner.innerHTML = buildItems() + buildItems();
+
+  // ── Hover pause with 3-second auto-resume ──
+  let resumeTimer = null;
+
+  function pauseScroll() {
+    inner.style.animationPlayState = 'paused';
+    // Clear any existing timer
+    if (resumeTimer) clearTimeout(resumeTimer);
+    // Resume after 3 seconds if user does not click
+    resumeTimer = setTimeout(() => {
+      inner.style.animationPlayState = 'running';
+    }, 3000);
+  }
+
+  function resumeScroll() {
+    // Only resume immediately if mouse leaves — timer handles the 3s case
+    if (resumeTimer) clearTimeout(resumeTimer);
+    inner.style.animationPlayState = 'running';
+  }
+
+  const scroll = $('.breaking-scroll');
+  if (scroll) {
+    scroll.addEventListener('mouseenter', pauseScroll);
+    scroll.addEventListener('mouseleave', resumeScroll);
+    // Touch support for mobile
+    scroll.addEventListener('touchstart', pauseScroll, { passive: true });
+    scroll.addEventListener('touchend', () => {
+      // On touch — wait 3 seconds then resume
+      if (resumeTimer) clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => {
+        inner.style.animationPlayState = 'running';
+      }, 3000);
+    }, { passive: true });
+  }
 }
 
 // ── SCROLL: HEADER SLIDES AS ONE UNIT ───────────────
