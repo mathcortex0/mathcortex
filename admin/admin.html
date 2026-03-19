@@ -684,7 +684,7 @@ function autoId() {
 
 // ── GEMINI AI FORMATTER ────────────────────────────────
 const GEMINI_KEY = 'AIzaSyASCbryU0Yq1DZWc3hGItdoSRYacfbs_8A';
-const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_KEY;
+const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + GEMINI_KEY;
 
 async function formatWithAI() {
   const raw    = document.getElementById('raw-input').value.trim();
@@ -733,6 +733,10 @@ ${raw}`;
     });
 
     const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error?.message || 'API error ' + res.status);
+    }
 
     if (data.candidates && data.candidates[0]) {
       let html = data.candidates[0].content.parts[0].text;
