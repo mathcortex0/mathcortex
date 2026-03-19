@@ -311,7 +311,7 @@
     <div class="contact-divider"></div>
     <div class="contact-desc">
       📌 This form is for <strong>news tips, press enquiries, and editorial feedback only.</strong>
-      To protect the quality of our inbox, each user may submit one message every 7 days.
+      To protect the quality of our inbox, each user may submit one message every 24 hours.
     </div>
 
     <!-- BLOCKED STATE -->
@@ -320,7 +320,7 @@
       <div class="blocked-title">Message Already Sent</div>
       <div class="blocked-text">
         You have already sent a message recently. To ensure fair access for all users,
-        each person may contact us once every 7 days. Please check back later.
+        each person may contact us once every 24 hours. Please check back later.
       </div>
       <div class="blocked-countdown" id="blocked-countdown">You can message again in —</div>
     </div>
@@ -431,7 +431,7 @@ setActiveNav();
 // ── 7-DAY LIMIT ───────────────────────────────────────
 
 const STORAGE_KEY = 'an_contact_sent';
-const SEVEN_DAYS  = 7 * 24 * 60 * 60 * 1000;
+const SEVEN_DAYS  = 24 * 60 * 60 * 1000;
 
 function checkLimit() {
   const form    = document.getElementById('contact-form');
@@ -455,8 +455,7 @@ function checkLimit() {
     const mins  = Math.floor((remaining % 3600000) / 60000);
 
     let txt = 'You can message again in ';
-    if (days > 0)       txt += days + ' day' + (days > 1 ? 's' : '');
-    else if (hours > 0) txt += hours + ' hour' + (hours > 1 ? 's' : '');
+    if (hours > 0)      txt += hours + ' hour' + (hours > 1 ? 's' : '') + (mins > 0 ? ' ' + mins + ' min' : '');
     else                txt += mins + ' minute' + (mins > 1 ? 's' : '');
 
     counter.textContent = txt;
