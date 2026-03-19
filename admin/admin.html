@@ -544,6 +544,28 @@
         <!-- Content -->
         <div class="form-group full">
           <label>Article Content <span>*</span></label>
+
+          <!-- AI Raw Input -->
+          <div style="margin-bottom:.8rem">
+            <div style="font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#1a7a4a;margin-bottom:.4rem">
+              ✨ AI Formatter — Paste raw text here
+            </div>
+            <textarea id="raw-input" rows="6"
+              placeholder="Paste your raw article text here — no formatting needed. AI will automatically add paragraphs, headings, bold and italic…"
+              style="border-color:#1a7a4a22;background:#f0faf4"></textarea>
+            <button class="tool-btn" onclick="formatWithAI()"
+              id="ai-btn"
+              style="margin-top:.5rem;background:#1a7a4a;color:#fff;border-color:#1a7a4a;padding:.45rem 1.2rem;font-size:.75rem">
+              ✨ Format with AI
+            </button>
+            <span id="ai-status" style="font-size:.72rem;color:#1a7a4a;margin-left:.8rem;display:none">
+              AI is formatting…
+            </span>
+          </div>
+
+          <div style="font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);margin-bottom:.4rem">
+            HTML Content Editor
+          </div>
           <div class="content-tools">
             <button class="tool-btn" onclick="wrap('p')">¶ Paragraph</button>
             <button class="tool-btn" onclick="wrap('h2')">H2 Heading</button>
@@ -554,7 +576,7 @@
             <button class="tool-btn" onclick="clearContent()" style="margin-left:auto;color:var(--red)">✕ Clear</button>
           </div>
           <textarea id="content-editor"
-            placeholder="Write your article content here. Use the buttons above to wrap selected text in HTML tags, or type HTML directly…"></textarea>
+            placeholder="Formatted HTML will appear here after AI formatting, or write/paste HTML directly…"></textarea>
         </div>
 
       </div>
@@ -658,6 +680,85 @@ function autoId() {
   const id = slug + dateSuffix;
   document.getElementById('f-id').value = id;
   document.getElementById('id-preview').innerHTML = 'ID: <span>' + id + '</span>';
+}
+
+// ── GEMINI AI FORMATTER ────────────────────────────────
+const GEMINI_KEY = 'AIzaSyASCbryU0Yq1DZWc3hGItdoSRYacfbs_8A';
+const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_KEY;
+
+async function formatWithAI() {
+  const raw    = document.getElementById('raw-input').value.trim();
+  const btn    = document.getElementById('ai-btn');
+  const status = document.getElementById('ai-status');
+
+  if (!raw) {
+    alert('Please paste your raw article text first.');
+    return;
+  }
+
+  btn.disabled   = true;
+  btn.textContent = '⏳ Formatting…';
+  status.style.display = 'inline';
+
+  const prompt = `You are a professional news article HTML formatter for Alamin Network, an international news portal.
+
+Convert the following raw article text into clean, professional HTML for a news article body.
+
+Rules:
+- Wrap every paragraph in <p> tags
+- Convert section titles or subheadings into <h2> tags
+- Use <strong> for important facts, names, numbers, and key phrases
+- Use <em> for quotes within text or emphasis
+- Use <blockquote> for direct quotes from officials or spokespersons
+- Do NOT add <html>, <body>, <head>, or any outer wrapper tags
+- Do NOT add any CSS or styles
+- Output ONLY the HTML — no explanation, no markdown, no code blocks
+- Keep all the original information — do not summarize or remove content
+- Maintain the journalistic tone throughout
+
+Raw article text:
+${raw}`;
+
+  try {
+    const res = await fetch(GEMINI_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 0.3,
+          maxOutputTokens: 4000
+        }
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.candidates && data.candidates[0]) {
+      let html = data.candidates[0].content.parts[0].text;
+      // Clean any markdown code blocks if Gemini wraps in them
+      html = html.replace(/```html\n?/gi, '').replace(/```\n?/gi, '').trim();
+      document.getElementById('content-editor').value = html;
+      document.getElementById('raw-input').value = '';
+
+      // Show success
+      btn.textContent  = '✅ Done!';
+      btn.style.background = '#0f5c2e';
+      setTimeout(() => {
+        btn.textContent = '✨ Format with AI';
+        btn.style.background = '#1a7a4a';
+        btn.disabled = false;
+      }, 2000);
+    } else {
+      throw new Error('No response from AI');
+    }
+  } catch (err) {
+    alert('AI formatting failed: ' + err.message + '\n\nPlease format manually or try again.');
+    btn.textContent = '✨ Format with AI';
+    btn.disabled    = false;
+  }
+
+  status.style.display = 'none';
 }
 
 // ── CONTENT TOOLS ──────────────────────────────────────
