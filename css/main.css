@@ -67,7 +67,7 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
 ::-webkit-scrollbar-thumb:hover{background:var(--gold)}
 
 /* ── BREAKING BANNER ───────────────────────────────── */
-.breaking-banner{background:var(--red);display:none;align-items:center;height:36px;overflow:hidden}
+.breaking-banner{background:var(--red);display:none;align-items:center;height:36px;overflow:hidden;position:sticky;top:0;z-index:201;width:100%}
 .breaking-banner.visible{display:flex}
 .breaking-tag{background:rgba(0,0,0,.2);color:#fff;font-family:var(--ui);font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:0 1.2rem;height:100%;display:flex;align-items:center;gap:.5rem;flex-shrink:0;white-space:nowrap}
 .breaking-dot{width:6px;height:6px;background:#fff;border-radius:50%;animation:blink 1s ease-in-out infinite}
@@ -88,6 +88,10 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
   transform: translateY(0);
   transition: transform .32s cubic-bezier(.4,0,.2,1),
               box-shadow .3s ease;
+}
+/* When breaking banner is visible — header sticks below it */
+.breaking-banner.visible ~ .site-header{
+  top: 36px;
 }
 .site-header.hide-up{
   transform: translateY(-100%);
@@ -142,8 +146,6 @@ button{cursor:pointer;font-family:var(--ui);border:none;background:none}
 
 /* ── CATEGORY NAV — scrollable strip, part of sticky header ── */
 /* ── BREAKING BANNER ───────────────────────────────── */
-.breaking-banner{background:var(--red);display:none;align-items:center;height:36px;overflow:hidden}
-.breaking-banner.visible{display:flex}
 .breaking-tag{background:rgba(0,0,0,.2);color:#fff;font-family:var(--ui);font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:0 1.2rem;height:100%;display:flex;align-items:center;gap:.5rem;flex-shrink:0;white-space:nowrap}
 .breaking-dot{width:6px;height:6px;background:#fff;border-radius:50%;animation:blink 1s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
