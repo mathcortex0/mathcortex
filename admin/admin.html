@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Alamin Network</title>
+  <link rel="icon" type="image/png" href="../logo_alaminnetwork.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0f2040;
+      --gold:    #b8922a;
+      --surface: #ffffff;
+      --bg:      #f4f2ed;
+      --border:  #ddd9d0;
+      --text:    #1a2332;
+      --text2:   #5a6270;
+      --green:   #1a7a4a;
+      --red:     #c0392b;
+      --r:       6px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── LOGIN ── */
+    .login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .login-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 4px 24px rgba(15,32,64,.08);
+    }
+    .login-logo {
+      text-align: center;
+      margin-bottom: 1.8rem;
+    }
+    .login-logo img { height: 48px; }
+    .login-logo h1 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-top: .5rem;
+    }
+    .login-logo p {
+      font-size: .72rem;
+      color: var(--text2);
+      margin-top: .2rem;
+    }
+    .login-label {
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: .4rem;
+    }
+    .login-input {
+      width: 100%;
+      padding: .7rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+      font-size: .9rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color .18s;
+      margin-bottom: 1rem;
+    }
+    .login-input:focus { border-color: var(--navy); }
+    .login-btn {
+      width: 100%;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: var(--r);
+      padding: .8rem;
+      font-size: .85rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .18s;
+    }
+    .login-btn:hover { background: #1a3560; }
+    .login-error {
+      color: var(--red);
+      font-size: .78rem;
+      margin-top: .8rem;
+      text-align: center;
+      display: none;
+    }
+
+    /* ── ADMIN LAYOUT ── */
+    .admin-screen { display: none; }
+    .admin-header {
+      background: var(--navy);
+      padding: .8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .admin-header-left {
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
+    .admin-header img { height: 32px; }
+    .admin-header-title {
+      font-size: .85rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: .05em;
+    }
+    .admin-header-sub {
+      font-size: .6rem;
+      color: rgba(255,255,255,.5);
+      margin-top: .1rem;
+    }
+    .logout-btn {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      color: #fff;
+      padding: .35rem .9rem;
+      border-radius: 30px;
+      font-size: .7rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .18s;
+    }
+    .logout-btn:hover { background: rgba(255,255,255,.2); }
+
+    .admin-body {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 5rem;
+    }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      padding-bottom: .6rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── FORM ── */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .form-group { display: flex; flex-direction: column; gap: .35rem; }
+    .form-group.full { grid-column: span 2; }
+
+    label {
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+    label span { color: var(--red); margin-left: .2rem; }
+
+    input[type=text], input[type=date], input[type=time],
+    select, textarea {
+      width: 100%;
+      padding: .65rem .9rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+      font-size: .88rem;
+      color: var(--text);
+      background: var(--surface);
+      outline: none;
+      transition: border-color .18s;
+      font-family: inherit;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(15,32,64,.05);
+    }
+    textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+
+    /* Toggle switches */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .8rem 1rem;
+      background: var(--bg);
+      border-radius: var(--r);
+      border: 1px solid var(--border);
+    }
+    .toggle-label { font-size: .82rem; font-weight: 500; color: var(--text); }
+    .toggle-sub { font-size: .68rem; color: var(--text2); margin-top: .1rem; }
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: #ccc;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      left: 3px;
+      top: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform .2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    }
+    .toggle input:checked + .toggle-slider { background: var(--navy); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+    #breaking-toggle input:checked + .toggle-slider { background: var(--red); }
+
+    /* Content editor */
+    .content-tools {
+      display: flex;
+      gap: .4rem;
+      flex-wrap: wrap;
+      margin-bottom: .6rem;
+    }
+    .tool-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: .3rem .7rem;
+      font-size: .72rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text);
+      transition: background .15s;
+    }
+    .tool-btn:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+    #content-editor {
+      min-height: 280px;
+      font-size: .88rem;
+      line-height: 1.8;
+    }
+
+    /* ID preview */
+    .id-preview {
+      font-size: .7rem;
+      color: var(--text2);
+      margin-top: .3rem;
+      font-family: monospace;
+    }
+    .id-preview span { color: var(--navy); font-weight: 600; }
+
+    /* Generate button */
+    .generate-btn {
+      width: 100%;
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      border-radius: var(--r);
+      padding: 1rem;
+      font-size: .85rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .18s, transform .18s;
+      margin-bottom: 1.5rem;
+    }
+    .generate-btn:hover { background: #a07820; transform: translateY(-1px); }
+
+    /* Output */
+    .output-card {
+      background: #0d1117;
+      border-radius: 10px;
+      overflow: hidden;
+      display: none;
+    }
+    .output-card.show { display: block; }
+    .output-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .8rem 1.2rem;
+      background: #161b22;
+      border-bottom: 1px solid #30363d;
+    }
+    .output-header-title {
+      font-size: .72rem;
+      font-weight: 600;
+      color: #8b949e;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .copy-btn {
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: .35rem .9rem;
+      font-size: .72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .18s;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .copy-btn:hover { background: #1a3560; }
+    .copy-btn.copied { background: var(--green); }
+
+    #json-output {
+      padding: 1.2rem;
+      font-family: 'Courier New', monospace;
+      font-size: .78rem;
+      line-height: 1.7;
+      color: #e6edf3;
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    /* Instructions */
+    .instructions {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .instructions h3 {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .step {
+      display: flex;
+      gap: .8rem;
+      align-items: flex-start;
+      margin-bottom: .8rem;
+      font-size: .82rem;
+      color: var(--text2);
+      line-height: 1.5;
+    }
+    .step-num {
+      width: 22px;
+      height: 22px;
+      background: var(--navy);
+      color: #fff;
+      border-radius: 50%;
+      font-size: .65rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: .1rem;
+    }
+
+    /* Notification */
+    .notif {
+      position: fixed;
+      bottom: 2rem;
+      right: 1.5rem;
+      background: var(--green);
+      color: #fff;
+      padding: .8rem 1.4rem;
+      border-radius: 30px;
+      font-size: .8rem;
+      font-weight: 600;
+      box-shadow: 0 4px 16px rgba(0,0,0,.2);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all .3s cubic-bezier(.4,0,.2,1);
+      z-index: 999;
+    }
+    .notif.show { transform: translateY(0); opacity: 1; }
+
+    @media(max-width:600px){
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: span 1; }
+      .admin-body { padding: 1.2rem 1rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN SCREEN ── -->
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="../logo_alaminnetwork.png" alt="Alamin Network" />
+      <h1>Alamin Network</h1>
+      <p>Admin Panel — Authorised Access Only</p>
+    </div>
+    <label class="login-label" for="pwd">Password</label>
+    <input class="login-input" type="password" id="pwd"
+      placeholder="Enter admin password"
+      onkeydown="if(event.key==='Enter') doLogin()" />
+    <button class="login-btn" onclick="doLogin()">Sign In</button>
+    <div class="login-error" id="login-error">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<!-- ── ADMIN SCREEN ── -->
+<div class="admin-screen" id="admin-screen">
+
+  <div class="admin-header">
+    <div class="admin-header-left">
+      <img src="../logo_alaminnetwork.png" alt="Alamin Network" />
+      <div>
+        <div class="admin-header-title">Article Composer</div>
+        <div class="admin-header-sub">Alamin Network Admin Panel</div>
+      </div>
+    </div>
+    <button class="logout-btn" onclick="doLogout()">Sign Out</button>
+  </div>
+
+  <div class="admin-body">
+
+    <div class="section-title">New Article</div>
+
+    <div class="form-card">
+      <div class="form-grid">
+
+        <!-- Title -->
+        <div class="form-group full">
+          <label for="f-title">Headline <span>*</span></label>
+          <input type="text" id="f-title" placeholder="Article headline…"
+            oninput="autoId()" />
+        </div>
+
+        <!-- Auto ID -->
+        <div class="form-group full">
+          <label for="f-id">Article ID <span>*</span></label>
+          <input type="text" id="f-id" placeholder="auto-generated from headline" />
+          <div class="id-preview" id="id-preview">ID: <span>—</span></div>
+        </div>
+
+        <!-- Summary -->
+        <div class="form-group full">
+          <label for="f-summary">Summary <span>*</span></label>
+          <textarea id="f-summary" rows="2"
+            placeholder="One or two sentence summary for article cards…"></textarea>
+        </div>
+
+        <!-- Category -->
+        <div class="form-group">
+          <label for="f-cat">Category <span>*</span></label>
+          <select id="f-cat">
+            <option value="International">International</option>
+            <option value="Bangladesh">Bangladesh</option>
+            <option value="Politics">Politics</option>
+            <option value="Business">Business</option>
+            <option value="Sports">Sports</option>
+            <option value="Technology">Technology</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Explained">Explained</option>
+            <option value="Opinion">Opinion</option>
+          </select>
+        </div>
+
+        <!-- Image -->
+        <div class="form-group">
+          <label for="f-image">Image Path <span>*</span></label>
+          <input type="text" id="f-image"
+            placeholder="images/filename.jpg or https://…" />
+        </div>
+
+        <!-- Date -->
+        <div class="form-group">
+          <label for="f-date">Date <span>*</span></label>
+          <input type="date" id="f-date" />
+        </div>
+
+        <!-- Time -->
+        <div class="form-group">
+          <label for="f-time">Time <span>*</span></label>
+          <input type="time" id="f-time" />
+        </div>
+
+        <!-- Toggles -->
+        <div class="form-group full">
+          <div style="display:flex;flex-direction:column;gap:.6rem">
+            <div class="toggle-row">
+              <div>
+                <div class="toggle-label">Featured Article</div>
+                <div class="toggle-sub">Pins this article as the homepage hero</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="f-featured">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="toggle-row" id="breaking-toggle">
+              <div>
+                <div class="toggle-label">Breaking News</div>
+                <div class="toggle-sub">Shows red scrolling banner across entire site</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="f-breaking">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="form-group full">
+          <label>Article Content <span>*</span></label>
+          <div class="content-tools">
+            <button class="tool-btn" onclick="wrap('p')">¶ Paragraph</button>
+            <button class="tool-btn" onclick="wrap('h2')">H2 Heading</button>
+            <button class="tool-btn" onclick="wrap('h3')">H3 Heading</button>
+            <button class="tool-btn" onclick="wrap('strong')"><b>Bold</b></button>
+            <button class="tool-btn" onclick="wrap('em')"><i>Italic</i></button>
+            <button class="tool-btn" onclick="wrap('blockquote')">" Quote</button>
+            <button class="tool-btn" onclick="clearContent()" style="margin-left:auto;color:var(--red)">✕ Clear</button>
+          </div>
+          <textarea id="content-editor"
+            placeholder="Write your article content here. Use the buttons above to wrap selected text in HTML tags, or type HTML directly…"></textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Generate -->
+    <button class="generate-btn" onclick="generateJSON()">
+      ⚡ Generate JSON — Ready to Copy
+    </button>
+
+    <!-- Output -->
+    <div class="output-card" id="output-card">
+      <div class="output-header">
+        <div class="output-header-title">📋 JSON Output — Copy and paste at the TOP of your category JSON file</div>
+        <button class="copy-btn" id="copy-btn" onclick="copyJSON()">
+          Copy JSON
+        </button>
+      </div>
+      <div id="json-output"></div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="instructions">
+      <h3>How to publish this article</h3>
+      <div class="step"><div class="step-num">1</div><div>Fill in all fields above and click Generate JSON</div></div>
+      <div class="step"><div class="step-num">2</div><div>Click Copy JSON to copy the generated object</div></div>
+      <div class="step"><div class="step-num">3</div><div>Go to your GitHub repo and open <strong>data/[category].json</strong></div></div>
+      <div class="step"><div class="step-num">4</div><div>Paste the JSON at the very top of the array — after the opening <strong>[</strong> bracket</div></div>
+      <div class="step"><div class="step-num">5</div><div>Add a comma after your new article if one is not already there</div></div>
+      <div class="step"><div class="step-num">6</div><div>Commit and push — your article is live within 2 minutes</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Notification -->
+<div class="notif" id="notif">✓ Copied to clipboard!</div>
+
+<script>
+// ── PASSWORD ── Change this to your own password
+const ADMIN_PASSWORD = 'AlaminNetwork2026';
+const SESSION_KEY    = 'an_admin_session';
+
+// ── LOGIN ──────────────────────────────────────────────
+function doLogin() {
+  const pwd = document.getElementById('pwd').value;
+  if (pwd === ADMIN_PASSWORD) {
+    sessionStorage.setItem(SESSION_KEY, '1');
+    showAdmin();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('pwd').value = '';
+    document.getElementById('pwd').focus();
+  }
+}
+
+function doLogout() {
+  sessionStorage.removeItem(SESSION_KEY);
+  document.getElementById('admin-screen').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pwd').value = '';
+}
+
+function showAdmin() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('admin-screen').style.display = 'block';
+  // Set today's date and current time
+  const now = new Date();
+  document.getElementById('f-date').value = now.toISOString().split('T')[0];
+  document.getElementById('f-time').value =
+    String(now.getHours()).padStart(2,'0') + ':' +
+    String(now.getMinutes()).padStart(2,'0');
+}
+
+// Check session on load
+if (sessionStorage.getItem(SESSION_KEY)) showAdmin();
+
+// ── AUTO ID ────────────────────────────────────────────
+function autoId() {
+  const title = document.getElementById('f-title').value;
+  const date  = document.getElementById('f-date').value;
+  if (!title) return;
+
+  // Slugify title
+  let slug = title.toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .substring(0, 50);
+
+  // Add date suffix
+  let dateSuffix = '';
+  if (date) {
+    const d = new Date(date + 'T00:00:00');
+    const months = ['jan','feb','mar','apr','may','jun',
+                    'jul','aug','sep','oct','nov','dec'];
+    dateSuffix = '-' + d.getDate() + '-' + months[d.getMonth()];
+  }
+
+  const id = slug + dateSuffix;
+  document.getElementById('f-id').value = id;
+  document.getElementById('id-preview').innerHTML = 'ID: <span>' + id + '</span>';
+}
+
+// ── CONTENT TOOLS ──────────────────────────────────────
+function wrap(tag) {
+  const el    = document.getElementById('content-editor');
+  const start = el.selectionStart;
+  const end   = el.selectionEnd;
+  const sel   = el.value.substring(start, end);
+  const open  = '<' + tag + '>';
+  const close = '</' + tag + '>';
+  const replacement = sel ? open + sel + close : open + close;
+  el.value = el.value.substring(0, start) + replacement + el.value.substring(end);
+  el.focus();
+  el.selectionStart = start + open.length;
+  el.selectionEnd   = start + open.length + sel.length;
+}
+
+function clearContent() {
+  if (confirm('Clear all content?')) {
+    document.getElementById('content-editor').value = '';
+  }
+}
+
+// ── GENERATE JSON ──────────────────────────────────────
+function generateJSON() {
+  const id       = document.getElementById('f-id').value.trim();
+  const title    = document.getElementById('f-title').value.trim();
+  const summary  = document.getElementById('f-summary').value.trim();
+  const category = document.getElementById('f-cat').value;
+  const image    = document.getElementById('f-image').value.trim();
+  const date     = document.getElementById('f-date').value;
+  const time     = document.getElementById('f-time').value;
+  const featured = document.getElementById('f-featured').checked;
+  const breaking = document.getElementById('f-breaking').checked;
+  const content  = document.getElementById('content-editor').value.trim();
+
+  // Validate
+  const missing = [];
+  if (!id)      missing.push('Article ID');
+  if (!title)   missing.push('Headline');
+  if (!summary) missing.push('Summary');
+  if (!image)   missing.push('Image Path');
+  if (!date)    missing.push('Date');
+  if (!time)    missing.push('Time');
+  if (!content) missing.push('Article Content');
+
+  if (missing.length) {
+    alert('Please fill in: ' + missing.join(', '));
+    return;
+  }
+
+  // Escape content for JSON
+  const escapedContent = content
+    .replace(/\\/g, '\\\\')
+    .replace(/"/g, '\\"')
+    .replace(/\n/g, '');
+
+  const json = `{
+  "id": "${id}",
+  "title": "${title.replace(/"/g, '\\"')}",
+  "summary": "${summary.replace(/"/g, '\\"')}",
+  "date": "${date}",
+  "time": "${time}",
+  "category": "${category}",
+  "image": "${image}",
+  "featured": ${featured},
+  "breaking": ${breaking},
+  "content": "${escapedContent}"
+}`;
+
+  document.getElementById('json-output').textContent = json;
+  document.getElementById('output-card').classList.add('show');
+  document.getElementById('output-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── COPY JSON ──────────────────────────────────────────
+function copyJSON() {
+  const text = document.getElementById('json-output').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy JSON';
+      btn.classList.remove('copied');
+    }, 2500);
+
+    const notif = document.getElementById('notif');
+    notif.classList.add('show');
+    setTimeout(() => notif.classList.remove('show'), 2500);
+  });
+}
+
+// Update ID when date changes
+document.getElementById('f-date').addEventListener('change', autoId);
+</script>
+</body>
+</html>
