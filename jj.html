@@ -6,266 +6,175 @@
 <title>EduTools BD — Student Tools</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Tiro+Bangla&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
   :root {
-    --green: #00c07f;
-    --green-dark: #009962;
-    --bg: #0d0f14;
-    --card: #161a22;
-    --border: #232836;
-    --text: #e8eaf0;
-    --muted: #7a8299;
-    --gold: #f5c842;
+    --green: #00c07f; --green-dark: #009962;
+    --bg: #0d0f14; --card: #161a22; --border: #232836;
+    --text: #e8eaf0; --muted: #7a8299; --gold: #f5c842;
   }
-
   * { margin:0; padding:0; box-sizing:border-box; }
-
-  body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-  }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
   /* NAV */
-  nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 24px;
-    border-bottom: 1px solid var(--border);
-    background: var(--card);
+  nav { display:flex; justify-content:space-between; align-items:center; padding:12px 24px; border-bottom:1px solid var(--border); background:var(--card); position:sticky; top:0; z-index:50; }
+  .logo { font-size:20px; font-weight:800; color:var(--green); }
+  .logo span { color:var(--text); }
+  .nav-right { display:flex; gap:10px; align-items:center; }
+  .btn { padding:8px 18px; border-radius:8px; border:none; cursor:pointer; font-family:inherit; font-weight:600; font-size:14px; transition:all 0.2s; }
+  .btn-outline { background:transparent; border:1px solid var(--border); color:var(--text); }
+  .btn-outline:hover { border-color:var(--green); color:var(--green); }
+  .btn-primary { background:var(--green); color:#fff; }
+  .btn-primary:hover { background:var(--green-dark); }
+  .btn-gold { background:var(--gold); color:#1a1200; font-weight:700; }
+  .btn-gold:hover { background:#e0b030; }
+
+  /* AVATAR */
+  .avatar-wrap { position:relative; cursor:pointer; display:none; }
+  .avatar-circle {
+    width:40px; height:40px; border-radius:50%; border:2px solid var(--border);
+    background:var(--border); display:flex; align-items:center; justify-content:center;
+    font-size:15px; font-weight:800; color:var(--text); overflow:hidden; transition:border 0.2s;
   }
-  .logo { font-size: 20px; font-weight: 800; color: var(--green); }
-  .logo span { color: var(--text); }
-  .nav-btns { display: flex; gap: 10px; align-items: center; }
-  .btn {
-    padding: 8px 18px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-family: inherit;
-    font-weight: 600;
-    font-size: 14px;
-    transition: all 0.2s;
+  .avatar-circle img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+  .avatar-circle.premium { border-color:var(--gold); box-shadow:0 0 0 2px rgba(245,200,66,0.3); }
+  .avatar-dropdown {
+    display:none; position:absolute; top:52px; right:0;
+    background:var(--card); border:1px solid var(--border); border-radius:14px;
+    padding:8px; min-width:220px; z-index:999; box-shadow:0 12px 40px rgba(0,0,0,0.5);
   }
-  .btn-outline {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text);
+  .avatar-dropdown.open { display:block; animation:fadeDown 0.15s ease; }
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+  .dd-header { padding:12px; border-bottom:1px solid var(--border); margin-bottom:6px; }
+  .dd-avatar-big {
+    width:52px; height:52px; border-radius:50%; background:var(--border);
+    display:flex; align-items:center; justify-content:center; font-size:22px;
+    font-weight:800; margin-bottom:10px; overflow:hidden; border:2px solid var(--border);
   }
-  .btn-outline:hover { border-color: var(--green); color: var(--green); }
-  .btn-primary { background: var(--green); color: #fff; }
-  .btn-primary:hover { background: var(--green-dark); }
-  .btn-gold { background: var(--gold); color: #1a1200; }
-  .btn-gold:hover { background: #e0b030; }
-  #user-info { font-size: 13px; color: var(--muted); }
-  #premium-badge {
-    background: var(--gold);
-    color: #1a1200;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 20px;
-    display: none;
-  }
+  .dd-avatar-big.premium { border-color:var(--gold); }
+  .dd-avatar-big img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+  .dd-name { font-weight:700; font-size:15px; }
+  .dd-email { font-size:12px; color:var(--muted); margin-top:2px; word-break:break-all; }
+  .dd-badge { display:inline-block; margin-top:8px; font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; }
+  .badge-free { background:var(--border); color:var(--muted); }
+  .badge-premium { background:var(--gold); color:#1a1200; }
+  .dd-item { padding:10px 12px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:10px; color:var(--text); transition:background 0.15s; }
+  .dd-item:hover { background:var(--border); }
+  .dd-item.red { color:#ff6b6b; }
+  #avatar-file { display:none; }
 
   /* PAGES */
-  .page { display: none; }
-  .page.active { display: block; }
+  .page { display:none; }
+  .page.active { display:block; }
 
-  /* AUTH PAGE */
-  .auth-wrap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 60px);
-    padding: 24px;
-  }
-  .auth-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 36px;
-    width: 100%;
-    max-width: 400px;
-  }
-  .auth-card h2 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
-  .auth-card p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
-  .form-group { margin-bottom: 16px; }
-  .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--muted); }
-  .form-group input {
-    width: 100%;
-    padding: 11px 14px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--bg);
-    color: var(--text);
-    font-family: inherit;
-    font-size: 14px;
-    outline: none;
-    transition: border 0.2s;
-  }
-  .form-group input:focus { border-color: var(--green); }
-  .btn-full { width: 100%; padding: 12px; font-size: 15px; border-radius: 10px; margin-top: 4px; }
-  .auth-switch { text-align: center; margin-top: 18px; font-size: 13px; color: var(--muted); }
-  .auth-switch a { color: var(--green); cursor: pointer; text-decoration: none; font-weight: 600; }
-  .msg { font-size: 13px; padding: 10px 14px; border-radius: 8px; margin-bottom: 14px; display: none; }
-  .msg.error { background: #2d1212; color: #ff6b6b; border: 1px solid #4a1f1f; display: block; }
-  .msg.success { background: #0d2d1f; color: #00c07f; border: 1px solid #0f4030; display: block; }
+  /* AUTH */
+  .auth-wrap { display:flex; justify-content:center; align-items:center; min-height:calc(100vh - 65px); padding:24px; }
+  .auth-card { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:36px; width:100%; max-width:400px; }
+  .auth-card h2 { font-size:24px; font-weight:800; margin-bottom:6px; }
+  .auth-card .sub { color:var(--muted); font-size:14px; margin-bottom:24px; }
+  .form-group { margin-bottom:16px; }
+  .form-group label { display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:var(--muted); }
+  .form-group input { width:100%; padding:11px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text); font-family:inherit; font-size:14px; outline:none; transition:border 0.2s; }
+  .form-group input:focus { border-color:var(--green); }
+  .btn-full { width:100%; padding:13px; font-size:15px; border-radius:10px; margin-top:4px; }
+  .auth-switch { text-align:center; margin-top:18px; font-size:13px; color:var(--muted); }
+  .auth-switch a { color:var(--green); cursor:pointer; font-weight:600; }
+  .msg { font-size:13px; padding:10px 14px; border-radius:8px; margin-bottom:14px; display:none; }
+  .msg.error { background:#2d1212; color:#ff6b6b; border:1px solid #4a1f1f; display:block; }
+  .msg.success { background:#0d2d1f; color:#00c07f; border:1px solid #0f4030; display:block; }
 
   /* DASHBOARD */
-  .dashboard { padding: 28px 20px; max-width: 700px; margin: 0 auto; }
-  .dashboard h1 { font-size: 26px; font-weight: 800; margin-bottom: 6px; }
-  .dashboard .sub { color: var(--muted); font-size: 14px; margin-bottom: 28px; }
-
-  .section-title {
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
-
-  .tools-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-    margin-bottom: 28px;
-  }
-
-  .tool-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px 14px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-  }
-  .tool-card:hover { border-color: var(--green); transform: translateY(-2px); }
-  .tool-card .icon { font-size: 28px; margin-bottom: 8px; }
-  .tool-card .name { font-size: 13px; font-weight: 600; }
-  .tool-card .lock {
-    position: absolute;
-    top: 8px; right: 8px;
-    font-size: 11px;
-    background: var(--gold);
-    color: #1a1200;
-    padding: 2px 6px;
-    border-radius: 20px;
-    font-weight: 700;
-  }
+  .dash { padding:28px 20px; max-width:720px; margin:0 auto; }
+  .dash h1 { font-size:26px; font-weight:800; margin-bottom:4px; }
+  .dash .sub { color:var(--muted); font-size:14px; margin-bottom:28px; }
+  .section-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:12px; }
+  .tools-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; margin-bottom:28px; }
+  .tool-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 14px; text-align:center; cursor:pointer; transition:all 0.2s; position:relative; }
+  .tool-card:hover { border-color:var(--green); transform:translateY(-2px); }
+  .tool-card .t-icon { font-size:30px; margin-bottom:8px; }
+  .tool-card .t-name { font-size:13px; font-weight:600; }
+  .pro-tag { position:absolute; top:8px; right:8px; font-size:10px; background:var(--gold); color:#1a1200; padding:2px 7px; border-radius:20px; font-weight:700; }
 
   /* PREMIUM BANNER */
-  .premium-banner {
-    background: linear-gradient(135deg, #1a1200, #2d2000);
-    border: 1px solid var(--gold);
-    border-radius: 14px;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 28px;
-    gap: 12px;
-  }
-  .premium-banner h3 { font-size: 16px; font-weight: 700; color: var(--gold); }
-  .premium-banner p { font-size: 13px; color: #a88c30; margin-top: 4px; }
-  .premium-banner-hidden { display: none; }
+  .premium-banner { background:linear-gradient(135deg,#1a1200,#2d2000); border:1px solid var(--gold); border-radius:14px; padding:20px; display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; gap:12px; }
+  .premium-banner h3 { font-size:16px; font-weight:700; color:var(--gold); }
+  .premium-banner p { font-size:13px; color:#a88c30; margin-top:4px; }
 
-  /* TOOL MODAL */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    z-index: 100;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px;
-    width: 100%;
-    max-width: 420px;
-  }
-  .modal h3 { font-size: 20px; font-weight: 700; margin-bottom: 18px; }
-  .modal-close { float: right; background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; margin-top: -4px; }
-  .result-box {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px;
-    margin-top: 14px;
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--green);
-    text-align: center;
-    display: none;
-  }
+  /* MODAL */
+  .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; justify-content:center; align-items:center; padding:20px; }
+  .overlay.open { display:flex; }
+  .modal { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px; width:100%; max-width:420px; }
+  .modal-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+  .modal-top h3 { font-size:19px; font-weight:700; }
+  .modal-close { background:none; border:none; color:var(--muted); font-size:22px; cursor:pointer; line-height:1; }
+  .result-box { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:16px; margin-top:14px; font-size:15px; font-weight:700; color:var(--green); text-align:center; display:none; }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="logo">Edu<span>Tools BD</span></div>
-  <div class="nav-btns">
-    <span id="user-info"></span>
-    <span id="premium-badge">⭐ Premium</span>
-    <button class="btn btn-gold" id="upgrade-btn" onclick="showUpgrade()" style="display:none">⭐ Upgrade</button>
-    <button class="btn btn-outline" id="logout-btn" onclick="logout()" style="display:none">Logout</button>
-    <button class="btn btn-outline" id="login-nav-btn" onclick="showPage('login')">Sign In</button>
-    <button class="btn btn-primary" id="signup-nav-btn" onclick="showPage('signup')">Sign Up</button>
+  <div class="nav-right">
+    <!-- Logged OUT -->
+    <button class="btn btn-outline" id="btn-login-nav" onclick="showPage('login')">Sign In</button>
+    <button class="btn btn-primary" id="btn-signup-nav" onclick="showPage('signup')">Sign Up</button>
+
+    <!-- Logged IN -->
+    <input type="file" id="avatar-file" accept="image/*" onchange="uploadAvatar(event)"/>
+    <div class="avatar-wrap" id="avatar-wrap" onclick="toggleDD(event)">
+      <div class="avatar-circle" id="nav-avatar">👤</div>
+      <div class="avatar-dropdown" id="avatar-dd">
+        <div class="dd-header">
+          <div class="dd-avatar-big" id="dd-avatar-big">👤</div>
+          <div class="dd-name" id="dd-name">User</div>
+          <div class="dd-email" id="dd-email"></div>
+          <span class="dd-badge badge-free" id="dd-badge">Free Plan</span>
+        </div>
+        <div class="dd-item" onclick="document.getElementById('avatar-file').click();event.stopPropagation()">📷 Change Profile Photo</div>
+        <div class="dd-item" id="dd-upgrade" onclick="showUpgrade();event.stopPropagation()">⭐ Upgrade to Premium</div>
+        <div class="dd-item red" onclick="logout();event.stopPropagation()">🚪 Logout</div>
+      </div>
+    </div>
   </div>
 </nav>
 
-<!-- SIGNUP PAGE -->
+<!-- SIGNUP -->
 <div class="page active" id="page-signup">
   <div class="auth-wrap">
     <div class="auth-card">
       <h2>Create Account</h2>
-      <p>Join thousands of Bangladeshi students 🇧🇩</p>
-      <div class="msg" id="signup-msg"></div>
-      <div class="form-group"><label>Full Name</label><input type="text" id="signup-name" placeholder="Your name"/></div>
-      <div class="form-group"><label>Email</label><input type="email" id="signup-email" placeholder="email@example.com"/></div>
-      <div class="form-group"><label>Password</label><input type="password" id="signup-pass" placeholder="Min 6 characters"/></div>
-      <button class="btn btn-primary btn-full" onclick="signUp()">Create Account</button>
+      <p class="sub">Join Bangladeshi students 🇧🇩</p>
+      <div class="msg" id="msg-signup"></div>
+      <div class="form-group"><label>Full Name</label><input id="s-name" type="text" placeholder="Your name"/></div>
+      <div class="form-group"><label>Email</label><input id="s-email" type="email" placeholder="email@example.com"/></div>
+      <div class="form-group"><label>Password</label><input id="s-pass" type="password" placeholder="Min 6 characters"/></div>
+      <button class="btn btn-primary btn-full" onclick="doSignUp()">Create Account</button>
       <div class="auth-switch">Already have account? <a onclick="showPage('login')">Sign In</a></div>
     </div>
   </div>
 </div>
 
-<!-- LOGIN PAGE -->
+<!-- LOGIN -->
 <div class="page" id="page-login">
   <div class="auth-wrap">
     <div class="auth-card">
-      <h2>Welcome Back</h2>
-      <p>Sign in to your account</p>
-      <div class="msg" id="login-msg"></div>
-      <div class="form-group"><label>Email</label><input type="email" id="login-email" placeholder="email@example.com"/></div>
-      <div class="form-group"><label>Password</label><input type="password" id="login-pass" placeholder="Your password"/></div>
-      <button class="btn btn-primary btn-full" onclick="signIn()">Sign In</button>
+      <h2>Welcome Back 👋</h2>
+      <p class="sub">Sign in to your account</p>
+      <div class="msg" id="msg-login"></div>
+      <div class="form-group"><label>Email</label><input id="l-email" type="email" placeholder="email@example.com"/></div>
+      <div class="form-group"><label>Password</label><input id="l-pass" type="password" placeholder="Your password"/></div>
+      <button class="btn btn-primary btn-full" onclick="doSignIn()">Sign In</button>
       <div class="auth-switch">No account? <a onclick="showPage('signup')">Sign Up</a></div>
     </div>
   </div>
 </div>
 
-<!-- DASHBOARD PAGE -->
+<!-- DASHBOARD -->
 <div class="page" id="page-dashboard">
-  <div class="dashboard">
+  <div class="dash">
     <h1>Student Tools 📚</h1>
-    <p class="sub">All tools in one place — free & premium</p>
+    <p class="sub">Free & Premium tools for Bangladeshi students</p>
 
-    <!-- Premium Banner -->
-    <div class="premium-banner" id="premium-banner">
+    <div class="premium-banner" id="upgrade-banner">
       <div>
         <h3>⭐ Upgrade to Premium</h3>
         <p>Unlock all tools for just ৳99/month</p>
@@ -273,56 +182,34 @@
       <button class="btn btn-gold" onclick="showUpgrade()">Upgrade Now</button>
     </div>
 
-    <!-- Free Tools -->
-    <div class="section-title">✅ Free Tools</div>
+    <div class="section-label">✅ Free Tools</div>
     <div class="tools-grid">
-      <div class="tool-card" onclick="openTool('gpa')">
-        <div class="icon">🎓</div>
-        <div class="name">GPA Calculator</div>
-      </div>
-      <div class="tool-card" onclick="openTool('age')">
-        <div class="icon">🎂</div>
-        <div class="name">Age Calculator</div>
-      </div>
-      <div class="tool-card" onclick="openTool('word')">
-        <div class="icon">📝</div>
-        <div class="name">Word Counter</div>
-      </div>
+      <div class="tool-card" onclick="openTool('gpa')"><div class="t-icon">🎓</div><div class="t-name">GPA Calculator</div></div>
+      <div class="tool-card" onclick="openTool('age')"><div class="t-icon">🎂</div><div class="t-name">Age Calculator</div></div>
+      <div class="tool-card" onclick="openTool('word')"><div class="t-icon">📝</div><div class="t-name">Word Counter</div></div>
     </div>
 
-    <!-- Premium Tools -->
-    <div class="section-title">⭐ Premium Tools</div>
+    <div class="section-label">⭐ Premium Tools</div>
     <div class="tools-grid">
-      <div class="tool-card" onclick="openTool('mcq')">
-        <div class="icon">📋</div>
-        <div class="name">MCQ Practice</div>
-        <span class="lock" id="lock-mcq">PRO</span>
-      </div>
-      <div class="tool-card" onclick="openTool('notes')">
-        <div class="icon">📖</div>
-        <div class="name">Study Notes</div>
-        <span class="lock" id="lock-notes">PRO</span>
-      </div>
-      <div class="tool-card" onclick="openTool('mock')">
-        <div class="icon">🏆</div>
-        <div class="name">Mock Exam</div>
-        <span class="lock" id="lock-mock">PRO</span>
-      </div>
+      <div class="tool-card" onclick="openTool('mcq')"><div class="t-icon">📋</div><div class="t-name">MCQ Practice</div><span class="pro-tag" id="lock-mcq">PRO</span></div>
+      <div class="tool-card" onclick="openTool('notes')"><div class="t-icon">📖</div><div class="t-name">Study Notes</div><span class="pro-tag" id="lock-notes">PRO</span></div>
+      <div class="tool-card" onclick="openTool('mock')"><div class="t-icon">🏆</div><div class="t-name">Mock Exam</div><span class="pro-tag" id="lock-mock">PRO</span></div>
     </div>
   </div>
 </div>
 
 <!-- TOOL MODAL -->
-<div class="modal-overlay" id="tool-modal">
+<div class="overlay" id="tool-overlay">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <h3 id="modal-title">Tool</h3>
+    <div class="modal-top">
+      <h3 id="modal-title">Tool</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
     <div id="modal-body"></div>
   </div>
 </div>
 
 <script>
-// ======= SUPABASE SETUP =======
 const { createClient } = supabase;
 const sb = createClient(
   'https://pwprxidlohbzfsoxrnxs.supabase.co',
@@ -331,214 +218,212 @@ const sb = createClient(
 
 let currentUser = null;
 let isPremium = false;
+let userName = '';
+let avatarUrl = null;
 
-// ======= PAGE NAVIGATION =======
-function showPage(name) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
+// ── PAGE NAV ──
+function showPage(p) {
+  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+  document.getElementById('page-' + p).classList.add('active');
 }
 
-// ======= CHECK SESSION =======
+// ── DROPDOWN ──
+function toggleDD(e) {
+  e.stopPropagation();
+  document.getElementById('avatar-dd').classList.toggle('open');
+}
+document.addEventListener('click', () => document.getElementById('avatar-dd')?.classList.remove('open'));
+
+// ── SESSION ──
 async function checkSession() {
   const { data: { user } } = await sb.auth.getUser();
-  if (user) {
-    currentUser = user;
-    await loadProfile(user);
-    showLoggedInUI();
-    showPage('dashboard');
-  } else {
-    showPage('signup');
-  }
+  if (user) { currentUser = user; await loadProfile(user); showLoggedIn(); showPage('dashboard'); }
+  else showPage('signup');
 }
 
 async function loadProfile(user) {
   const { data } = await sb.from('profiles').select('*').eq('id', user.id).single();
   if (data) {
-    isPremium = data.is_premium;
+    isPremium = data.is_premium || false;
+    userName = data.full_name || user.email.split('@')[0];
+    avatarUrl = data.avatar_url || null;
+    updateAvatarUI();
     updatePremiumUI();
   }
 }
 
-function showLoggedInUI() {
-  document.getElementById('user-info').textContent = currentUser.email;
-  document.getElementById('logout-btn').style.display = 'block';
-  document.getElementById('login-nav-btn').style.display = 'none';
-  document.getElementById('signup-nav-btn').style.display = 'none';
-  document.getElementById('upgrade-btn').style.display = isPremium ? 'none' : 'block';
+function updateAvatarUI() {
+  const initials = userName ? userName.charAt(0).toUpperCase() : '👤';
+
+  // Nav avatar
+  const navAv = document.getElementById('nav-avatar');
+  if (avatarUrl) {
+    navAv.innerHTML = `<img src="${avatarUrl}" alt="avatar"/>`;
+  } else {
+    navAv.textContent = initials;
+  }
+  navAv.className = 'avatar-circle' + (isPremium ? ' premium' : '');
+
+  // Dropdown big avatar
+  const ddAv = document.getElementById('dd-avatar-big');
+  if (avatarUrl) {
+    ddAv.innerHTML = `<img src="${avatarUrl}" alt="avatar"/>`;
+  } else {
+    ddAv.textContent = initials;
+  }
+  ddAv.className = 'dd-avatar-big' + (isPremium ? ' premium' : '');
+
+  document.getElementById('dd-name').textContent = userName;
+  document.getElementById('dd-email').textContent = currentUser.email;
 }
 
 function updatePremiumUI() {
-  document.getElementById('premium-badge').style.display = isPremium ? 'inline-block' : 'none';
-  document.getElementById('premium-banner').style.display = isPremium ? 'none' : 'flex';
-  document.getElementById('upgrade-btn').style.display = isPremium ? 'none' : 'block';
+  const badge = document.getElementById('dd-badge');
+  badge.textContent = isPremium ? '⭐ Premium' : 'Free Plan';
+  badge.className = 'dd-badge ' + (isPremium ? 'badge-premium' : 'badge-free');
+  document.getElementById('upgrade-banner').style.display = isPremium ? 'none' : 'flex';
+  document.getElementById('dd-upgrade').style.display = isPremium ? 'none' : 'flex';
   ['mcq','notes','mock'].forEach(id => {
-    const lock = document.getElementById('lock-' + id);
-    if (lock) lock.style.display = isPremium ? 'none' : 'block';
+    const el = document.getElementById('lock-' + id);
+    if (el) el.style.display = isPremium ? 'none' : 'block';
   });
 }
 
-// ======= SIGN UP =======
-async function signUp() {
-  const name = document.getElementById('signup-name').value.trim();
-  const email = document.getElementById('signup-email').value.trim();
-  const pass = document.getElementById('signup-pass').value;
-  const msg = document.getElementById('signup-msg');
-  msg.className = 'msg';
+function showLoggedIn() {
+  document.getElementById('btn-login-nav').style.display = 'none';
+  document.getElementById('btn-signup-nav').style.display = 'none';
+  document.getElementById('avatar-wrap').style.display = 'block';
+}
 
-  if (!name || !email || !pass) { msg.className='msg error'; msg.textContent='Please fill all fields!'; return; }
+// ── SIGN UP ──
+async function doSignUp() {
+  const name = document.getElementById('s-name').value.trim();
+  const email = document.getElementById('s-email').value.trim();
+  const pass = document.getElementById('s-pass').value;
+  const msg = document.getElementById('msg-signup');
+  msg.className = 'msg';
+  if (!name||!email||!pass) { msg.className='msg error'; msg.textContent='Please fill all fields!'; return; }
   if (pass.length < 6) { msg.className='msg error'; msg.textContent='Password must be 6+ characters!'; return; }
-
-  const { error } = await sb.auth.signUp({
-    email, password: pass,
-    options: { data: { full_name: name } }
-  });
-
+  const { error } = await sb.auth.signUp({ email, password:pass, options:{ data:{ full_name:name } } });
   if (error) { msg.className='msg error'; msg.textContent=error.message; }
-  else { msg.className='msg success'; msg.textContent='✅ Account created! Please check your email to verify, then sign in.'; }
+  else { msg.className='msg success'; msg.textContent='✅ Account created! Check email to verify, then Sign In.'; }
 }
 
-// ======= SIGN IN =======
-async function signIn() {
-  const email = document.getElementById('login-email').value.trim();
-  const pass = document.getElementById('login-pass').value;
-  const msg = document.getElementById('login-msg');
+// ── SIGN IN ──
+async function doSignIn() {
+  const email = document.getElementById('l-email').value.trim();
+  const pass = document.getElementById('l-pass').value;
+  const msg = document.getElementById('msg-login');
   msg.className = 'msg';
-
-  if (!email || !pass) { msg.className='msg error'; msg.textContent='Please fill all fields!'; return; }
-
-  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
-
+  if (!email||!pass) { msg.className='msg error'; msg.textContent='Please fill all fields!'; return; }
+  const { data, error } = await sb.auth.signInWithPassword({ email, password:pass });
   if (error) { msg.className='msg error'; msg.textContent='Wrong email or password!'; }
-  else {
-    currentUser = data.user;
-    await loadProfile(data.user);
-    showLoggedInUI();
-    showPage('dashboard');
-  }
+  else { currentUser=data.user; await loadProfile(data.user); showLoggedIn(); showPage('dashboard'); }
 }
 
-// ======= LOGOUT =======
+// ── LOGOUT ──
 async function logout() {
   await sb.auth.signOut();
-  currentUser = null;
-  isPremium = false;
-  document.getElementById('user-info').textContent = '';
-  document.getElementById('logout-btn').style.display = 'none';
-  document.getElementById('upgrade-btn').style.display = 'none';
-  document.getElementById('login-nav-btn').style.display = 'block';
-  document.getElementById('signup-nav-btn').style.display = 'block';
-  document.getElementById('premium-badge').style.display = 'none';
+  currentUser=null; isPremium=false; userName=''; avatarUrl=null;
+  document.getElementById('btn-login-nav').style.display='block';
+  document.getElementById('btn-signup-nav').style.display='block';
+  document.getElementById('avatar-wrap').style.display='none';
   showPage('signup');
 }
 
-// ======= UPGRADE (DEMO) =======
+// ── UPGRADE DEMO ──
 async function showUpgrade() {
   if (!currentUser) { showPage('login'); return; }
-  const confirm = window.confirm('Demo: Click OK to activate Premium (৳99/month)\n\nIn real version, this connects to Bkash/SSLCommerz payment!');
-  if (confirm) {
-    await sb.from('profiles').update({ is_premium: true }).eq('id', currentUser.id);
+  const ok = confirm('Demo Mode: Click OK to activate Premium!\n\nIn real version → Bkash/Nagad payment first, then you manually set premium in Supabase.');
+  if (ok) {
+    await sb.from('profiles').update({ is_premium:true }).eq('id', currentUser.id);
     isPremium = true;
+    updateAvatarUI();
     updatePremiumUI();
-    alert('🎉 Welcome to Premium! All tools unlocked!');
+    alert('🎉 Premium activated! All tools unlocked!');
   }
 }
 
-// ======= TOOLS =======
+// ── AVATAR UPLOAD ──
+async function uploadAvatar(e) {
+  const file = e.target.files[0];
+  if (!file || !currentUser) return;
+  const reader = new FileReader();
+  reader.onload = async (ev) => {
+    avatarUrl = ev.target.result; // base64 for demo
+    await sb.from('profiles').update({ avatar_url: avatarUrl }).eq('id', currentUser.id);
+    updateAvatarUI();
+    document.getElementById('avatar-dd').classList.remove('open');
+    alert('✅ Profile photo updated!');
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── TOOLS ──
 function openTool(tool) {
-  const premiumTools = ['mcq', 'notes', 'mock'];
-  if (premiumTools.includes(tool) && !isPremium) {
-    alert('⭐ This is a Premium tool!\nUpgrade for ৳99/month to unlock all tools.');
+  const premTools = ['mcq','notes','mock'];
+  if (premTools.includes(tool) && !isPremium) {
+    alert('⭐ Premium Tool!\nUpgrade for ৳99/month to unlock.');
     return;
   }
-  const modal = document.getElementById('tool-modal');
-  const title = document.getElementById('modal-title');
   const body = document.getElementById('modal-body');
+  const title = document.getElementById('modal-title');
 
-  if (tool === 'gpa') {
-    title.textContent = '🎓 GPA Calculator';
-    body.innerHTML = `
-      <div class="form-group"><label>Total Marks (out of 1200)</label><input type="number" id="t-marks" placeholder="e.g. 950"/></div>
-      <button class="btn btn-primary btn-full" onclick="calcGPA()">Calculate GPA</button>
-      <div class="result-box" id="gpa-result"></div>`;
-  } else if (tool === 'age') {
-    title.textContent = '🎂 Age Calculator';
-    body.innerHTML = `
-      <div class="form-group"><label>Date of Birth</label><input type="date" id="dob"/></div>
-      <button class="btn btn-primary btn-full" onclick="calcAge()">Calculate Age</button>
-      <div class="result-box" id="age-result"></div>`;
-  } else if (tool === 'word') {
-    title.textContent = '📝 Word Counter';
-    body.innerHTML = `
-      <div class="form-group"><label>Paste your text</label><textarea id="wc-text" rows="5" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit;resize:vertical" oninput="countWords()"></textarea></div>
-      <div class="result-box" style="display:block" id="word-result">Words: 0 | Characters: 0</div>`;
-  } else if (tool === 'mcq') {
-    title.textContent = '📋 MCQ Practice (Premium)';
-    body.innerHTML = `
-      <p style="color:var(--muted);font-size:14px;margin-bottom:16px">Sample SSC Physics Question:</p>
-      <p style="font-weight:600;margin-bottom:12px">What is the SI unit of Force?</p>
-      <button class="btn btn-outline" style="width:100%;margin-bottom:8px;text-align:left" onclick="checkMCQ(this,'wrong')">A) Watt</button>
-      <button class="btn btn-outline" style="width:100%;margin-bottom:8px;text-align:left" onclick="checkMCQ(this,'correct')">B) Newton ✓</button>
-      <button class="btn btn-outline" style="width:100%;margin-bottom:8px;text-align:left" onclick="checkMCQ(this,'wrong')">C) Joule</button>
-      <button class="btn btn-outline" style="width:100%;text-align:left" onclick="checkMCQ(this,'wrong')">D) Pascal</button>`;
-  } else if (tool === 'notes') {
-    title.textContent = '📖 Study Notes (Premium)';
-    body.innerHTML = `<div style="background:var(--bg);border-radius:10px;padding:16px;font-size:14px;line-height:1.7;color:var(--muted)">
-      <b style="color:var(--text)">Physics Chapter 1 — Motion</b><br/><br/>
-      • Distance is a scalar quantity<br/>
-      • Displacement is a vector quantity<br/>
-      • Speed = Distance / Time<br/>
-      • Velocity = Displacement / Time<br/>
-      • Acceleration = Change in velocity / Time<br/><br/>
-      <i>More chapters available in full premium access...</i></div>`;
-  } else if (tool === 'mock') {
-    title.textContent = '🏆 Mock Exam (Premium)';
-    body.innerHTML = `<div style="text-align:center;padding:20px">
-      <div style="font-size:48px;margin-bottom:12px">🏆</div>
-      <p style="font-weight:700;font-size:16px;margin-bottom:8px">Full Mock Exam</p>
-      <p style="color:var(--muted);font-size:13px;margin-bottom:16px">30 questions • 30 minutes • SSC level</p>
-      <button class="btn btn-primary" style="width:100%">Start Exam</button></div>`;
+  if (tool==='gpa') {
+    title.textContent='🎓 GPA Calculator';
+    body.innerHTML=`<div class="form-group"><label>Total Marks (out of 1200)</label><input type="number" id="t-marks" placeholder="e.g. 950"/></div><button class="btn btn-primary btn-full" onclick="calcGPA()">Calculate</button><div class="result-box" id="r-gpa"></div>`;
+  } else if (tool==='age') {
+    title.textContent='🎂 Age Calculator';
+    body.innerHTML=`<div class="form-group"><label>Date of Birth</label><input type="date" id="t-dob"/></div><button class="btn btn-primary btn-full" onclick="calcAge()">Calculate</button><div class="result-box" id="r-age"></div>`;
+  } else if (tool==='word') {
+    title.textContent='📝 Word Counter';
+    body.innerHTML=`<div class="form-group"><label>Paste your text</label><textarea id="t-wc" rows="5" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit;resize:vertical" oninput="countWords()"></textarea></div><div class="result-box" style="display:block" id="r-wc">Words: 0 | Characters: 0</div>`;
+  } else if (tool==='mcq') {
+    title.textContent='📋 MCQ Practice';
+    body.innerHTML=`<p style="color:var(--muted);font-size:13px;margin-bottom:14px">SSC Physics Sample:</p><p style="font-weight:700;margin-bottom:14px">What is the SI unit of Force?</p>
+    <button class="btn btn-outline" style="width:100%;margin-bottom:8px;text-align:left" onclick="mcqClick(this,'w')">A) Watt</button>
+    <button class="btn btn-outline" style="width:100%;margin-bottom:8px;text-align:left" onclick="mcqClick(this,'c')">B) Newton</button>
+    <button class="btn btn-outline" style="width:100%;margin-bottom:8px;text-align:left" onclick="mcqClick(this,'w')">C) Joule</button>
+    <button class="btn btn-outline" style="width:100%;text-align:left" onclick="mcqClick(this,'w')">D) Pascal</button>`;
+  } else if (tool==='notes') {
+    title.textContent='📖 Study Notes';
+    body.innerHTML=`<div style="background:var(--bg);border-radius:10px;padding:16px;font-size:14px;line-height:1.8;color:var(--muted)"><b style="color:var(--text)">Physics — Chapter 1: Motion</b><br/><br/>• Distance is a scalar quantity<br/>• Displacement is a vector quantity<br/>• Speed = Distance ÷ Time<br/>• Velocity = Displacement ÷ Time<br/>• Acceleration = Δv ÷ Time<br/><br/><i>More chapters unlocked in full version...</i></div>`;
+  } else if (tool==='mock') {
+    title.textContent='🏆 Mock Exam';
+    body.innerHTML=`<div style="text-align:center;padding:20px"><div style="font-size:48px;margin-bottom:12px">🏆</div><p style="font-weight:700;font-size:16px;margin-bottom:8px">Full Mock Exam</p><p style="color:var(--muted);font-size:13px;margin-bottom:16px">30 questions • 30 minutes • SSC Level</p><button class="btn btn-primary" style="width:100%">Start Exam</button></div>`;
   }
-
-  modal.classList.add('open');
+  document.getElementById('tool-overlay').classList.add('open');
 }
-
-function closeModal() { document.getElementById('tool-modal').classList.remove('open'); }
+function closeModal() { document.getElementById('tool-overlay').classList.remove('open'); }
 
 function calcGPA() {
-  const marks = parseFloat(document.getElementById('t-marks').value);
-  const res = document.getElementById('gpa-result');
-  if (!marks || marks < 0 || marks > 1200) { res.style.display='block'; res.textContent='Please enter valid marks (0-1200)'; res.style.color='#ff6b6b'; return; }
-  const pct = (marks / 1200) * 100;
-  let gpa = pct >= 80 ? 5.0 : pct >= 70 ? 4.0 : pct >= 60 ? 3.5 : pct >= 50 ? 3.0 : pct >= 40 ? 2.0 : 1.0;
-  let grade = pct >= 80 ? 'A+' : pct >= 70 ? 'A' : pct >= 60 ? 'A-' : pct >= 50 ? 'B' : pct >= 40 ? 'C' : 'D';
-  res.style.display='block'; res.style.color='var(--green)';
-  res.textContent = `GPA: ${gpa} | Grade: ${grade} | Percentage: ${pct.toFixed(1)}%`;
+  const m = parseFloat(document.getElementById('t-marks').value);
+  const r = document.getElementById('r-gpa');
+  if (!m||m<0||m>1200) { r.style.display='block';r.style.color='#ff6b6b';r.textContent='Enter valid marks (0-1200)';return; }
+  const p = (m/1200)*100;
+  const gpa = p>=80?5.0:p>=70?4.0:p>=60?3.5:p>=50?3.0:p>=40?2.0:1.0;
+  const g = p>=80?'A+':p>=70?'A':p>=60?'A-':p>=50?'B':p>=40?'C':'D';
+  r.style.display='block';r.style.color='var(--green)';
+  r.textContent=`GPA: ${gpa} | Grade: ${g} | ${p.toFixed(1)}%`;
 }
-
 function calcAge() {
-  const dob = new Date(document.getElementById('dob').value);
-  const res = document.getElementById('age-result');
-  if (!dob.getTime()) { res.style.display='block'; res.textContent='Please select date'; res.style.color='#ff6b6b'; return; }
-  const today = new Date();
-  let years = today.getFullYear() - dob.getFullYear();
-  let months = today.getMonth() - dob.getMonth();
-  if (months < 0) { years--; months += 12; }
-  res.style.display='block'; res.style.color='var(--green)';
-  res.textContent = `Age: ${years} years, ${months} months`;
+  const d = new Date(document.getElementById('t-dob').value);
+  const r = document.getElementById('r-age');
+  if (!d.getTime()) { r.style.display='block';r.style.color='#ff6b6b';r.textContent='Please select date';return; }
+  const t = new Date(); let y=t.getFullYear()-d.getFullYear(),mo=t.getMonth()-d.getMonth();
+  if(mo<0){y--;mo+=12;}
+  r.style.display='block';r.style.color='var(--green)';r.textContent=`Age: ${y} years, ${mo} months`;
 }
-
 function countWords() {
-  const text = document.getElementById('wc-text').value;
-  const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
-  document.getElementById('word-result').textContent = `Words: ${words} | Characters: ${text.length}`;
+  const t = document.getElementById('t-wc').value;
+  const w = t.trim()===''?0:t.trim().split(/\s+/).length;
+  document.getElementById('r-wc').textContent=`Words: ${w} | Characters: ${t.length}`;
+}
+function mcqClick(btn, res) {
+  if(res==='c'){btn.style.background='#0d2d1f';btn.style.borderColor='var(--green)';btn.style.color='var(--green)';}
+  else{btn.style.background='#2d1212';btn.style.borderColor='#ff6b6b';btn.style.color='#ff6b6b';}
 }
 
-function checkMCQ(btn, result) {
-  if (result === 'correct') { btn.style.background='#0d2d1f'; btn.style.borderColor='var(--green)'; btn.style.color='var(--green)'; }
-  else { btn.style.background='#2d1212'; btn.style.borderColor='#ff6b6b'; btn.style.color='#ff6b6b'; }
-}
-
-// ======= INIT =======
 checkSession();
 </script>
 </body>
