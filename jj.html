@@ -62,6 +62,18 @@
   .dd-item.red { color:#ff6b6b; }
   #avatar-file { display:none; }
 
+  /* GOOGLE BUTTON */
+  .btn-google {
+    width:100%; padding:12px; border-radius:10px; border:1px solid var(--border);
+    background:var(--card); color:var(--text); font-family:inherit; font-size:14px;
+    font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    gap:10px; transition:all 0.2s; margin-top:12px;
+  }
+  .btn-google:hover { border-color:#4285f4; background:#1a1f2e; }
+  .btn-google img { width:18px; height:18px; }
+  .or-divider { display:flex; align-items:center; gap:10px; margin:16px 0; color:var(--muted); font-size:12px; }
+  .or-divider::before,.or-divider::after { content:''; flex:1; height:1px; background:var(--border); }
+
   /* PAGES */
   .page { display:none; }
   .page.active { display:block; }
@@ -148,6 +160,10 @@
       <div class="form-group"><label>Email</label><input id="s-email" type="email" placeholder="email@example.com"/></div>
       <div class="form-group"><label>Password</label><input id="s-pass" type="password" placeholder="Min 6 characters"/></div>
       <button class="btn btn-primary btn-full" onclick="doSignUp()">Create Account</button>
+      <div class="or-divider">OR</div>
+      <button class="btn-google" onclick="googleSignIn()">
+        <img src="https://www.google.com/favicon.ico"/> Continue with Google
+      </button>
       <div class="auth-switch">Already have account? <a onclick="showPage('login')">Sign In</a></div>
     </div>
   </div>
@@ -163,6 +179,10 @@
       <div class="form-group"><label>Email</label><input id="l-email" type="email" placeholder="email@example.com"/></div>
       <div class="form-group"><label>Password</label><input id="l-pass" type="password" placeholder="Your password"/></div>
       <button class="btn btn-primary btn-full" onclick="doSignIn()">Sign In</button>
+      <div class="or-divider">OR</div>
+      <button class="btn-google" onclick="googleSignIn()">
+        <img src="https://www.google.com/favicon.ico"/> Continue with Google
+      </button>
       <div class="auth-switch">No account? <a onclick="showPage('signup')">Sign Up</a></div>
     </div>
   </div>
@@ -221,6 +241,15 @@ let isPremium = false;
 let userName = '';
 let avatarUrl = null;
 
+// ── GOOGLE SIGN IN ──
+async function googleSignIn() {
+  const { error } = await sb.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.href }
+  });
+  if (error) alert('Google Sign In failed: ' + error.message);
+}
+
 // ── PAGE NAV ──
 function showPage(p) {
   document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
@@ -236,6 +265,15 @@ document.addEventListener('click', () => document.getElementById('avatar-dd')?.c
 
 // ── SESSION ──
 async function checkSession() {
+  // Handle Google OAuth redirect
+  const { data: { session } } = await sb.auth.getSession();
+  if (session?.user) {
+    currentUser = session.user;
+    await loadProfile(session.user);
+    showLoggedIn();
+    showPage('dashboard');
+    return;
+  }
   const { data: { user } } = await sb.auth.getUser();
   if (user) { currentUser = user; await loadProfile(user); showLoggedIn(); showPage('dashboard'); }
   else showPage('signup');
