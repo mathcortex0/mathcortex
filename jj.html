@@ -8,117 +8,118 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
   :root {
-    --green: #00c07f; --green-dark: #009962;
-    --bg: #0d0f14; --card: #161a22; --border: #232836;
-    --text: #e8eaf0; --muted: #7a8299; --gold: #f5c842;
+    --green:#00c07f; --green-dark:#009962;
+    --bg:#0d0f14; --card:#161a22; --border:#232836;
+    --text:#e8eaf0; --muted:#7a8299; --gold:#f5c842;
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
   /* NAV */
-  nav { display:flex; justify-content:space-between; align-items:center; padding:12px 24px; border-bottom:1px solid var(--border); background:var(--card); position:sticky; top:0; z-index:50; }
-  .logo { font-size:20px; font-weight:800; color:var(--green); }
-  .logo span { color:var(--text); }
-  .nav-right { display:flex; gap:10px; align-items:center; }
-  .btn { padding:8px 18px; border-radius:8px; border:none; cursor:pointer; font-family:inherit; font-weight:600; font-size:14px; transition:all 0.2s; }
-  .btn-outline { background:transparent; border:1px solid var(--border); color:var(--text); }
-  .btn-outline:hover { border-color:var(--green); color:var(--green); }
-  .btn-primary { background:var(--green); color:#fff; }
-  .btn-primary:hover { background:var(--green-dark); }
-  .btn-gold { background:var(--gold); color:#1a1200; font-weight:700; }
-  .btn-gold:hover { background:#e0b030; }
+  nav{display:flex;justify-content:space-between;align-items:center;padding:12px 24px;border-bottom:1px solid var(--border);background:var(--card);position:sticky;top:0;z-index:50;}
+  .logo{font-size:20px;font-weight:800;color:var(--green);}
+  .logo span{color:var(--text);}
+  .nav-right{display:flex;gap:10px;align-items:center;}
+  .btn{padding:8px 18px;border-radius:8px;border:none;cursor:pointer;font-family:inherit;font-weight:600;font-size:14px;transition:all 0.2s;}
+  .btn-outline{background:transparent;border:1px solid var(--border);color:var(--text);}
+  .btn-outline:hover{border-color:var(--green);color:var(--green);}
+  .btn-primary{background:var(--green);color:#fff;}
+  .btn-primary:hover{background:var(--green-dark);}
+  .btn-gold{background:var(--gold);color:#1a1200;font-weight:700;}
+  .btn-gold:hover{background:#e0b030;}
+  .btn-full{width:100%;padding:13px;font-size:15px;border-radius:10px;margin-top:4px;}
 
   /* AVATAR */
-  .avatar-wrap { position:relative; cursor:pointer; display:none; }
-  .avatar-circle {
-    width:40px; height:40px; border-radius:50%; border:2px solid var(--border);
-    background:var(--border); display:flex; align-items:center; justify-content:center;
-    font-size:15px; font-weight:800; color:var(--text); overflow:hidden; transition:border 0.2s;
-  }
-  .avatar-circle img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
-  .avatar-circle.premium { border-color:var(--gold); box-shadow:0 0 0 2px rgba(245,200,66,0.3); }
-  .avatar-dropdown {
-    display:none; position:absolute; top:52px; right:0;
-    background:var(--card); border:1px solid var(--border); border-radius:14px;
-    padding:8px; min-width:220px; z-index:999; box-shadow:0 12px 40px rgba(0,0,0,0.5);
-  }
-  .avatar-dropdown.open { display:block; animation:fadeDown 0.15s ease; }
-  @keyframes fadeDown { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
-  .dd-header { padding:12px; border-bottom:1px solid var(--border); margin-bottom:6px; }
-  .dd-avatar-big {
-    width:52px; height:52px; border-radius:50%; background:var(--border);
-    display:flex; align-items:center; justify-content:center; font-size:22px;
-    font-weight:800; margin-bottom:10px; overflow:hidden; border:2px solid var(--border);
-  }
-  .dd-avatar-big.premium { border-color:var(--gold); }
-  .dd-avatar-big img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
-  .dd-name { font-weight:700; font-size:15px; }
-  .dd-email { font-size:12px; color:var(--muted); margin-top:2px; word-break:break-all; }
-  .dd-badge { display:inline-block; margin-top:8px; font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px; }
-  .badge-free { background:var(--border); color:var(--muted); }
-  .badge-premium { background:var(--gold); color:#1a1200; }
-  .dd-item { padding:10px 12px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:10px; color:var(--text); transition:background 0.15s; }
-  .dd-item:hover { background:var(--border); }
-  .dd-item.red { color:#ff6b6b; }
-  #avatar-file { display:none; }
+  .avatar-wrap{position:relative;cursor:pointer;display:none;}
+  .avatar-circle{width:40px;height:40px;border-radius:50%;border:2px solid var(--border);background:var(--border);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:var(--text);overflow:hidden;transition:all 0.2s;}
+  .avatar-circle img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+  .avatar-circle.premium{border-color:var(--gold);box-shadow:0 0 0 2px rgba(245,200,66,0.3);}
+  .avatar-dropdown{display:none;position:absolute;top:52px;right:0;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:8px;min-width:220px;z-index:999;box-shadow:0 12px 40px rgba(0,0,0,0.5);}
+  .avatar-dropdown.open{display:block;animation:fadeDown 0.15s ease;}
+  @keyframes fadeDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+  .dd-header{padding:12px;border-bottom:1px solid var(--border);margin-bottom:6px;}
+  .dd-avatar-big{width:52px;height:52px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;margin-bottom:10px;overflow:hidden;border:2px solid var(--border);}
+  .dd-avatar-big.premium{border-color:var(--gold);}
+  .dd-avatar-big img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+  .dd-name{font-weight:700;font-size:15px;}
+  .dd-email{font-size:12px;color:var(--muted);margin-top:2px;word-break:break-all;}
+  .dd-badge{display:inline-block;margin-top:8px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;}
+  .badge-free{background:var(--border);color:var(--muted);}
+  .badge-premium{background:var(--gold);color:#1a1200;}
+  .dd-item{padding:10px 12px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text);transition:background 0.15s;}
+  .dd-item:hover{background:var(--border);}
+  .dd-item.red{color:#ff6b6b;}
+  #avatar-file{display:none;}
 
-  /* GOOGLE BUTTON */
-  .btn-google {
-    width:100%; padding:12px; border-radius:10px; border:1px solid var(--border);
-    background:var(--card); color:var(--text); font-family:inherit; font-size:14px;
-    font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center;
-    gap:10px; transition:all 0.2s; margin-top:12px;
-  }
-  .btn-google:hover { border-color:#4285f4; background:#1a1f2e; }
-  .btn-google img { width:18px; height:18px; }
-  .or-divider { display:flex; align-items:center; gap:10px; margin:16px 0; color:var(--muted); font-size:12px; }
-  .or-divider::before,.or-divider::after { content:''; flex:1; height:1px; background:var(--border); }
+  /* GOOGLE BTN */
+  .btn-google{width:100%;padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.2s;margin-top:12px;}
+  .btn-google:hover{border-color:#4285f4;background:#1a1f2e;}
+  .btn-google img{width:18px;height:18px;}
+  .or-divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--muted);font-size:12px;}
+  .or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:var(--border);}
 
   /* PAGES */
-  .page { display:none; }
-  .page.active { display:block; }
+  .page{display:none;}
+  .page.active{display:block;}
 
   /* AUTH */
-  .auth-wrap { display:flex; justify-content:center; align-items:center; min-height:calc(100vh - 65px); padding:24px; }
-  .auth-card { background:var(--card); border:1px solid var(--border); border-radius:18px; padding:36px; width:100%; max-width:400px; }
-  .auth-card h2 { font-size:24px; font-weight:800; margin-bottom:6px; }
-  .auth-card .sub { color:var(--muted); font-size:14px; margin-bottom:24px; }
-  .form-group { margin-bottom:16px; }
-  .form-group label { display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:var(--muted); }
-  .form-group input { width:100%; padding:11px 14px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text); font-family:inherit; font-size:14px; outline:none; transition:border 0.2s; }
-  .form-group input:focus { border-color:var(--green); }
-  .btn-full { width:100%; padding:13px; font-size:15px; border-radius:10px; margin-top:4px; }
-  .auth-switch { text-align:center; margin-top:18px; font-size:13px; color:var(--muted); }
-  .auth-switch a { color:var(--green); cursor:pointer; font-weight:600; }
-  .msg { font-size:13px; padding:10px 14px; border-radius:8px; margin-bottom:14px; display:none; }
-  .msg.error { background:#2d1212; color:#ff6b6b; border:1px solid #4a1f1f; display:block; }
-  .msg.success { background:#0d2d1f; color:#00c07f; border:1px solid #0f4030; display:block; }
+  .auth-wrap{display:flex;justify-content:center;align-items:center;min-height:calc(100vh - 65px);padding:24px;}
+  .auth-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:36px;width:100%;max-width:400px;}
+  .auth-card h2{font-size:24px;font-weight:800;margin-bottom:6px;}
+  .auth-card .sub{color:var(--muted);font-size:14px;margin-bottom:24px;}
+  .form-group{margin-bottom:16px;}
+  .form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--muted);}
+  .form-group input{width:100%;padding:11px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit;font-size:14px;outline:none;transition:border 0.2s;}
+  .form-group input:focus{border-color:var(--green);}
+  .auth-switch{text-align:center;margin-top:18px;font-size:13px;color:var(--muted);}
+  .auth-switch a{color:var(--green);cursor:pointer;font-weight:600;}
+  .msg{font-size:13px;padding:10px 14px;border-radius:8px;margin-bottom:14px;display:none;}
+  .msg.error{background:#2d1212;color:#ff6b6b;border:1px solid #4a1f1f;display:block;}
+  .msg.success{background:#0d2d1f;color:#00c07f;border:1px solid #0f4030;display:block;}
 
   /* DASHBOARD */
-  .dash { padding:28px 20px; max-width:720px; margin:0 auto; }
-  .dash h1 { font-size:26px; font-weight:800; margin-bottom:4px; }
-  .dash .sub { color:var(--muted); font-size:14px; margin-bottom:28px; }
-  .section-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); margin-bottom:12px; }
-  .tools-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; margin-bottom:28px; }
-  .tool-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 14px; text-align:center; cursor:pointer; transition:all 0.2s; position:relative; }
-  .tool-card:hover { border-color:var(--green); transform:translateY(-2px); }
-  .tool-card .t-icon { font-size:30px; margin-bottom:8px; }
-  .tool-card .t-name { font-size:13px; font-weight:600; }
-  .pro-tag { position:absolute; top:8px; right:8px; font-size:10px; background:var(--gold); color:#1a1200; padding:2px 7px; border-radius:20px; font-weight:700; }
-
-  /* PREMIUM BANNER */
-  .premium-banner { background:linear-gradient(135deg,#1a1200,#2d2000); border:1px solid var(--gold); border-radius:14px; padding:20px; display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; gap:12px; }
-  .premium-banner h3 { font-size:16px; font-weight:700; color:var(--gold); }
-  .premium-banner p { font-size:13px; color:#a88c30; margin-top:4px; }
+  .dash{padding:28px 20px;max-width:720px;margin:0 auto;}
+  .dash h1{font-size:26px;font-weight:800;margin-bottom:4px;}
+  .dash .sub{color:var(--muted);font-size:14px;margin-bottom:28px;}
+  .section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;}
+  .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:28px;}
+  .tool-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 14px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
+  .tool-card:hover{border-color:var(--green);transform:translateY(-2px);}
+  .tool-card .t-icon{font-size:30px;margin-bottom:8px;}
+  .tool-card .t-name{font-size:13px;font-weight:600;}
+  .pro-tag{position:absolute;top:8px;right:8px;font-size:10px;background:var(--gold);color:#1a1200;padding:2px 7px;border-radius:20px;font-weight:700;}
+  .premium-banner{background:linear-gradient(135deg,#1a1200,#2d2000);border:1px solid var(--gold);border-radius:14px;padding:20px;display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;gap:12px;}
+  .premium-banner h3{font-size:16px;font-weight:700;color:var(--gold);}
+  .premium-banner p{font-size:13px;color:#a88c30;margin-top:4px;}
 
   /* MODAL */
-  .overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; justify-content:center; align-items:center; padding:20px; }
-  .overlay.open { display:flex; }
-  .modal { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:28px; width:100%; max-width:420px; }
-  .modal-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
-  .modal-top h3 { font-size:19px; font-weight:700; }
-  .modal-close { background:none; border:none; color:var(--muted); font-size:22px; cursor:pointer; line-height:1; }
-  .result-box { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:16px; margin-top:14px; font-size:15px; font-weight:700; color:var(--green); text-align:center; display:none; }
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;justify-content:center;align-items:center;padding:20px;}
+  .overlay.open{display:flex;}
+  .modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;width:100%;max-width:440px;max-height:85vh;overflow-y:auto;}
+  .modal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+  .modal-top h3{font-size:19px;font-weight:700;}
+  .modal-close{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;line-height:1;}
+  .result-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;margin-top:14px;font-size:15px;font-weight:700;color:var(--green);text-align:center;display:none;}
+
+  /* LOADING */
+  .loading{text-align:center;padding:30px;color:var(--muted);font-size:14px;}
+  .spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* MCQ */
+  .mcq-option{width:100%;padding:12px 14px;margin-bottom:8px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;text-align:left;transition:all 0.2s;}
+  .mcq-option:hover{border-color:var(--green);}
+  .mcq-option.correct{background:#0d2d1f;border-color:var(--green);color:var(--green);}
+  .mcq-option.wrong{background:#2d1212;border-color:#ff6b6b;color:#ff6b6b;}
+  .mcq-nav{display:flex;justify-content:space-between;align-items:center;margin-top:16px;}
+  .note-content{background:var(--bg);border-radius:10px;padding:16px;font-size:14px;line-height:1.8;color:var(--muted);}
+  .note-content b{color:var(--text);}
+
+  /* LOCKED */
+  .locked-box{text-align:center;padding:30px 20px;}
+  .locked-box .lock-icon{font-size:48px;margin-bottom:12px;}
+  .locked-box h3{font-size:18px;font-weight:700;margin-bottom:8px;}
+  .locked-box p{color:var(--muted);font-size:13px;margin-bottom:20px;}
 </style>
 </head>
 <body>
@@ -126,11 +127,8 @@
 <nav>
   <div class="logo">Edu<span>Tools BD</span></div>
   <div class="nav-right">
-    <!-- Logged OUT -->
     <button class="btn btn-outline" id="btn-login-nav" onclick="showPage('login')">Sign In</button>
     <button class="btn btn-primary" id="btn-signup-nav" onclick="showPage('signup')">Sign Up</button>
-
-    <!-- Logged IN -->
     <input type="file" id="avatar-file" accept="image/*" onchange="uploadAvatar(event)"/>
     <div class="avatar-wrap" id="avatar-wrap" onclick="toggleDD(event)">
       <div class="avatar-circle" id="nav-avatar">👤</div>
@@ -141,7 +139,7 @@
           <div class="dd-email" id="dd-email"></div>
           <span class="dd-badge badge-free" id="dd-badge">Free Plan</span>
         </div>
-        <div class="dd-item" onclick="document.getElementById('avatar-file').click();event.stopPropagation()">📷 Change Profile Photo</div>
+        <div class="dd-item" onclick="document.getElementById('avatar-file').click();event.stopPropagation()">📷 Change Photo</div>
         <div class="dd-item" id="dd-upgrade" onclick="showUpgrade();event.stopPropagation()">⭐ Upgrade to Premium</div>
         <div class="dd-item red" onclick="logout();event.stopPropagation()">🚪 Logout</div>
       </div>
@@ -193,7 +191,6 @@
   <div class="dash">
     <h1>Student Tools 📚</h1>
     <p class="sub">Free & Premium tools for Bangladeshi students</p>
-
     <div class="premium-banner" id="upgrade-banner">
       <div>
         <h3>⭐ Upgrade to Premium</h3>
@@ -201,14 +198,12 @@
       </div>
       <button class="btn btn-gold" onclick="showUpgrade()">Upgrade Now</button>
     </div>
-
     <div class="section-label">✅ Free Tools</div>
     <div class="tools-grid">
       <div class="tool-card" onclick="openTool('gpa')"><div class="t-icon">🎓</div><div class="t-name">GPA Calculator</div></div>
       <div class="tool-card" onclick="openTool('age')"><div class="t-icon">🎂</div><div class="t-name">Age Calculator</div></div>
       <div class="tool-card" onclick="openTool('word')"><div class="t-icon">📝</div><div class="t-name">Word Counter</div></div>
     </div>
-
     <div class="section-label">⭐ Premium Tools</div>
     <div class="tools-grid">
       <div class="tool-card" onclick="openTool('mcq')"><div class="t-icon">📋</div><div class="t-name">MCQ Practice</div><span class="pro-tag" id="lock-mcq">PRO</span></div>
@@ -218,7 +213,7 @@
   </div>
 </div>
 
-<!-- TOOL MODAL -->
+<!-- MODAL -->
 <div class="overlay" id="tool-overlay">
   <div class="modal">
     <div class="modal-top">
@@ -263,9 +258,8 @@ function toggleDD(e) {
 }
 document.addEventListener('click', () => document.getElementById('avatar-dd')?.classList.remove('open'));
 
-// ── SESSION ──
+// ── SESSION CHECK ──
 async function checkSession() {
-  // Handle Google OAuth redirect
   const { data: { session } } = await sb.auth.getSession();
   if (session?.user) {
     currentUser = session.user;
@@ -279,38 +273,37 @@ async function checkSession() {
   else showPage('signup');
 }
 
+// ── LOAD PROFILE FROM SUPABASE ──
 async function loadProfile(user) {
-  const { data } = await sb.from('profiles').select('*').eq('id', user.id).single();
+  const { data, error } = await sb.from('profiles').select('*').eq('id', user.id).single();
   if (data) {
     isPremium = data.is_premium || false;
-    userName = data.full_name || user.email.split('@')[0];
-    avatarUrl = data.avatar_url || null;
-    updateAvatarUI();
-    updatePremiumUI();
+    userName = data.full_name || user.user_metadata?.full_name || user.email.split('@')[0];
+    avatarUrl = data.avatar_url || user.user_metadata?.avatar_url || null;
+  } else {
+    // New Google user — create profile
+    userName = user.user_metadata?.full_name || user.email.split('@')[0];
+    avatarUrl = user.user_metadata?.avatar_url || null;
+    await sb.from('profiles').upsert({
+      id: user.id,
+      full_name: userName,
+      email: user.email,
+      is_premium: false,
+      avatar_url: avatarUrl
+    });
   }
+  updateAvatarUI();
+  updatePremiumUI();
 }
 
 function updateAvatarUI() {
   const initials = userName ? userName.charAt(0).toUpperCase() : '👤';
-
-  // Nav avatar
   const navAv = document.getElementById('nav-avatar');
-  if (avatarUrl) {
-    navAv.innerHTML = `<img src="${avatarUrl}" alt="avatar"/>`;
-  } else {
-    navAv.textContent = initials;
-  }
+  navAv.innerHTML = avatarUrl ? `<img src="${avatarUrl}"/>` : initials;
   navAv.className = 'avatar-circle' + (isPremium ? ' premium' : '');
-
-  // Dropdown big avatar
   const ddAv = document.getElementById('dd-avatar-big');
-  if (avatarUrl) {
-    ddAv.innerHTML = `<img src="${avatarUrl}" alt="avatar"/>`;
-  } else {
-    ddAv.textContent = initials;
-  }
+  ddAv.innerHTML = avatarUrl ? `<img src="${avatarUrl}"/>` : initials;
   ddAv.className = 'dd-avatar-big' + (isPremium ? ' premium' : '');
-
   document.getElementById('dd-name').textContent = userName;
   document.getElementById('dd-email').textContent = currentUser.email;
 }
@@ -372,13 +365,10 @@ async function logout() {
 // ── UPGRADE DEMO ──
 async function showUpgrade() {
   if (!currentUser) { showPage('login'); return; }
-  const ok = confirm('Demo Mode: Click OK to activate Premium!\n\nIn real version → Bkash/Nagad payment first, then you manually set premium in Supabase.');
+  const ok = confirm('Demo Mode!\n\nReal version: User pays via Bkash/Nagad\nThen you set is_premium=true in Supabase SQL\n\nClick OK to demo activate premium now:');
   if (ok) {
-    await sb.from('profiles').update({ is_premium:true }).eq('id', currentUser.id);
-    isPremium = true;
-    updateAvatarUI();
-    updatePremiumUI();
-    alert('🎉 Premium activated! All tools unlocked!');
+    const { error } = await sb.from('profiles').update({ is_premium:true }).eq('id', currentUser.id);
+    if (!error) { isPremium=true; updateAvatarUI(); updatePremiumUI(); alert('🎉 Premium activated! All tools unlocked!'); }
   }
 }
 
@@ -388,7 +378,7 @@ async function uploadAvatar(e) {
   if (!file || !currentUser) return;
   const reader = new FileReader();
   reader.onload = async (ev) => {
-    avatarUrl = ev.target.result; // base64 for demo
+    avatarUrl = ev.target.result;
     await sb.from('profiles').update({ avatar_url: avatarUrl }).eq('id', currentUser.id);
     updateAvatarUI();
     document.getElementById('avatar-dd').classList.remove('open');
@@ -397,69 +387,152 @@ async function uploadAvatar(e) {
   reader.readAsDataURL(file);
 }
 
-// ── TOOLS ──
-function openTool(tool) {
-  const premTools = ['mcq','notes','mock'];
-  if (premTools.includes(tool) && !isPremium) {
-    alert('⭐ Premium Tool!\nUpgrade for ৳99/month to unlock.');
-    return;
-  }
+// ══════════════════════════════════════
+// 🔐 SECURE TOOL LOADING FROM SUPABASE
+// Premium content is fetched from DB
+// If user is not premium → DB returns nothing
+// Even if they hack JS → no data comes!
+// ══════════════════════════════════════
+
+async function openTool(tool) {
+  document.getElementById('tool-overlay').classList.add('open');
   const body = document.getElementById('modal-body');
   const title = document.getElementById('modal-title');
 
-  if (tool==='gpa') {
-    title.textContent='🎓 GPA Calculator';
-    body.innerHTML=`<div class="form-group"><label>Total Marks (out of 1200)</label><input type="number" id="t-marks" placeholder="e.g. 950"/></div><button class="btn btn-primary btn-full" onclick="calcGPA()">Calculate</button><div class="result-box" id="r-gpa"></div>`;
-  } else if (tool==='age') {
-    title.textContent='🎂 Age Calculator';
-    body.innerHTML=`<div class="form-group"><label>Date of Birth</label><input type="date" id="t-dob"/></div><button class="btn btn-primary btn-full" onclick="calcAge()">Calculate</button><div class="result-box" id="r-age"></div>`;
-  } else if (tool==='word') {
-    title.textContent='📝 Word Counter';
-    body.innerHTML=`<div class="form-group"><label>Paste your text</label><textarea id="t-wc" rows="5" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit;resize:vertical" oninput="countWords()"></textarea></div><div class="result-box" style="display:block" id="r-wc">Words: 0 | Characters: 0</div>`;
-  } else if (tool==='mcq') {
-    title.textContent='📋 MCQ Practice';
-    body.innerHTML=`<p style="color:var(--muted);font-size:13px;margin-bottom:14px">SSC Physics Sample:</p><p style="font-weight:700;margin-bottom:14px">What is the SI unit of Force?</p>
-    <button class="btn btn-outline" style="width:100%;margin-bottom:8px;text-align:left" onclick="mcqClick(this,'w')">A) Watt</button>
-    <button class="btn btn-outline" style="width:100%;margin-bottom:8px;text-align:left" onclick="mcqClick(this,'c')">B) Newton</button>
-    <button class="btn btn-outline" style="width:100%;margin-bottom:8px;text-align:left" onclick="mcqClick(this,'w')">C) Joule</button>
-    <button class="btn btn-outline" style="width:100%;text-align:left" onclick="mcqClick(this,'w')">D) Pascal</button>`;
-  } else if (tool==='notes') {
-    title.textContent='📖 Study Notes';
-    body.innerHTML=`<div style="background:var(--bg);border-radius:10px;padding:16px;font-size:14px;line-height:1.8;color:var(--muted)"><b style="color:var(--text)">Physics — Chapter 1: Motion</b><br/><br/>• Distance is a scalar quantity<br/>• Displacement is a vector quantity<br/>• Speed = Distance ÷ Time<br/>• Velocity = Displacement ÷ Time<br/>• Acceleration = Δv ÷ Time<br/><br/><i>More chapters unlocked in full version...</i></div>`;
-  } else if (tool==='mock') {
-    title.textContent='🏆 Mock Exam';
-    body.innerHTML=`<div style="text-align:center;padding:20px"><div style="font-size:48px;margin-bottom:12px">🏆</div><p style="font-weight:700;font-size:16px;margin-bottom:8px">Full Mock Exam</p><p style="color:var(--muted);font-size:13px;margin-bottom:16px">30 questions • 30 minutes • SSC Level</p><button class="btn btn-primary" style="width:100%">Start Exam</button></div>`;
+  // FREE TOOLS — no DB needed
+  if (tool === 'gpa') {
+    title.textContent = '🎓 GPA Calculator';
+    body.innerHTML = `
+      <div class="form-group"><label>Total Marks (out of 1200)</label>
+      <input type="number" id="t-marks" placeholder="e.g. 950"/></div>
+      <button class="btn btn-primary btn-full" onclick="calcGPA()">Calculate</button>
+      <div class="result-box" id="r-gpa"></div>`;
+    return;
   }
-  document.getElementById('tool-overlay').classList.add('open');
+  if (tool === 'age') {
+    title.textContent = '🎂 Age Calculator';
+    body.innerHTML = `
+      <div class="form-group"><label>Date of Birth</label>
+      <input type="date" id="t-dob"/></div>
+      <button class="btn btn-primary btn-full" onclick="calcAge()">Calculate</button>
+      <div class="result-box" id="r-age"></div>`;
+    return;
+  }
+  if (tool === 'word') {
+    title.textContent = '📝 Word Counter';
+    body.innerHTML = `
+      <div class="form-group"><label>Paste your text</label>
+      <textarea id="t-wc" rows="5" style="width:100%;padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit;resize:vertical" oninput="countWords()"></textarea></div>
+      <div class="result-box" style="display:block" id="r-wc">Words: 0 | Characters: 0</div>`;
+    return;
+  }
+
+  // PREMIUM TOOLS — fetch from Supabase RLS protected tables
+  title.textContent = tool === 'mcq' ? '📋 MCQ Practice' : tool === 'notes' ? '📖 Study Notes' : '🏆 Mock Exam';
+  body.innerHTML = `<div class="loading"><div class="spinner"></div>Loading...</div>`;
+
+  if (tool === 'mcq') {
+    // Fetch MCQ from DB — RLS blocks non-premium users
+    const { data, error } = await sb.from('mcq_questions').select('*').limit(5);
+    if (error || !data || data.length === 0) {
+      body.innerHTML = `<div class="locked-box">
+        <div class="lock-icon">🔒</div>
+        <h3>Premium Only</h3>
+        <p>Upgrade to access MCQ Practice questions</p>
+        <button class="btn btn-gold btn-full" onclick="closeModal();showUpgrade()">⭐ Upgrade ৳99/month</button>
+      </div>`;
+      return;
+    }
+    let current = 0;
+    function renderQ() {
+      const q = data[current];
+      const opts = JSON.parse(q.options);
+      body.innerHTML = `
+        <p style="color:var(--muted);font-size:12px;margin-bottom:10px">Question ${current+1} of ${data.length} • ${q.subject}</p>
+        <p style="font-weight:700;font-size:15px;margin-bottom:16px;line-height:1.5">${q.question}</p>
+        ${opts.map((o,i)=>`<button class="mcq-option" onclick="mcqClick(this,'${i===q.answer?'c':'w'}')">${String.fromCharCode(65+i)}) ${o}</button>`).join('')}
+        <div class="mcq-nav">
+          <button class="btn btn-outline" onclick="if(current>0){current--;renderQ();}" style="font-size:13px;padding:8px 14px">← Prev</button>
+          <span style="color:var(--muted);font-size:13px">${current+1}/${data.length}</span>
+          <button class="btn btn-primary" onclick="if(current<data.length-1){current++;renderQ();}" style="font-size:13px;padding:8px 14px">Next →</button>
+        </div>`;
+    }
+    renderQ();
+    // make renderQ accessible inside onclick
+    window._mcqRender = renderQ;
+    window._mcqData = data;
+    window._mcqCurrent = 0;
+  }
+
+  else if (tool === 'notes') {
+    const { data, error } = await sb.from('study_notes').select('*').limit(10);
+    if (error || !data || data.length === 0) {
+      body.innerHTML = `<div class="locked-box">
+        <div class="lock-icon">🔒</div>
+        <h3>Premium Only</h3>
+        <p>Upgrade to access Study Notes</p>
+        <button class="btn btn-gold btn-full" onclick="closeModal();showUpgrade()">⭐ Upgrade ৳99/month</button>
+      </div>`;
+      return;
+    }
+    body.innerHTML = data.map(n => `
+      <div class="note-content" style="margin-bottom:14px">
+        <b>${n.title}</b><br/><br/>
+        ${n.content.replace(/\n/g,'<br/>')}
+      </div>`).join('');
+  }
+
+  else if (tool === 'mock') {
+    const { data, error } = await sb.from('mock_exams').select('*').limit(1);
+    if (error || !data || data.length === 0) {
+      body.innerHTML = `<div class="locked-box">
+        <div class="lock-icon">🔒</div>
+        <h3>Premium Only</h3>
+        <p>Upgrade to access Mock Exams</p>
+        <button class="btn btn-gold btn-full" onclick="closeModal();showUpgrade()">⭐ Upgrade ৳99/month</button>
+      </div>`;
+      return;
+    }
+    const exam = data[0];
+    body.innerHTML = `<div style="text-align:center;padding:20px">
+      <div style="font-size:48px;margin-bottom:12px">🏆</div>
+      <p style="font-weight:700;font-size:18px;margin-bottom:8px">${exam.title}</p>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:6px">${exam.total_questions} questions • ${exam.duration_minutes} minutes</p>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:20px">${exam.subject}</p>
+      <button class="btn btn-primary btn-full">Start Exam</button>
+    </div>`;
+  }
 }
+
 function closeModal() { document.getElementById('tool-overlay').classList.remove('open'); }
 
+// FREE TOOL FUNCTIONS
 function calcGPA() {
   const m = parseFloat(document.getElementById('t-marks').value);
   const r = document.getElementById('r-gpa');
   if (!m||m<0||m>1200) { r.style.display='block';r.style.color='#ff6b6b';r.textContent='Enter valid marks (0-1200)';return; }
-  const p = (m/1200)*100;
-  const gpa = p>=80?5.0:p>=70?4.0:p>=60?3.5:p>=50?3.0:p>=40?2.0:1.0;
-  const g = p>=80?'A+':p>=70?'A':p>=60?'A-':p>=50?'B':p>=40?'C':'D';
+  const p=(m/1200)*100;
+  const gpa=p>=80?5.0:p>=70?4.0:p>=60?3.5:p>=50?3.0:p>=40?2.0:1.0;
+  const g=p>=80?'A+':p>=70?'A':p>=60?'A-':p>=50?'B':p>=40?'C':'D';
   r.style.display='block';r.style.color='var(--green)';
   r.textContent=`GPA: ${gpa} | Grade: ${g} | ${p.toFixed(1)}%`;
 }
 function calcAge() {
-  const d = new Date(document.getElementById('t-dob').value);
-  const r = document.getElementById('r-age');
-  if (!d.getTime()) { r.style.display='block';r.style.color='#ff6b6b';r.textContent='Please select date';return; }
-  const t = new Date(); let y=t.getFullYear()-d.getFullYear(),mo=t.getMonth()-d.getMonth();
+  const d=new Date(document.getElementById('t-dob').value);
+  const r=document.getElementById('r-age');
+  if(!d.getTime()){r.style.display='block';r.style.color='#ff6b6b';r.textContent='Please select date';return;}
+  const t=new Date();let y=t.getFullYear()-d.getFullYear(),mo=t.getMonth()-d.getMonth();
   if(mo<0){y--;mo+=12;}
   r.style.display='block';r.style.color='var(--green)';r.textContent=`Age: ${y} years, ${mo} months`;
 }
 function countWords() {
-  const t = document.getElementById('t-wc').value;
-  const w = t.trim()===''?0:t.trim().split(/\s+/).length;
+  const t=document.getElementById('t-wc').value;
+  const w=t.trim()===''?0:t.trim().split(/\s+/).length;
   document.getElementById('r-wc').textContent=`Words: ${w} | Characters: ${t.length}`;
 }
-function mcqClick(btn, res) {
-  if(res==='c'){btn.style.background='#0d2d1f';btn.style.borderColor='var(--green)';btn.style.color='var(--green)';}
-  else{btn.style.background='#2d1212';btn.style.borderColor='#ff6b6b';btn.style.color='#ff6b6b';}
+function mcqClick(btn,res) {
+  document.querySelectorAll('.mcq-option').forEach(b=>{b.disabled=true;});
+  btn.className='mcq-option '+(res==='c'?'correct':'wrong');
 }
 
 checkSession();
