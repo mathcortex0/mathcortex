@@ -1,0 +1,334 @@
+name: Build Alamin Network Android App
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+      
+      - name: Create Web Files
+        run: |
+          # Create a simple HTML wrapper for your website
+          mkdir -p dist
+          
+          cat > dist/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+              <title>Alamin Network</title>
+              <style>
+                  * {
+                      margin: 0;
+                      padding: 0;
+                      box-sizing: border-box;
+                  }
+                  
+                  body {
+                      margin: 0;
+                      padding: 0;
+                      overflow: hidden;
+                      height: 100vh;
+                      width: 100vw;
+                  }
+                  
+                  iframe {
+                      position: absolute;
+                      top: 0;
+                      left: 0;
+                      width: 100%;
+                      height: 100%;
+                      border: none;
+                      background: white;
+                  }
+                  
+                  /* Loading indicator */
+                  .loading {
+                      position: fixed;
+                      top: 50%;
+                      left: 50%;
+                      transform: translate(-50%, -50%);
+                      z-index: 1000;
+                      font-family: Arial, sans-serif;
+                      text-align: center;
+                  }
+                  
+                  .spinner {
+                      border: 4px solid #f3f3f3;
+                      border-top: 4px solid #3498db;
+                      border-radius: 50%;
+                      width: 40px;
+                      height: 40px;
+                      animation: spin 1s linear infinite;
+                      margin: 0 auto 10px;
+                  }
+                  
+                  @keyframes spin {
+                      0% { transform: rotate(0deg); }
+                      100% { transform: rotate(360deg); }
+                  }
+                  
+                  /* Splash screen styles */
+                  .splash {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      width: 100%;
+                      height: 100%;
+                      background: white;
+                      z-index: 9999;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      transition: opacity 0.5s;
+                  }
+                  
+                  .splash-content {
+                      text-align: center;
+                  }
+                  
+                  .splash-logo {
+                      font-size: 48px;
+                      font-weight: bold;
+                      color: #333;
+                      margin-bottom: 20px;
+                  }
+                  
+                  .splash-title {
+                      font-size: 24px;
+                      color: #666;
+                      margin-bottom: 20px;
+                  }
+              </style>
+          </head>
+          <body>
+              <div class="splash" id="splash">
+                  <div class="splash-content">
+                      <div class="splash-logo">🌐 Alamin Network</div>
+                      <div class="splash-title">Loading...</div>
+                      <div class="spinner"></div>
+                  </div>
+              </div>
+              
+              <iframe 
+                  id="webview"
+                  src="https://alaminnetwork.pages.dev/"
+                  allow="geolocation; microphone; camera; payment; autoplay"
+                  allowfullscreen
+              ></iframe>
+              
+              <script>
+                  const iframe = document.getElementById('webview');
+                  const splash = document.getElementById('splash');
+                  
+                  // Hide splash screen when content loads
+                  iframe.addEventListener('load', function() {
+                      setTimeout(() => {
+                          splash.style.opacity = '0';
+                          setTimeout(() => {
+                              splash.style.display = 'none';
+                          }, 500);
+                      }, 1000);
+                  });
+                  
+                  // Handle offline detection
+                  window.addEventListener('online', function() {
+                      console.log('Back online');
+                  });
+                  
+                  window.addEventListener('offline', function() {
+                      alert('No internet connection. Please check your network settings.');
+                  });
+              </script>
+          </body>
+          </html>
+          EOF
+          
+          # Create a manifest file
+          cat > dist/manifest.json << 'EOF'
+          {
+              "name": "Alamin Network",
+              "short_name": "Alamin",
+              "description": "Alamin Network - Your trusted platform",
+              "start_url": "https://alaminnetwork.pages.dev/",
+              "display": "standalone",
+              "background_color": "#ffffff",
+              "theme_color": "#3498db",
+              "icons": [
+                  {
+                      "src": "https://alaminnetwork.pages.dev/favicon.ico",
+                      "sizes": "64x64",
+                      "type": "image/x-icon"
+                  }
+              ]
+          }
+          EOF
+          
+          # Create a simple service worker for offline support
+          cat > dist/sw.js << 'EOF'
+          const CACHE_NAME = 'alamin-network-v1';
+          const urlsToCache = [
+              '/',
+              '/index.html'
+          ];
+          
+          self.addEventListener('install', event => {
+              event.waitUntil(
+                  caches.open(CACHE_NAME)
+                      .then(cache => cache.addAll(urlsToCache))
+              );
+          });
+          
+          self.addEventListener('fetch', event => {
+              event.respondWith(
+                  caches.match(event.request)
+                      .then(response => response || fetch(event.request))
+              );
+          });
+          EOF
+          
+          echo "✅ Web files created successfully"
+      
+      - name: Setup Capacitor
+        run: |
+          # Install Capacitor
+          npm install @capacitor/core @capacitor/cli @capacitor/android
+          
+          # Create Capacitor config for Alamin Network
+          cat > capacitor.config.json << 'EOF'
+          {
+            "appId": "com.alamin.network",
+            "appName": "Alamin Network",
+            "webDir": "dist",
+            "bundledWebRuntime": false,
+            "backgroundColor": "#ffffff",
+            "server": {
+              "androidScheme": "https",
+              "cleartext": true,
+              "allowNavigation": ["alaminnetwork.pages.dev"]
+            },
+            "android": {
+              "allowMixedContent": true,
+              "captureInput": true,
+              "webContentsDebuggingEnabled": false
+            }
+          }
+          EOF
+          
+          # Initialize Capacitor
+          npx cap init AlaminNetwork com.alamin.network
+          npx cap add android
+          npx cap sync android
+          
+          echo "✅ Capacitor configured for Alamin Network"
+      
+      - name: Customize Android App
+        run: |
+          cd android
+          
+          # Update app name in strings.xml
+          cat > app/src/main/res/values/strings.xml << 'EOF'
+          <resources>
+              <string name="app_name">Alamin Network</string>
+          </resources>
+          EOF
+          
+          # Create launcher icon config
+          cat > app/src/main/AndroidManifest.xml << 'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+              package="com.alamin.network">
+              
+              <uses-permission android:name="android.permission.INTERNET" />
+              <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+              <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+              
+              <application
+                  android:allowBackup="true"
+                  android:icon="@mipmap/ic_launcher"
+                  android:label="@string/app_name"
+                  android:roundIcon="@mipmap/ic_launcher_round"
+                  android:supportsRtl="true"
+                  android:theme="@style/AppTheme"
+                  android:usesCleartextTraffic="true">
+                  
+                  <activity
+                      android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
+                      android:name="com.getcapacitor.MainActivity"
+                      android:label="@string/app_name"
+                      android:theme="@style/AppTheme.NoActionBarLaunch"
+                      android:launchMode="singleTask"
+                      android:exported="true">
+                      
+                      <intent-filter>
+                          <action android:name="android.intent.action.MAIN" />
+                          <category android:name="android.intent.category.LAUNCHER" />
+                      </intent-filter>
+                  </activity>
+                  
+                  <provider
+                      android:name="androidx.core.content.FileProvider"
+                      android:authorities="${applicationId}.fileprovider"
+                      android:exported="false"
+                      android:grantUriPermissions="true">
+                      <meta-data
+                          android:name="android.support.FILE_PROVIDER_PATHS"
+                          android:resource="@xml/file_paths" />
+                  </provider>
+              </application>
+          </manifest>
+          EOF
+          
+          echo "✅ Android app customized for Alamin Network"
+      
+      - name: Build APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+          
+          # Rename APK with app name
+          if [ -f "app/build/outputs/apk/debug/app-debug.apk" ]; then
+            cp app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/Alamin-Network-v1.0-debug.apk
+          fi
+          
+          echo "✅ APK built successfully!"
+      
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Alamin-Network-Android-App
+          path: android/app/build/outputs/apk/debug/*.apk
+          retention-days: 30
+      
+      - name: Display APK Info
+        run: |
+          if [ -f "android/app/build/outputs/apk/debug/Alamin-Network-v1.0-debug.apk" ]; then
+            APK_SIZE=$(du -h android/app/build/outputs/apk/debug/Alamin-Network-v1.0-debug.apk | cut -f1)
+            echo "✅ Alamin Network APK built successfully!"
+            echo "📱 App Name: Alamin Network"
+            echo "🔗 Website: https://alaminnetwork.pages.dev/"
+            echo "📦 APK Size: $APK_SIZE"
+            echo "📍 Location: android/app/build/outputs/apk/debug/"
+          fi
