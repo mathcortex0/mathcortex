@@ -1,139 +1,109 @@
 name: Build Android APK
 
-on: [push]
-
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
-    env:
-
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
     steps:
-
       - name: Checkout Code
-
         uses: actions/checkout@v4
 
-
-      - name: Set up JDK 21
-
-        uses: actions/setup-java@v4
-
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
+          node-version: '22'
 
-          java-version: '21'
-
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
           distribution: 'temurin'
 
+      - name: Create package.json
+        run: |
+          cat > package.json << 'PKGJSON'
+          {
+            "name": "alamin-network",
+            "version": "1.0.0",
+            "scripts": { "build": "node build.js" },
+            "dependencies": {
+              "@capacitor/core": "^6.0.0",
+              "@capacitor/cli": "^6.0.0",
+              "@capacitor/android": "^6.0.0"
+            }
+          }
+          PKGJSON
+
+      - name: Create build.js
+        run: |
+          cat > build.js << 'BUILDJS'
+          const fs = require('fs');
+          const path = require('path');
+          const ITEMS = [
+            'index.html','category.html','report.html','about.html',
+            'archive.html','live.html','contact.html','404.html',
+            'robots.txt','sitemap.xml','css','js','data','images'
+          ];
+          function copy(src, dest) {
+            if (!fs.existsSync(src)) return;
+            const stat = fs.statSync(src);
+            if (stat.isDirectory()) {
+              if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
+              fs.readdirSync(src).forEach(f => copy(path.join(src,f), path.join(dest,f)));
+            } else {
+              fs.copyFileSync(src, dest);
+            }
+          }
+          if (!fs.existsSync('dist')) fs.mkdirSync('dist');
+          ITEMS.forEach(item => { copy(item, path.join('dist', item)); });
+          console.log('Build complete');
+          BUILDJS
+
+      - name: Create capacitor.config.json
+        run: |
+          cat > capacitor.config.json << 'CAPJSON'
+          {
+            "appId": "dev.alaminnetwork.app",
+            "appName": "Alamin Network",
+            "webDir": "dist",
+            "server": {
+              "androidScheme": "https",
+              "hostname": "alaminnetwork.pages.dev",
+              "cleartext": true
+            },
+            "android": {
+              "allowMixedContent": true
+            }
+          }
+          CAPJSON
 
       - name: Install Dependencies
-
-        run: npm install --force
-
+        run: npm install
 
       - name: Build Web Project
+        run: npm run build
 
+      - name: Setup Capacitor Android
         run: |
-
-         
-
-          npm run build -- --base=./ || npm run build || true
-
-          if [ ! -d "dist" ]; then
-
-            mkdir -p dist
-
-            cp index.html dist/ 2>/dev/null || true
-
-          fi
-
-
-      - name: Setup Capacitor Config
-
-        run: |
-
-          npm install @capacitor/core @capacitor/cli @capacitor/android
-
-         
-
-         
-
-         
-
-          cat <<EOF > capacitor.config.json
-
-          {
-
-            "appId": "com.ec.aoo",
-
-            "appName": "Alamin Network",
-
-            "webDir": "dist",
-
-            "server": {
-
-              "androidScheme": "https",
-
-              "hostname": "localhost",
-
-              "cleartext": true
-
-            }
-
-          }
-
-          EOF
-
-         
-
-          npx cap add android || true
-
+          npx cap add android 2>/dev/null || true
           npx cap sync android
 
-
       - name: Build Android APK
-
         run: |
-
           cd android
-
-         
-
-         
-
-          echo "configurations.all {
-
-              resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-
-                  if (details.requested.group == 'org.jetbrains.kotlin') {
-
-                      details.useVersion '1.8.22'
-
-                  }
-
-              }
-
-          }" >> app/build.gradle
-
-         
-
           chmod +x gradlew
-
-          ./gradlew assembleDebug
-
+          ./gradlew assembleDebug \
+            -Dorg.gradle.jvmargs="-Xmx2048m" \
+            --no-daemon
 
       - name: Upload APK
-
         uses: actions/upload-artifact@v4
-
         with:
-
-          name: Mobile-App-APK
-
+          name: AlaminNetwork-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
-
+          retention-days: 30
